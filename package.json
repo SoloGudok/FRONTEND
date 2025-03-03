@@ -1,39 +1,60 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.2.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
+  "name": "directory_react_theme",
+  "title": "Directory – Directory & Listing React Theme",
+  "version": "2.0.5",
+  "description": "",
+  "homepage": "https://themes.getbootstrap.com/product/directory-directory-listing-react-theme/",
+  "author": "Bootstrapious - https://bootstrapious.com",
+  "contact": "hello@bootstrapious.com",
+  "bugs": "",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next build && next export"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.12",
+    "@svgr/webpack": "^6.4.0",
+    "bootstrap": "^5.3.0",
+    "date-fns": "^2.28.0",
+    "leaflet": "^1.9.1",
+    "next": "^12.3.1",
+    "nouislider-react": "^3.4.1",
+    "nprogress": "^0.2.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.8.0",
+    "react-day-picker": "^8.3.0",
+    "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.2",
+    "react-leaflet": "^4.1.0",
+    "react-scroll": "^1.8.7",
+    "react-select": "^5.7.4",
+    "react-syntax-highlighter": "^15.4.4",
+    "sass": "~1.38.1",
+    "swiper": "^8.4.2",
+    "yet-another-react-lightbox": "^2.1.1"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "browserslist": [
+    ">= 0.5%",
+    "last 2 major versions",
+    "not dead",
+    "Chrome >= 60",
+    "Firefox >= 60",
+    "Firefox ESR",
+    "iOS >= 12",
+    "Safari >= 12",
+    "not Explorer <= 11"
+  ],
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "printWidth": 80,
+    "semi": false
   }
 }
