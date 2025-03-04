@@ -1,5 +1,11 @@
 .App {
-  text-align: center;
+  width: 100%;
+  max-width: 600px; /* 모바일 최대 크기 설정 (ex: iPhone 14 Pro Max) */
+  height: 100vh;
+  margin: 0 auto;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-logo {
