@@ -1,20 +1,20 @@
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Layout from "./Layout";
 import "./App.css";
+import Dashboard from "./main/dashboard";
+import Category from "./main/category";
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <h1>모바일 전용 페이지</h1>
-      <p>이 웹사이트는 모바일에서만 최적화되었습니다.</p>
-      <h1>모바일 전용 페이지</h1>
-      <p>이 웹사이트는 모바일에서만 최적화되었습니다.</p>
-      <h1>모바일 전용 페이지</h1>
-      <p>이 웹사이트는 모바일에서만 최적화되었습니다.</p>
-      <h1>모바일 전용 페이지</h1>
-      <p>이 웹사이트는 모바일에서만 최적화되었습니다.</p>
-      <Footer />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="/category" element={<Category />} />
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 }

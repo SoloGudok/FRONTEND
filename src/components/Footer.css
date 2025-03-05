@@ -18,7 +18,7 @@ footer {
   justify-content: center;
   gap: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #777;
+  /* border-bottom: 1px solid #777; */
 }
 
 .footer-links a {
@@ -49,6 +49,7 @@ a {
   cursor: pointer;
   padding: 10px;
   font-weight: bold;
+  margin: 0;
   color: white;
   display: flex;
   justify-content: space-between;
