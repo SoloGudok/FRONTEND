@@ -1,8 +1,9 @@
 /* 헤더 전체 스타일 */
 header {
+  position: fixed;
   display: flex;
   align-items: center; /* 세로 정렬 */
-  height: 80px; /* 원하는 높이 설정 */
+  height: 60px; /* 원하는 높이 설정 */
   background-color: #ffffff;
   padding: 10px 20px;
   justify-content: center;
