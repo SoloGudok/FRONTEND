@@ -6,8 +6,8 @@ body {
 
 footer {
   padding-top: 20px;
-  background: #444;
-  color: white;
+  background: #d3d3d3;
+  color: rgb(82, 82, 82);
   padding: 20px;
   font-size: 14px;
 }
@@ -22,12 +22,12 @@ footer {
 }
 
 .footer-links a {
-  color: white;
+  color: rgb(82, 82, 82);
   text-decoration: none;
   font-size: 14px;
 }
 a {
-  color: white;
+  color: rgb(0, 0, 0);
   text-decoration: none;
   font-size: 14px;
 }
@@ -50,7 +50,7 @@ a {
   padding: 10px;
   font-weight: bold;
   margin: 0;
-  color: white;
+  color: rgb(82, 82, 82);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,6 +71,6 @@ a {
   padding: 10px;
   font-size: 14px;
   color: #ddd;
-  background: #333;
+  background: #afafaf;
   border-top: 1px solid #666;
 }

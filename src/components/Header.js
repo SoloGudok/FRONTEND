@@ -1,4 +1,4 @@
-import logo from "./img/logo.png";
+import logo from "./img/logo1.png";
 import "./Header.css";
 
 const Header = () => {
@@ -10,7 +10,7 @@ const Header = () => {
             <img src={logo} />
           </a>
         </div>
-
+        {/* 
         <div id="header-menus">
           <a href="#">
             <div id="header-menu1">구독 서비스</div>
@@ -31,7 +31,7 @@ const Header = () => {
           <a href="#">
             <div id="header-menu5">해지</div>
           </a>
-        </div>
+        </div> */}
       </div>
     </header>
   );
