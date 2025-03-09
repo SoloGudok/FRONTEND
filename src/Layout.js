@@ -5,11 +5,13 @@ import { Outlet } from "react-router-dom";
 
 function Layout({ title, footermessage }) {
   return (
-    <>
+    <div className="layout">
       <Header title={title} />
-      <Outlet />
+      <main className="content">
+        <Outlet />
+      </main>
       <Footer message={footermessage} />
-    </>
+    </div>
   );
 }
 export default Layout;
