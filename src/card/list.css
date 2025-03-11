@@ -1,0 +1,99 @@
+/* 카드 목록 전체 컨테이너 */
+.card-list {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* Swiper 컨테이너 스타일 */
+.swiper {
+  width: 100%;
+  padding-bottom: 30px; /* 아래 여백 */
+}
+
+/* 개별 카드 스타일 */
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  width: 100%; /* 슬라이드 내에서 자동 조정 */
+  max-width: 300px; /* 카드 최대 크기 설정 */
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  background: white;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* 카드에 그림자 추가 */
+}
+
+/* 카드 hover 시 확대 효과 */
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* 카드 이미지 스타일 */
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* 카드 제목 스타일 */
+.card h3 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* 카드 설명 스타일 */
+.card p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* 슬라이드 간 간격 */
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px; /* 좌우 여백 */
+}
+
+/* Swiper 네비게이션 버튼 스타일 */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #333; /* 버튼 색상 */
+}
+
+.swiper-pagination-bullet {
+  background: #333 !important;
+}
+.filter-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 300px;
+  text-align: center;
+}
+
+.filter-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-content button {
+  padding: 10px;
+  background-color: #f1f1f1;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.filter-content button:hover {
+  background-color: #ddd;
+}

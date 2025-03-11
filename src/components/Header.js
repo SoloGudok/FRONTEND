@@ -1,39 +1,49 @@
 import logo from "./img/logo.png";
 import "./Header.css";
+import { Link } from "react-router-dom"; // Link 컴포넌트 import
 
 const Header = () => {
   return (
     <header>
       <div id="header">
         <div id="header-logo-image">
-          <a href="#">
-            <img src={logo} />
-          </a>
+          {/* 홈 화면으로 이동 */}
+          <Link to="/">
+            <img src={logo} alt="사이트 로고" />
+          </Link>
         </div>
 
         <div id="header-menus">
-          <a href="#">
-            <div id="header-menu1">구독 서비스</div>
-          </a>
+          {/* 구독 서비스 메뉴 */}
+          <Link to="/" id="header-menu1">
+            구독 서비스
+          </Link>
 
-          <a href="#">
-            <div id="header-menu2">카드</div>
-          </a>
+          {/* 카드 메뉴 */}
+          <Link to="/cards" id="header-menu2">
+            {" "}
+            {/* /cards 경로로 이동 */}
+            카드
+          </Link>
 
-          <a href="#">
-            <div id="header-menu3">마이</div>
-          </a>
+          {/* 마이 메뉴 */}
+          <Link to="/" id="header-menu3">
+            마이
+          </Link>
 
-          <a href="#">
-            <div id="header-menu4">혜택</div>
-          </a>
+          {/* 혜택 메뉴 */}
+          <Link to="/" id="header-menu4">
+            혜택
+          </Link>
 
-          <a href="#">
-            <div id="header-menu5">해지</div>
-          </a>
+          {/* 해지 메뉴 */}
+          <Link to="/" id="header-menu5">
+            해지
+          </Link>
         </div>
       </div>
     </header>
   );
 };
+
 export default Header;

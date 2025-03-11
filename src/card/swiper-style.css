@@ -1,0 +1,15 @@
+/* swiper-style.css 파일에 추가 */
+.swiper-image {
+  width: 70%;
+  height: auto;
+  object-fit: cover;
+}
+.filter-button {
+  background-color: #c4d0dd;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
