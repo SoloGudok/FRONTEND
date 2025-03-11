@@ -1,0 +1,69 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-footer {
+  position: sticky;
+  max-height: 40px;
+  width: 100%;
+  max-width: 600px;
+  bottom: 0;
+  left: 50%;
+  background: rgb(230, 235, 255);
+  border-top: 1px solid #d5edff;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+}
+
+.menu-footer-links {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-button {
+  flex: 1;
+  text-align: center;
+}
+
+.menu-footer-button-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-footer-button-item-img img {
+  width: 20px;
+  height: 20px;
+}
+
+.menu-footer-button-item-content {
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: #3f3f3f; /* 글자 색을 어두운 회색으로 변경 */
+}
+
+/* 링크 스타일 변경 */
+.menu-footer-link {
+  text-decoration: none; /* 밑줄 제거 */
+  color: inherit; /* 링크 색 변경 방지 */
+}
+
+.menu-footer-link:visited,
+.menu-footer-link:hover,
+.menu-footer-link:active {
+  color: inherit; /* 클릭해도 색 변하지 않도록 설정 */
+}

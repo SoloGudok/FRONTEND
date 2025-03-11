@@ -1,4 +1,4 @@
-import logo from "./img/logo.png";
+import logo from "./img/logo1.png";
 import "./Header.css";
 import { Link } from "react-router-dom"; // Link 컴포넌트 import
 
@@ -12,7 +12,7 @@ const Header = () => {
             <img src={logo} alt="사이트 로고" />
           </Link>
         </div>
-
+        {/* 
         <div id="header-menus">
           {/* 구독 서비스 메뉴 */}
           <Link to="/" id="header-menu1">
@@ -36,6 +36,10 @@ const Header = () => {
             혜택
           </Link>
 
+          <a href="#">
+            <div id="header-menu5">해지</div>
+          </a>
+        </div> */}
           {/* 해지 메뉴 */}
           <Link to="/" id="header-menu5">
             해지
