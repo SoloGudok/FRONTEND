@@ -19,6 +19,8 @@ function App() {
             <Route path="/category" element={<Category />} />
             {/* 카드 페이지 (CardList 컴포넌트를 /cards 경로로 설정) */}
             <Route path="/cards" element={<CardList />} />
+            <Route path="/membership" element={<Membership />} />
+            {/* 🔥 추가! */}
           </Route>
         </Routes>
       </Router>
