@@ -1,5 +1,5 @@
 import "./MenuFooter.css";
-import React, { useEffect } from "react";
+import React from "react";
 import footer1 from "./img/footer1.png";
 import footer2 from "./img/footer2.png";
 import footer3 from "./img/footer3.png";

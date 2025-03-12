@@ -1,0 +1,103 @@
+/* 이벤트 헤더 */
+
+.event-header {
+  position: relative; /* 상대 위치 설정 */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 중앙 정렬 */
+  padding: 10px 0px 0px 0px;
+  background-color: #fff;
+  border-bottom: 2px solid #d0e3ff;
+  height: 50px; /* 적절한 높이 지정 */
+}
+
+/* 왼쪽 뒤로가기 버튼 */
+.event-header-leftside {
+  position: absolute;
+  left: 10px; /* 왼쪽 정렬 */
+  top: 50%;
+  transform: translateY(-50%); /* 수직 중앙 정렬 */
+  cursor: pointer;
+}
+
+.event-header-leftside img {
+  width: 24px; /* 크기 조정 */
+  height: 24px;
+}
+
+/* 중앙 컨텐츠 */
+.event-header-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* 가로 중앙 정렬 */
+}
+
+/* 캐릭터 이미지 */
+.event-header-character {
+  width: 32px;
+  height: 32px;
+}
+
+/* 이벤트 텍스트 */
+.event-header-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* 이벤트 리스트 */
+
+.event-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.event-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4개씩 가로 배치 */
+  gap: 20px; /* 카드 사이 간격 */
+  max-width: 1000px;
+}
+
+.event-item {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+}
+
+.event-image img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.event-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.event-date {
+  font-size: 14px;
+  color: gray;
+}
+
+/* 반응형: 화면이 작을 때 2열로 변경 */
+@media (max-width: 10240px) {
+  .event-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 반응형: 화면이 더 작을 때 1열로 변경 */
+@media (max-width: 600px) {
+  .event-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
