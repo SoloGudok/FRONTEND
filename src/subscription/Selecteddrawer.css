@@ -1,0 +1,53 @@
+/* Drawer 내부 콘텐츠 간격 및 크기 조정 */
+.drawer-content {
+  padding: 16px;
+  overflow: auto;
+  background-color: #fff;
+}
+
+/* 구독 목록 스타일 */
+.subscription-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* ✅ 리스트 간격 줄이기 */
+  padding: 0;
+  margin: 0;
+}
+
+.subscription-item {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* ✅ 이미지와 텍스트 간 간격 줄이기 */
+  padding: 10px;
+  border-radius: 8px; /* ✅ 둥근 테두리 추가 */
+  background-color: #f9f9f9; /* ✅ 배경색 추가 */
+}
+
+/* 구독 서비스 이미지 크기 조정 */
+.subscription-item img {
+  width: 40px; /* ✅ 크기 조정 */
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.drawer-button-container {
+  position: absolute; /* ✅ 부모 요소 기준으로 배치 */
+  bottom: 20px; /* 하단에서 20px 위 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content; /* 내용 크기에 맞춤 */
+}
+
+.drawer-button-container {
+  position: fixed; /* ✅ 화면 하단 고정 */
+  bottom: 20px; /* 화면 아래에서 20px 위 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  z-index: 100; /* ✅ 버튼이 다른 요소 위에 표시되도록 */
+  pointer-events: auto; /* ✅ 클릭 가능하게 설정 */
+}
+
+.drawer-button {
+  pointer-events: auto; /* ✅ 버튼이 클릭 가능하도록 */
+}
