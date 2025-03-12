@@ -36,7 +36,9 @@ const MenuFooter = () => {
           <div class="menu-footer-button">
             <div class="menu-footer-button-item">
               <div class="menu-footer-button-item-img">
-                <img src={footer5} alt="메인" />{" "}
+                <a href="/">
+                  <img src={footer5} alt="메인" />
+                </a>
               </div>
               <div class="menu-footer-button-item-content">메인</div>
             </div>
@@ -58,7 +60,9 @@ const MenuFooter = () => {
           <div class="menu-footer-button">
             <div class="menu-footer-button-item">
               <div class="menu-footer-button-item-img">
-                <img src={footer4} alt="혜택" />{" "}
+                <a href="/event">
+                  <img src={footer4} alt="혜택" />
+                </a>
               </div>
               <div class="menu-footer-button-item-content">혜택</div>
             </div>
