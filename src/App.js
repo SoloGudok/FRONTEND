@@ -8,6 +8,7 @@ import Membership from "./subscription/membership";
 import SubscriptionList from './subscription/list';
 import CardList from "./card/CardList"; // CardList 컴포넌트 import
 import "./card/list.css";
+import Membership from "./subscription/membership";
 
 
 function App() {

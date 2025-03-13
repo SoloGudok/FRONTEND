@@ -107,7 +107,7 @@ export default function Membership() {
           </li>
         </ul>
       </div>
-      <Categorymenu onCategorySelect={handleCategoryChange} />
+      <Categorymenu setSelectedCategory={handleCategoryChange} />
 
       <div className="w-full mt-4">
         {/* ✅ 구독 목록이 존재할 때만 렌더링 */}
