@@ -5,6 +5,7 @@ import Dashboard from "./main/dashboard";
 import Category from "./main/category";
 import CardList from "./card/CardList"; // CardList 컴포넌트 import
 import "./card/list.css";
+import Membership from "./subscription/membership";
 
 function App() {
   return (
