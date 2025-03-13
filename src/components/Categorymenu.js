@@ -5,6 +5,7 @@ export default function Categorymenu({ setSelectedCategory }) {
   const [selectedCategory, setSelectedCategoryState] = useState(null); // 단일 선택
 
   const categories = [
+    { id: 0, name: "전체", emoji: "🔍" }, // 전체 카테고리 추가
     { id: 1, name: "헬스케어", emoji: "🏃‍♂️‍➡️" },
     { id: 2, name: "홈/라이프", emoji: "🏠" },
     { id: 3, name: "게임", emoji: "🎮" },
