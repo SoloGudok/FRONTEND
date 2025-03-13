@@ -15,6 +15,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="/category" element={<Category />} />
             <Route path="/membership" element={<Membership />} />
+            <Route path="/subscriptions" element={<SubscriptionList />} />
             <Route path="/subscriptions/:categoryId" element={<SubscriptionList />} />
             {/* 🔥 추가! */}
           </Route>
