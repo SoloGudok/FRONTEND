@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import "./App.css";
 import Dashboard from "./main/dashboard";
 import Category from "./main/category";
+<<<<<<< HEAD
 
 import Membership from "./subscription/membership";
 import SubscriptionList from './subscription/list';
@@ -11,6 +12,9 @@ import "./card/list.css";
 import Membership from "./subscription/membership";
 
 
+=======
+import Detail from "./card/Detail"
+>>>>>>> 267e16a (dashboard, card-detail 추가)
 function App() {
   return (
     <div className="App">
@@ -20,7 +24,11 @@ function App() {
           <Route path="/" element={<Layout />}>
             {/* 기본 대시보드 */}
             <Route index element={<Dashboard />} />
+<<<<<<< HEAD
             {/* 카테고리 페이지 */}
+=======
+            <Route path="/detail" element={<Detail />} />
+>>>>>>> 267e16a (dashboard, card-detail 추가)
             <Route path="/category" element={<Category />} />
             {/* 카드 페이지 (CardList 컴포넌트를 /cards 경로로 설정) */}
             <Route path="/cards" element={<CardList />} />
