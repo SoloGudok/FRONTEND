@@ -2,7 +2,7 @@
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin-bottom: 20px; /* 아래쪽 여백 추가 */
+  margin-bottom: 10px; /* 아래쪽 여백 추가 */
   flex-wrap: wrap;
 }
 
