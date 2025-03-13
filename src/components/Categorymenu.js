@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
 import "./Categorymenu.css"; // 스타일 분리
 
-export default function Categorymenu() {
-  const [selected, setSelected] = useState(0);
+export default function Categorymenu({ setSelectedCategory }) {
+  const [selectedCategory, setSelectedCategoryState] = useState(null); // 단일 선택
 
   const categories = [
     { id: 1, name: "헬스케어", emoji: "🏃‍♂️‍➡️" },
@@ -18,13 +17,22 @@ export default function Categorymenu() {
     { id: 10, name: "도서", emoji: "📚" },
   ];
 
+  const handleCategoryClick = (categoryId) => {
+    const newSelectedCategory =
+      selectedCategory === categoryId ? null : categoryId;
+    setSelectedCategoryState(newSelectedCategory); // 내부 상태 업데이트
+    setSelectedCategory(newSelectedCategory); // 부모 컴포넌트로 전달
+  };
+
   return (
     <div className="category-container">
-      {categories.map((cat, index) => (
+      {categories.map((cat) => (
         <button
           key={cat.id}
-          onClick={() => setSelected(index)}
-          className={`category-button ${selected === index ? "active" : ""}`}
+          onClick={() => handleCategoryClick(cat.id)}
+          className={`category-button ${
+            selectedCategory === cat.id ? "active" : ""
+          }`}
         >
           <span className="emoji">{cat.emoji}</span> {cat.name}
         </button>

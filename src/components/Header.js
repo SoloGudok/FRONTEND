@@ -12,40 +12,11 @@ const Header = () => {
             <img src={logo} alt="사이트 로고" />
           </Link>
         </div>
-        {/* 
-        {/* 
-        <div id="header-menus">
-          {/* 구독 서비스 메뉴 */}
-          <Link to="/" id="header-menu1">
-            구독 서비스
-          </Link>
 
-          {/* 카드 메뉴 */}
-          <Link to="/cards" id="header-menu2">
-            {" "}
-            {/* /cards 경로로 이동 */}
-            카드
-          </Link>
-
-          {/* 마이 메뉴 */}
-          <Link to="/" id="header-menu3">
-            마이
-          </Link>
-
-          {/* 혜택 메뉴 */}
-          <Link to="/" id="header-menu4">
-            혜택
-          </Link>
-
-          <a href="#">
-            <div id="header-menu5">해지</div>
-          </a>
-        </div> */}
-          {/* 해지 메뉴 */}
-          <Link to="/" id="header-menu5">
-            해지
-          </Link>
-        </div>
+        {/* 기존 주석을 제거하고 해지 메뉴만 남기기 */}
+        <Link to="/" id="header-menu5">
+          해지
+        </Link>
       </div>
     </header>
   );

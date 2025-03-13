@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -6,105 +6,102 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Card from "./Card";
-import SearchFilter from "./SearchFilter"; // 검색 UI
-import BenefitList from "./BenefitList"; // 새로 만든 BenefitList 컴포넌트
+import Categorymenu from "../components/Categorymenu";
+import MenuFooter from "../components/MenuFooter";
+import FilterCardList from "./FilterCardList";
 import "./list.css";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import PauseIcon from "@mui/icons-material/Pause";
+import IconButton from "@mui/material/IconButton"; // IconButton 임포트
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 function CardList() {
-  const [cards, setCards] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [filteredCards, setFilteredCards] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedBenefits, setSelectedBenefits] = useState([]);
-
-  // 예시 카테고리 데이터 (백엔드에서 받아올 수 있음)
-  const categories = [
-    { id: 1, name: "헬스케어", emoji: "💳" },
-    { id: 2, name: "홈/라이프", emoji: "⛽" },
-    { id: 3, name: "게임", emoji: "🛒" },
-    { id: 4, name: "IT", emoji: "🏪" },
-    { id: 5, name: "식품", emoji: "🛍️" },
-    { id: 6, name: "자기개발", emoji: "" },
-    { id: 7, name: "뷰티티", emoji: "💄" },
-    // 필요에 따라 추가
-  ];
+  const [allCards, setAllCards] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [currentSlide, setCurrentSlide] = useState(1);
+  const swiperRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true); // 슬라이드가 재생 중인지 여부
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8090/api/v1/card/with-images-and-category/json")
-      .then((response) => {
-        console.log(response.data); // 받은 데이터를 확인
-        setCards(response.data); // CardDTO 배열을 저장
-        setFilteredCards(response.data);
-      })
-      .catch((error) => console.error("Error fetching cards:", error));
+    const allCards = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8090/api/v1/card/filter"
+        );
+        setAllCards(response.data);
+      } catch (error) {
+        console.error("Error fetching filtered cards:", error);
+      }
+    };
+    allCards();
   }, []);
 
   useEffect(() => {
-    // 검색어가 변경될 때마다 카드 필터링
-    const filtered = cards.filter((card) =>
-      card.cardName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredCards(filtered);
-  }, [searchTerm, cards]);
+    const fetchFilteredCards = async () => {
+      try {
+        const params = new URLSearchParams();
 
-  const handleFilterClick = () => {
-    setIsModalOpen(true);
-  };
+        if (selectedCategory) {
+          params.append("categoryId", selectedCategory); // 단일 값만 추가
+        }
 
-  const handleCheckboxChange = (event) => {
-    const benefitId = parseInt(event.target.value);
-    setSelectedBenefits((prev) =>
-      prev.includes(benefitId)
-        ? prev.filter((id) => id !== benefitId)
-        : [...prev, benefitId]
-    );
-  };
+        const response = await axios.get(
+          "http://localhost:8090/api/v1/card/filter",
+          { params }
+        );
+        setFilteredCards(response.data);
+      } catch (error) {
+        console.error("Error fetching filtered cards:", error);
+      }
+    };
 
-  const applyFilters = () => {
-    if (selectedBenefits.length === 0) {
-      setFilteredCards(cards);
-    } else {
-      setFilteredCards(
-        cards.filter((card) => selectedBenefits.includes(card.category_id))
-      );
+    fetchFilteredCards();
+  }, [selectedCategory]); // selectedCategory가 변경될 때마다 호출
+
+  // 슬라이드를 한 칸 뒤로 이동
+  const goToPrevSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slidePrev();
     }
-    setIsModalOpen(false);
+  };
+
+  // 슬라이드를 한 칸 앞으로 이동
+  const goToNextSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slideNext();
+    }
+  };
+
+  // 슬라이드 일시 정지/재개
+  const handlePause = () => {
+    if (swiperRef.current) {
+      const swiper = swiperRef.current.swiper;
+      if (swiper.autoplay.running) {
+        swiper.autoplay.stop(); // 슬라이드 멈추기
+        setIsPlaying(false); // 정지 상태로 변경
+      } else {
+        swiper.autoplay.start(); // 슬라이드 재개
+        setIsPlaying(true); // 재생 상태로 변경
+      }
+    }
   };
 
   return (
-    <div className="card-list-container">
-      <SearchFilter
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        onFilterClick={handleFilterClick}
-      />
-
-      {/* 모달에 BenefitList 컴포넌트 삽입 */}
-      {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <BenefitList
-              categories={categories}
-              onCheckboxChange={handleCheckboxChange}
-              selectedBenefits={selectedBenefits}
-            />
-            <button onClick={applyFilters}>적용</button>
-            <button onClick={() => setIsModalOpen(false)}>닫기</button>
-          </div>
-        </div>
-      )}
-
+    <>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
-        slidesPerView={3}
+        slidesPerView={1}
         navigation
-        pagination={{ clickable: true }}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
+        onSlideChange={(swiper) => setCurrentSlide(swiper.realIndex + 1)}
+        speed={600}
+        ref={swiperRef}
       >
-        {filteredCards.length > 0 ? (
-          filteredCards.map((card) => (
+        {allCards.length > 0 ? (
+          allCards.map((card) => (
             <SwiperSlide key={card.id}>
               <Card card={card} />
             </SwiperSlide>
@@ -113,10 +110,70 @@ function CardList() {
           <p>검색 결과가 없습니다.</p>
         )}
       </Swiper>
-      <button className="filter-button" onClick={handleFilterClick}>
-        필터
-      </button>
-    </div>
+
+      <div
+        className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 rounded-full shadow-md flex items-center gap-2"
+        style={{ marginBottom: "0px", marginTop: "-30px" }}
+      >
+        {/* 이전 버튼 */}
+        <IconButton
+          onClick={goToPrevSlide}
+          style={{
+            backgroundColor: "white",
+            padding: "26px",
+            marginLeft: "-10px",
+            color: "black",
+          }}
+        >
+          <ChevronLeftIcon fontSize="medium" />
+        </IconButton>
+
+        {/* 일시 정지/재개 버튼 */}
+        <IconButton
+          onClick={handlePause}
+          style={{
+            opacity: 0.7,
+            backgroundColor: "white",
+            padding: "1px",
+            marginLeft: "-30px",
+          }}
+        >
+          {isPlaying ? (
+            <PauseIcon fontSize="medium" />
+          ) : (
+            <PlayArrowIcon fontSize="medium" />
+          )}
+        </IconButton>
+
+        <span
+          className="text-lg font-semibold"
+          style={{ position: "relative", opacity: 0.7, top: "0.9px" }}
+        >
+          {currentSlide} / {allCards.length}
+        </span>
+
+        {/* 다음 버튼 */}
+        <IconButton
+          onClick={goToNextSlide}
+          style={{ backgroundColor: "white", padding: "1px", color: "black" }}
+        >
+          <NavigateNextIcon fontSize="medium" />
+        </IconButton>
+      </div>
+
+      <Categorymenu
+        setSelectedCategory={setSelectedCategory}
+        className="category-menu"
+      />
+
+      <FilterCardList
+        filteredCards={filteredCards}
+        currentSlide={currentSlide}
+        setCurrentSlide={setCurrentSlide}
+        className="filter-card-list"
+      />
+      <MenuFooter />
+    </>
   );
 }
 

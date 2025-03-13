@@ -32,7 +32,7 @@ export default function Membership() {
         // ✅ 선택 취소: DELETE 요청 보내기
         axios
           .delete(
-            "http://localhost:8090/api/v1/subscription/unselect/${subscription.id}"
+            `http://localhost:8090/api/v1/subscription/unselect/${subscription.id}` // 수정된 부분
           )
           .then(() => console.log("구독 선택 취소 성공"))
           .catch((error) => console.error("구독 선택 취소 실패", error));
