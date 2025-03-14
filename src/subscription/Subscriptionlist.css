@@ -1,0 +1,44 @@
+.subscription-card {
+  border-radius: 8px;
+  max-width: 150px;
+  height: 150px;
+  padding: 12px;
+  position: relative;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease-in-out;
+  background-color: white;
+  text-align: center;
+  margin-top: 30px; /* 상단 여백 추가 */
+  margin-bottom: 30px; /* 하40 여백 추가 */
+}
+
+.subscription-card:hover {
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.subscription-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+}
+
+.subscription-name {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subscription-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
