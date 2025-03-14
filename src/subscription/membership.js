@@ -84,29 +84,7 @@ export default function Membership() {
           alt="멤버십 이미지"
         />
       </div>
-      {/* 신한카드 정보 추가 */}
-      <div className="info type2">
-        <div className="info-name">
-          <div className="card_name">
-            <h1>내 맘대로 구독서비스 골라담기!</h1>
-          </div>
-        </div>
-        <p className="info-summary">
-          원하는 구독 서비스만 골라서 조합하고
-          <br />
-          할인 10%까지!
-        </p>
-        <ul className="info-benefit">
-          <li>
-            <span>대상</span>
-            <b>신한카드 고객</b>
-          </li>
-          <li>
-            <span>상품 내용</span>
-            <b>10% 할인 혜택</b>
-          </li>
-        </ul>
-      </div>
+
       <Categorymenu setSelectedCategory={handleCategoryChange} />
 
       <div className="w-full mt-4">

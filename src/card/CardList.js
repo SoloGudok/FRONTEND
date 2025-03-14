@@ -6,7 +6,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Card from "./Card";
-import Categorymenu from "../components/Categorymenu";
+import CategoryCard from "./CategoryCard";
+import "./CategoryCard.css";
 import MenuFooter from "../components/MenuFooter";
 import FilterCardList from "./FilterCardList";
 import "./list.css";
@@ -91,6 +92,7 @@ function CardList() {
   return (
     <>
       <Swiper
+        id="cardlist-slide"
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={1}
@@ -161,8 +163,8 @@ function CardList() {
         </IconButton>
       </div>
 
-      <Categorymenu
-        setSelectedCategory={setSelectedCategory}
+      <CategoryCard
+        onCategorySelect={setSelectedCategory}
         className="category-menu"
       />
 
