@@ -4,6 +4,7 @@ import "./App.css";
 import Dashboard from "./main/dashboard";
 import Category from "./main/category";
 import Membership from "./subscription/membership";
+import Payment from "./subscription/Payment";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="/category" element={<Category />} />
             <Route path="/membership" element={<Membership />} />
+            <Route path="/payment" element={<Payment />} /> {/* ✅ 추가 */}
             {/* 🔥 추가! */}
           </Route>
         </Routes>
