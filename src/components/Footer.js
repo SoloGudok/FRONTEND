@@ -37,7 +37,7 @@ const Footer = () => {
   }, []);
   return (
     <footer>
-      <div class="footer-links">
+      <div className="footer-links">
         <a href="https://www.shinhan.com/hpe/index.jsp#050404040000">
           개인정보처리방침
         </a>
@@ -55,9 +55,9 @@ const Footer = () => {
         </a>
       </div>
 
-      <div class="footer-item">
-        <button class="footer-button">웹접근성이용안내</button>
-        <div class="footer-content">
+      <div className="footer-item">
+        <button className="footer-button">웹접근성이용안내</button>
+        <div className="footer-content">
           <p>
             웹 접근성 관련하여 신한은 다양한 서비스를 제공합니다. 자세한 사항은
             <a href="https://www.shinhan.com/index.jsp"> 신한 홈페이지</a>로
@@ -66,16 +66,16 @@ const Footer = () => {
         </div>
       </div>
 
-      <div class="footer-item">
-        <button class="footer-button">위치기반서비스약관</button>
-        <div class="footer-content">
+      <div className="footer-item">
+        <button className="footer-button">위치기반서비스약관</button>
+        <div className="footer-content">
           <p>위치 기반 서비스를 이용하려면 관련 약관을 확인해 주세요.</p>
         </div>
       </div>
-      <div class="footer-item">
+      <div className="footer-item">
         고객센터 1599-8000 평일 09:00~18:00 (은행휴무일 제외)
       </div>
-      <div class="footer-item">© SHINHAN BANK. All rights reserved.</div>
+      <div className="footer-item">© SHINHAN BANK. All rights reserved.</div>
     </footer>
   );
 };
