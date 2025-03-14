@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "../components/Categorymenu.css"; // 스타일 분리
 
-export default function Categorymenu({ setSelectedCategory }) {
-  const [selectedCategory, setSelectedCategoryState] = useState(null); // 단일 선택
+export default function Categorymenu({ onCategorySelect }) {
+  const [selected, setSelected] = useState(0); // 기본값 0(전체)
 
   const categories = [
     { id: 0, name: "전체", emoji: "🔍" }, // 전체 카테고리 추가
@@ -19,10 +19,9 @@ export default function Categorymenu({ setSelectedCategory }) {
   ];
 
   const handleCategoryClick = (categoryId) => {
-    const newSelectedCategory =
-      selectedCategory === categoryId ? null : categoryId;
-    setSelectedCategoryState(newSelectedCategory); // 내부 상태 업데이트
-    setSelectedCategory(newSelectedCategory); // 부모 컴포넌트로 전달
+    console.log(`카테고리 ID 선택: ${categoryId}`);
+    setSelected(categoryId);
+    onCategorySelect(categoryId); // 부모 컴포넌트에 선택된 카테고리 ID 전달
   };
 
   return (
@@ -31,9 +30,7 @@ export default function Categorymenu({ setSelectedCategory }) {
         <button
           key={cat.id}
           onClick={() => handleCategoryClick(cat.id)}
-          className={`category-button ${
-            selectedCategory === cat.id ? "active" : ""
-          }`}
+          className={`category-button ${selected === cat.id ? "active" : ""}`}
         >
           <span className="emoji">{cat.emoji}</span> {cat.name}
         </button>
