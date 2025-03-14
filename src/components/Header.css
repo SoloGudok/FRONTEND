@@ -1,17 +1,14 @@
 /* 헤더 전체 스타일 */
 header {
-  position: fixed;
-  display: flex;
-  align-items: center; /* 세로 정렬 */
-  height: 60px; /* 원하는 높이 설정 */
+  position: sticky;
+  height: 30px; /* 원하는 높이 설정 */
   background-color: #ffffff;
   padding: 10px 20px;
-  justify-content: center;
 }
 
 /* 로고 이미지 스타일 */
 header #header-logo-image img {
-  width: 100px; /* 원하는 크기 설정 */
+  width: 140px; /* 원하는 크기 설정 */
   height: auto; /* 비율 유지 */
   object-fit: contain; /* 이미지 비율 유지하며 맞춤 */
 }
@@ -19,29 +16,4 @@ header #header-logo-image img {
 #header {
   display: flex;
   gap: 50px;
-}
-
-#header-menus {
-  font-size: 50px;
-  display: flex;
-  gap: 30px;
-  justify-items: center;
-  font-weight: bold;
-}
-
-#header-menus a {
-  color: black; /* 기본 링크 색상을 검은색으로 설정 */
-  text-decoration: none; /* 밑줄 제거 (필요하면) */
-}
-
-#header-menus a:visited {
-  color: black; /* 방문한 링크도 검은색으로 유지 */
-}
-
-#header-menus a:hover {
-  color: black; /* 마우스를 올렸을 때도 검은색 유지 */
-}
-
-#header-menus a:active {
-  color: black; /* 클릭할 때도 검은색 유지 */
 }
