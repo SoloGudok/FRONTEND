@@ -10,6 +10,8 @@ import CardList from "./card/CardList"; // CardList 컴포넌트 import
 import "./card/list.css";
 import Payment from "./subscription/Payment";
 import Event from "./others/Event";
+import CancelForm from "./mypage/cancelForm";
+import CancelCheck from "./mypage/cancelCheck";
 
 import Detail from "./card/Detail"
 function App() {
@@ -33,6 +35,8 @@ function App() {
               element={<SubscriptionList />}
             />
             <Route path="/payment" element={<Payment />} /> {/* ✅ 추가 */}
+            <Route path="/mypage/cancelForm" element={<CancelForm />} />
+            <Route path="/mypage/cancelCheck" element={<CancelCheck />} />
             {/* 🔥 추가! */}
           </Route>
         </Routes>
