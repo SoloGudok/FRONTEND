@@ -9,6 +9,8 @@ import "./card/list.css";
 import Membership from "./subscription/membership";
 import UserCard from "./subscription/UserCard";
 import Event from "./others/Event";
+import Payment from "./subscription/Payment";
+import Detail from "./card/Detail";
 
 function App() {
   return (
@@ -19,7 +21,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             {/* 기본 대시보드 */}
             <Route index element={<Dashboard />} />
-            {/* 카테고리 페이지 */}
+            <Route path="/detail" element={<Detail />} />
             <Route path="/category" element={<Category />} />
             {/* 카드 페이지 (CardList 컴포넌트를 /cards 경로로 설정) */}
             <Route path="/cards" element={<CardList />} />
@@ -33,6 +35,7 @@ function App() {
             {/* 🔥 추가! */}
             {/* UserCard 페이지 추가 */}
             <Route path="/user-card" element={<UserCard />} /> {/* New Route */}
+            <Route path="/payment" element={<Payment />} /> {/* ✅ 추가 */}
             {/* 🔥 추가! */}
           </Route>
         </Routes>
