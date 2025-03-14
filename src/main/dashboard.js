@@ -43,8 +43,6 @@ function Dashboard() {
       });
   }, []);
 
-  const a = {};
-
   async function fetchData() {
     try {
       const responses = await axios.all([
@@ -308,7 +306,7 @@ function Dashboard() {
             </Swiper>
           </>
         
-        <div id="rcss-container_bottom" onClick={() => window.location.href = "https://google.com"}><h4>더보기 &gt; </h4></div>
+        <div id="rcss-container_bottom" onClick={() => window.location.href = "/cards"}><h4>더보기 &gt; </h4></div>
       </div>
 
       <h3> 고객님을 위한 카드추천! </h3>
