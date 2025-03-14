@@ -3,12 +3,11 @@ import Layout from "./Layout";
 import "./App.css";
 import Dashboard from "./main/dashboard";
 import Category from "./main/category";
-
-import Membership from "./subscription/membership";
 import SubscriptionList from "./subscription/list";
 import CardList from "./card/CardList"; // CardList 컴포넌트 import
 import "./card/list.css";
 import Membership from "./subscription/membership";
+import UserCard from "./subscription/UserCard";
 import Event from "./others/Event";
 
 function App() {
@@ -31,6 +30,9 @@ function App() {
               path="/subscriptions/:categoryId"
               element={<SubscriptionList />}
             />
+            {/* 🔥 추가! */}
+            {/* UserCard 페이지 추가 */}
+            <Route path="/user-card" element={<UserCard />} /> {/* New Route */}
             {/* 🔥 추가! */}
           </Route>
         </Routes>
