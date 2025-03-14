@@ -5,9 +5,10 @@ import Dashboard from "./main/dashboard";
 import Category from "./main/category";
 
 import Membership from "./subscription/membership";
-import SubscriptionList from './subscription/list';
+import SubscriptionList from "./subscription/list";
 import CardList from "./card/CardList"; // CardList 컴포넌트 import
 import "./card/list.css";
+import Payment from "./subscription/Payment";
 import Event from "./others/Event";
 
 import Detail from "./card/Detail"
@@ -27,7 +28,11 @@ function App() {
             <Route path="/membership" element={<Membership />} />
             <Route path="/event" element={<Event />} />
             <Route path="/subscriptions" element={<SubscriptionList />} />
-            <Route path="/subscriptions/:categoryId" element={<SubscriptionList />} />
+            <Route
+              path="/subscriptions/:categoryId"
+              element={<SubscriptionList />}
+            />
+            <Route path="/payment" element={<Payment />} /> {/* ✅ 추가 */}
             {/* 🔥 추가! */}
           </Route>
         </Routes>

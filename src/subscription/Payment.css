@@ -1,0 +1,38 @@
+.subscription-item {
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px; /* 내부 여백 조절 */
+  height: 50px; /* 높이 조절 */
+  border-radius: 8px; /* 둥근 모서리 추가 (선택) */
+  margin-bottom: 8px; /* 항목 간 간격 조절 */
+
+  max-width: 500px; /* 🔥 최대 너비 지정 */
+  width: 90%; /* 🔥 화면에 너무 꽉 차지 않도록 설정 */
+  margin-left: auto;
+  margin-right: auto; /* 🔥 가운데 정렬 */
+}
+
+.subscription-name {
+  flex-grow: 1; /* 남은 공간 차지 */
+  text-align: left;
+}
+
+.subscription-price {
+  text-align: right;
+  min-width: 80px; /* 가격이 한 줄에 유지되도록 최소 너비 설정 */
+}
+.discounted-price {
+  color: red;
+  font-weight: bold;
+}
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+.accordion-details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

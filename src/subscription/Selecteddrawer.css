@@ -5,6 +5,12 @@
   background-color: #fff;
 }
 
+/* Drawer 전체 폭 조절 */
+.swipeable-drawer .MuiDrawer-paper {
+  margin: 0 auto; /* ✅ 가운데 정렬 */
+  border-radius: 12px 12px 0 0; /* ✅ 상단 모서리 둥글게 */
+}
+
 /* 구독 목록 스타일 */
 .subscription-list {
   display: flex;
@@ -38,16 +44,34 @@
   width: fit-content; /* 내용 크기에 맞춤 */
 }
 
+/* 버튼을 화면 하단에 고정 */
 .drawer-button-container {
-  position: fixed; /* ✅ 화면 하단 고정 */
-  bottom: 20px; /* 화면 아래에서 20px 위 */
+  position: fixed;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   width: fit-content;
-  z-index: 100; /* ✅ 버튼이 다른 요소 위에 표시되도록 */
+  z-index: 9999; /* ✅ 버튼을 최상단으로 올리기 */
   pointer-events: auto; /* ✅ 클릭 가능하게 설정 */
 }
 
+/* 버튼 스타일 */
 .drawer-button {
-  pointer-events: auto; /* ✅ 버튼이 클릭 가능하도록 */
+  background-color: #327bf0;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 20px;
+  pointer-events: auto !important; /* ✅ 클릭 안 되는 문제 방지 */
+}
+
+.payment-button {
+  background-color: #327bf0; /* 배경 흰색 */
+  color: white; /* 글자색을 테두리 색과 동일하게 */
+  font-weight: bold;
+  border: 2px solid #327bf0; /* ✅ 테두리 추가 */
+  border-radius: 20px;
+  padding: 8px 16px; /* 버튼 크기 조절 */
+  cursor: pointer; /* 클릭 가능하게 */
+  transition: all 0.3s ease; /* 부드러운 효과 */
 }
