@@ -115,7 +115,7 @@ function CardList() {
 
       <div
         className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 rounded-full shadow-md flex items-center gap-2"
-        style={{ marginBottom: "0px", marginTop: "-30px" }}
+        style={{ marginBottom: "-10px", marginTop: "-30px" }}
       >
         {/* 이전 버튼 */}
         <IconButton
@@ -124,7 +124,7 @@ function CardList() {
             backgroundColor: "white",
             padding: "26px",
             marginLeft: "-10px",
-            color: "black",
+            color: "gray",
           }}
         >
           <ChevronLeftIcon fontSize="medium" />
@@ -138,6 +138,7 @@ function CardList() {
             backgroundColor: "white",
             padding: "1px",
             marginLeft: "-30px",
+            color: "gray",
           }}
         >
           {isPlaying ? (
@@ -157,7 +158,7 @@ function CardList() {
         {/* 다음 버튼 */}
         <IconButton
           onClick={goToNextSlide}
-          style={{ backgroundColor: "white", padding: "1px", color: "black" }}
+          style={{ backgroundColor: "white", padding: "1px", color: "gray" }}
         >
           <NavigateNextIcon fontSize="medium" />
         </IconButton>

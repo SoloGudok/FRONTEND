@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Payment.css"; // CSS 파일 import
+import UserCard from "./UserCard";
 
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -97,6 +98,8 @@ const Payment = () => {
           </li>
         ))}
       </ul>
+      {/* ✅ 결제카드 선택 UI */}
+      <UserCard />
 
       {/* ✅ 최종 결제 금액 아코디언 UI */}
       <Accordion>
@@ -126,7 +129,6 @@ const Payment = () => {
           </div>
         </AccordionDetails>
       </Accordion>
-
       <button onClick={processPayment}>결제하기</button>
     </div>
   );
