@@ -7,7 +7,6 @@ import SubscriptionList from "./subscription/list";
 import CardList from "./card/CardList"; // CardList 컴포넌트 import
 import "./card/list.css";
 import Membership from "./subscription/membership";
-import UserCard from "./subscription/UserCard";
 import Event from "./others/Event";
 import Payment from "./subscription/Payment";
 import Detail from "./card/Detail";
@@ -33,8 +32,6 @@ function App() {
               element={<SubscriptionList />}
             />
             {/* 🔥 추가! */}
-            {/* UserCard 페이지 추가 */}
-            <Route path="/user-card" element={<UserCard />} /> {/* New Route */}
             <Route path="/payment" element={<Payment />} /> {/* ✅ 추가 */}
             {/* 🔥 추가! */}
           </Route>
