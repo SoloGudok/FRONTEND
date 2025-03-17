@@ -2,6 +2,7 @@ import "./cancelCheck.css";
 import MenuFooter from "../components/MenuFooter";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 import "swiper/css";
@@ -10,16 +11,20 @@ import "../main/styles-dashboard.css";
 
 export default function CancelCheck() {
   const [recommendSubscribingImg, setRecommendSubscribingImg] = useState([]);
-  const [loading, setLoading] = useState(false); // 데이터 로딩 상태
-  const [advertisement_images, setadvertisement_images] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [advertisement_images, setAdvertisementImages] = useState([]);
+  const [cancelledServices, setCancelledServices] = useState([]);
+  const [searchParams] = useSearchParams();
+  const ids = searchParams.getAll("id");
 
   useEffect(() => {
     fetchSubscriptionData();
+    fetchCancelledServices();
 
     axios
       .get("http://localhost:8090/api/v1/dashboard/sendDashboardData")
       .then((response) => {
-        setadvertisement_images(response.data.advertisementimages);
+        setAdvertisementImages(response.data.advertisementimages);
       })
       .catch((error) => {
         console.error("데이터를 가져오는 중 오류 발생:", error);
@@ -31,13 +36,38 @@ export default function CancelCheck() {
       const response = await axios.get(
         "http://localhost:8090/recommend/subscription"
       );
-
-      setRecommendSubscribingImg(response.data); // 추천 구독 데이터 업데이트
-      setLoading(true); // 로딩 완료
+      setRecommendSubscribingImg(response.data);
+      setLoading(true);
     } catch (error) {
       console.error("Error fetching subscription data:", error);
     }
   }
+
+  async function fetchCancelledServices() {
+    if (!ids || ids.length === 0) {
+      console.warn("No IDs provided");
+      return;
+    }
+    try {
+      const response = await axios.get(
+        "http://localhost:8090/api/v1/unsubscription",
+        {
+          params: { id: ids },
+          paramsSerializer: {
+            indexes: null, // 이 옵션이 중요합니다.
+          },
+        }
+      );
+      setCancelledServices(response.data);
+    } catch (error) {
+      console.error("Error fetching cancelled services:", error);
+    }
+  }
+
+  const displayedImages =
+    cancelledServices.length <= 1
+      ? cancelledServices
+      : cancelledServices.sort(() => 0.5 - Math.random()).slice(0, 3);
 
   return (
     <>
@@ -46,29 +76,17 @@ export default function CancelCheck() {
           <p>해지신청을 완료했어요.</p>
         </div>
         <div className="cancel-checkBox-img">
-          <img
-            src="https://sologudok-uploaded-files.s3.ap-northeast-2.amazonaws.com/ott_netflix.png"
-            alt="Logo"
-          />
-          <img
-            src="https://sologudok-uploaded-files.s3.ap-northeast-2.amazonaws.com/ott_netflix.png"
-            alt="Logo"
-          />
-          <img
-            src="https://sologudok-uploaded-files.s3.ap-northeast-2.amazonaws.com/ott_netflix.png"
-            alt="Logo"
-          />
-          {/* {images.map((imgSrc, index) => (
-            <img key={index} src={imgSrc} alt="Logo" />
-          ))} */}
+          {displayedImages.map((service, index) => (
+            <img key={index} src={service.subImgUrl} alt={service.name} />
+          ))}
         </div>
         <div className="cancel-checkBox-content">
           해지가 완료되면 <br /> 알림을 보내드리겠습니다.
         </div>
       </div>
+
       <div className="recommend-service">
         <p>고객님만을 위한 구독 꿀조합이 준비되어 있어요!</p>
-        {/* 대시보드에 구독 추천 그래도 가져올 예정 */}
         <div>
           <div id="rcss-container">
             <Swiper
@@ -104,6 +122,7 @@ export default function CancelCheck() {
           </div>
         </div>
       </div>
+
       <MenuFooter />
     </>
   );
