@@ -11,62 +11,60 @@ const MenuFooter = () => {
     <div className="menu-footer">
       <div className="menu-footer-links">
         <a href="/subscriptions">
-          <div className="menu-footer-button">
-            <div className="menu-footer-button-item">
-              <div className="menu-footer-button-item-img">
+          <span className="menu-footer-button">
+            <span className="menu-footer-button-item">
+              <span className="menu-footer-button-item-img">
                 <img src={footer1} alt="구독 서비스" />{" "}
-              </div>
-              <div className="menu-footer-button-item-content">구독 서비스</div>
-            </div>
-          </div>
+              </span>
+              <span className="menu-footer-button-item-content">
+                구독 서비스
+              </span>
+            </span>
+          </span>
         </a>
 
         <a href="/cards">
-          <div className="menu-footer-button">
-            <div className="menu-footer-button-item">
-              <div className="menu-footer-button-item-img">
+          <span className="menu-footer-button">
+            <span className="menu-footer-button-item">
+              <span className="menu-footer-button-item-img">
                 <img src={footer2} alt="카드" />{" "}
-              </div>
-              <div className="menu-footer-button-item-content">카드</div>
-            </div>
-          </div>
+              </span>
+              <span className="menu-footer-button-item-content">카드</span>
+            </span>
+          </span>
         </a>
 
         <a href="/">
-          <div className="menu-footer-button">
-            <div className="menu-footer-button-item">
-              <div className="menu-footer-button-item-img">
-                <a href="/">
-                  <img src={footer5} alt="메인" />
-                </a>
-              </div>
-              <div className="menu-footer-button-item-content">메인</div>
-            </div>
-          </div>
+          <span className="menu-footer-button">
+            <span className="menu-footer-button-item">
+              <span className="menu-footer-button-item-img">
+                <img src={footer5} alt="메인" />
+              </span>
+              <span className="menu-footer-button-item-content">메인</span>
+            </span>
+          </span>
         </a>
 
         <a href="#">
-          <div className="menu-footer-button">
-            <div className="menu-footer-button-item">
-              <div className="menu-footer-button-item-img">
+          <span className="menu-footer-button">
+            <span className="menu-footer-button-item">
+              <span className="menu-footer-button-item-img">
                 <img src={footer3} alt="마이" />{" "}
-              </div>
-              <div className="menu-footer-button-item-content">마이</div>
-            </div>
-          </div>
+              </span>
+              <span className="menu-footer-button-item-content">마이</span>
+            </span>
+          </span>
         </a>
 
-        <a href="#">
-          <div className="menu-footer-button">
-            <div className="menu-footer-button-item">
-              <div className="menu-footer-button-item-img">
-                <a href="/event">
-                  <img src={footer4} alt="혜택" />
-                </a>
-              </div>
-              <div className="menu-footer-button-item-content">혜택</div>
-            </div>
-          </div>
+        <a href="/event">
+          <span className="menu-footer-button">
+            <span className="menu-footer-button-item">
+              <span className="menu-footer-button-item-img">
+                <img src={footer4} alt="혜택" />
+              </span>
+              <span className="menu-footer-button-item-content">혜택</span>
+            </span>
+          </span>
         </a>
       </div>
     </div>

@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
 import "./App.css";
 import Dashboard from "./main/dashboard";
-import Category from "./main/category";
 
 import Membership from "./subscription/membership";
 import SubscriptionList from "./subscription/list";
@@ -13,7 +12,7 @@ import Event from "./others/Event";
 import CancelForm from "./mypage/cancelForm";
 import CancelCheck from "./mypage/cancelCheck";
 
-import Detail from "./card/Detail"
+import Detail from "./card/Detail";
 function App() {
   return (
     <div className="App">
@@ -24,7 +23,6 @@ function App() {
             {/* 기본 대시보드 */}
             <Route index element={<Dashboard />} />
             <Route path="/detail" element={<Detail />} />
-            <Route path="/category" element={<Category />} />
             {/* 카드 페이지 (CardList 컴포넌트를 /cards 경로로 설정) */}
             <Route path="/cards" element={<CardList />} />
             <Route path="/membership" element={<Membership />} />

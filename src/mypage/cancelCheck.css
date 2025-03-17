@@ -53,6 +53,10 @@
   font-weight: bold;
 }
 
+#rcss-container {
+  margin-bottom: 30px;
+}
+
 @media (max-width: 480px) {
   .cancel-checkBox {
     max-width: 90%;
