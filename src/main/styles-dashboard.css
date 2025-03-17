@@ -74,6 +74,10 @@
   width: 95%;
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
 /* recommend Card */
 #rccd-container {
   display: grid;

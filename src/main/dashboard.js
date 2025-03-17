@@ -225,7 +225,7 @@ function Dashboard() {
       };
 
       navigate('/detail', { state: selectedCard });
-      
+      window.location.reload();
     } catch (error) {
       console.error('Error fetching image details:', error);
     }
@@ -304,9 +304,9 @@ function Dashboard() {
                 </SwiperSlide>
               )) || <p>Loading...</p>}
             </Swiper>
-          </>
+          </>1
         
-        <div id="rcss-container_bottom" onClick={() => window.location.href = "/cards"}><h4>더보기 &gt; </h4></div>
+        <div id="rcss-container_bottom" onClick={() => window.location.href = "/cards"}><h4 class = "cursor-pointer">더보기 &gt; </h4></div>
       </div>
 
       <h3> 고객님을 위한 카드추천! </h3>
@@ -322,7 +322,7 @@ function Dashboard() {
                     alt="SinhanCard Image"
                     onClick={() => handleCardImageClick(index)}
                   />
-                  <div className="rccd-cell" onClick={() => handleCardImageClick(index)}> <h4>{card.card_name}</h4> </div>
+                  <div onClick={() => handleCardImageClick(index)}> <h4 class = "cursor-pointer">{card.card_name}</h4> </div>
                 </div>
               ))
             }
