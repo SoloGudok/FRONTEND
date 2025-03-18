@@ -1,0 +1,124 @@
+.swiper {
+  width: 100%;
+  /* height: 100px; */
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#swiper-advertisement {
+  height: 300px;
+  z-index: 0;
+}
+
+#swiper-susbscription {
+  height: 100px;
+  z-index: 0;
+}
+
+#swiper-charts {
+  height: 180px;
+  z-index: 0;
+}
+
+#swiper-recommendationSubscription {
+  z-index: 0;
+}
+
+/* recommend susbscription */
+#rcss-container {
+  display: grid;
+  grid-template-rows: 200px 150px;
+}
+
+#rcss-main {
+  grid-column: 1/3;
+  grid-row: 1/2;
+  /* background-color: aqua; */
+}
+
+#rcss-sub1 {
+  grid-row: 2/3;
+  grid-column: 1/2;
+  /* background-color: blue; */
+}
+
+#rcss-sub2 {
+  grid-row: 2/3;
+  grid-column: 2/3;
+  /* background-color: violet; */
+}
+
+#rcss-container {
+  display: grid;
+  height: 250px;
+}
+#rcss-container_bottom {
+  text-align: right;
+  width: 95%;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+/* recommend Card */
+#rccd-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 350px 175px;
+  align-items: center;
+  /* background-color: gray; */
+}
+
+#rcss-bottom {
+  height: 50px;
+  width: 95%;
+  text-align: right;
+}
+
+.charts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.charts-ment {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.sub-icon {
+  height: 80%;
+  width: 80%;
+}
+
+.rcss-mainicon {
+  height: 70%;
+  height: 70%;
+}
+
+.rcss-subicon {
+  height: 60%;
+  height: 60%;
+}
+
+.cardImg {
+  cursor: pointer;
+  height: 40%;
+  width: 40%;
+}

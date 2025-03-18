@@ -91,6 +91,7 @@ function CardList() {
   return (
     <>
       <Swiper
+        id="cardlist-swiper"
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={1}

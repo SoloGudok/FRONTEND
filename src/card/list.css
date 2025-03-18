@@ -58,7 +58,7 @@
 }
 
 /* 슬라이드 간 간격 */
-.swiper-slide {
+.swiper-slide #cardlist-swiper{
   justify-content: center;
   align-items: center;
   padding: 0 0px; /* 좌우 여백 */
