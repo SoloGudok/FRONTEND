@@ -80,7 +80,7 @@ const Event = () => {
             alt="이벤트 캐릭터"
             className="event-header-character"
           />
-          <span className="event-header-title">이벤트</span>
+          <div className="event-header-title">이벤트</div>
         </div>
       </div>
       <div className="event-container">

@@ -1,7 +1,6 @@
 .swiper {
-    width: 100%;
-    /* height: 100px; */
-    
+  width: 100%;
+  /* height: 100px; */
 }
 
 .swiper-slide {
@@ -21,23 +20,22 @@
   object-fit: cover;
 }
 
-
-#swiper-advertisement{
-  height : 300px;
+#swiper-advertisement {
+  height: 300px;
   z-index: 0;
 }
 
-#swiper-susbscription{
-  height : 100px;
+#swiper-susbscription {
+  height: 100px;
   z-index: 0;
 }
 
-#swiper-charts{
-  height : 180px;
+#swiper-charts {
+  height: 180px;
   z-index: 0;
 }
 
-#swiper-recommendationSubscription{
+#swiper-recommendationSubscription {
   z-index: 0;
 }
 
@@ -65,11 +63,11 @@
   /* background-color: violet; */
 }
 
-#rcss-container{
+#rcss-container {
   display: grid;
   height: 250px;
 }
-#rcss-container_bottom{
+#rcss-container_bottom {
   text-align: right;
   width: 95%;
 }
@@ -87,35 +85,40 @@
   /* background-color: gray; */
 }
 
-#rcss-bottom{
+#rcss-bottom {
   height: 50px;
   width: 95%;
   text-align: right;
 }
 
-.charts{
+.charts {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.sub-icon{
+.charts-ment {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.sub-icon {
   height: 80%;
   width: 80%;
 }
 
-.rcss-mainicon{
+.rcss-mainicon {
   height: 70%;
   height: 70%;
 }
 
-.rcss-subicon{
+.rcss-subicon {
   height: 60%;
   height: 60%;
 }
 
-.cardImg{
+.cardImg {
   cursor: pointer;
   height: 40%;
   width: 40%;
-  }
+}
