@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Button,
   FormControl,
@@ -18,6 +19,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { SignInPage } from "@toolpad/core/SignInPage";
 import { useTheme } from "@mui/material/styles";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 const providers = [{ id: "credentials", name: "Email and Password" }];
 
@@ -49,7 +51,6 @@ function CustomPasswordField() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -87,96 +88,134 @@ function CustomPasswordField() {
   );
 }
 
-function Title() {
-  return (
-    <>
-      <h2 style={{ marginBottom: 8 }}>해지 신청</h2>
-      <img
-        src="https://sologudok-uploaded-files.s3.ap-northeast-2.amazonaws.com/ott_netflix.png"
-        alt="Logo"
-        style={{ width: 200, height: 200, paddingBottom: 10 }}
-      />
-    </>
-  );
-}
-
-function Subtitle() {
-  return (
-    <Alert sx={{ mb: 2, px: 1, py: 0.25 }} severity="warning">
-      넷플릭스 계정 정보를 입력하세요.
-    </Alert>
-  );
-}
-
 export default function SlotsSignIn() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [agreed, setAgreed] = useState(false);
+  const [dtoList, setDtoList] = useState([]);
+  const [searchParams] = useSearchParams();
+  const ids = searchParams.getAll("id");
+
+  useEffect(() => {
+    if (ids.length > 0) {
+      axios
+        .get(
+          `http://localhost:8090/api/v1/unsubscription?id=${ids.join("&id=")}`
+        )
+        .then((response) => {
+          setDtoList(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }, [ids]);
 
   const handleAgreementChange = (event) => {
     setAgreed(event.target.checked);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!agreed) {
       alert("해지 신청을 위해 동의 체크박스를 선택하세요.");
       return;
     }
-    alert("넷플릭스를 해지합니다.");
+    try {
+      await Promise.all(
+        dtoList.map((dto) =>
+          axios.post(`http://localhost:8090/api/v1/unsubscription/uni_cancel`, {
+            email: "user@example.com",
+            password: "userpassword",
+            serviceId: dto.id,
+          })
+        )
+      );
+      navigate(`/mypage/cancelCheck?id=${ids.join("&id=")}`);
+    } catch (error) {
+      console.error("Error processing unsubscription:", error);
+      alert("해지 요청 중 오류가 발생했습니다.");
+    }
   };
 
-  return (
-    <>
-      <AppProvider theme={theme}>
-        <SignInPage
-          signIn={handleSubmit}
-          slots={{
-            title: Title,
-            subtitle: Subtitle,
-            emailField: CustomEmailField,
-            passwordField: CustomPasswordField,
-            submitButton: () => (
-              <Button
-                type="submit"
-                variant="outlined"
-                color="info"
-                size="small"
-                disableElevation
-                fullWidth
-                sx={{ my: 2 }}
-                onClick={handleSubmit}
-              >
-                해지 신청
-              </Button>
-            ),
-            rememberMe: () => (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name="tandc"
-                    value="true"
-                    color="primary"
-                    sx={{
-                      padding: 0.5,
-                      "& .MuiSvgIcon-root": { fontSize: 20 },
-                    }}
-                    checked={agreed}
-                    onChange={handleAgreementChange}
-                  />
-                }
-                slotProps={{
-                  typography: {
-                    fontSize: 14,
-                  },
-                }}
-                color="textSecondary"
-                label="해지 신청에 동의합니다."
+  function Title() {
+    return (
+      <>
+        <h2 style={{ marginBottom: 8 }}>해지 신청</h2>
+        {dtoList.length > 0 && (
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            {dtoList.map((dto, index) => (
+              <img
+                key={index}
+                src={dto.subImgUrl}
+                alt={`Service Logo ${index}`}
+                style={{ width: 200, height: 200, paddingBottom: 10 }}
               />
-            ),
-          }}
-          providers={providers}
-        />
-      </AppProvider>
-    </>
+            ))}
+          </div>
+        )}
+      </>
+    );
+  }
+
+  function Subtitle() {
+    return (
+      <Alert sx={{ mb: 2, px: 1, py: 0.25 }} severity="warning">
+        {dtoList.map((dto) => dto.name).join(", ")} 계정 정보를 입력하세요.
+      </Alert>
+    );
+  }
+
+  return (
+    <AppProvider theme={theme}>
+      <SignInPage
+        signIn={handleSubmit}
+        slots={{
+          title: Title,
+          subtitle: Subtitle,
+          emailField: CustomEmailField,
+          passwordField: CustomPasswordField,
+          submitButton: () => (
+            <Button
+              type="submit"
+              variant="outlined"
+              color="info"
+              size="small"
+              disableElevation
+              fullWidth
+              sx={{ my: 2 }}
+              onClick={handleSubmit}
+            >
+              해지 신청
+            </Button>
+          ),
+          rememberMe: () => (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="tandc"
+                  value="true"
+                  color="primary"
+                  sx={{
+                    padding: 0.5,
+                    "& .MuiSvgIcon-root": { fontSize: 20 },
+                  }}
+                  checked={agreed}
+                  onChange={handleAgreementChange}
+                />
+              }
+              slotProps={{
+                typography: {
+                  fontSize: 14,
+                },
+              }}
+              color="textSecondary"
+              label="해지 신청에 동의합니다."
+            />
+          ),
+        }}
+        providers={providers}
+      />
+    </AppProvider>
   );
 }
