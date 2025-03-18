@@ -66,9 +66,7 @@ const SubscriptionDetail = () => {
     <div className="subscription-detail-container">
       <img
         src={
-          subscription.imageUrl
-            ? `http://localhost:8090/static/subscription_img/${subscription.imageUrl}`
-            : "/default-image.jpg"
+          subscription.imageUrl ? subscription.imageUrl : "/default-image.jpg"
         }
         style={{
           width: "200px",
