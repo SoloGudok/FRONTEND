@@ -75,10 +75,8 @@ export default function Membership() {
         <img
           src={membershipImg}
           style={{
-            width: "350px",
-            height: "350px",
+            width: "550px",
             objectFit: "cover",
-            borderRadius: "10px", // 모서리를 둥글게 (10px 라운드)
             boxShadow: "4px 4px 10px rgba(50, 123, 240, 0.3)", // 파란색 계열 그림자 효과
           }}
           alt="멤버십 이미지"
@@ -102,13 +100,12 @@ export default function Membership() {
             <b>신한카드 고객</b>
           </li>
           <li>
-            <span>상품 내용</span>
+            <span>상품내용</span>
             <b>10% 할인 혜택</b>
           </li>
         </ul>
       </div>
-      <Categorymenu setSelectedCategory={handleCategoryChange} />
-
+      <Categorymenu onCategorySelect={handleCategoryChange} />
       <div className="w-full mt-4">
         {/* ✅ 구독 목록이 존재할 때만 렌더링 */}
         {subscriptions.length > 0 ? (

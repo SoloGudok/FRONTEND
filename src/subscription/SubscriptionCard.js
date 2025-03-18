@@ -1,12 +1,15 @@
 import React from "react";
 import { Card, CardContent } from "@mui/material";
-import "./SubscriptionCard.css"; // 스타일 적용
+import { useNavigate } from "react-router-dom"; // 🔴 (추가됨) 페이지 이동을 위한 useNavigate 추가
+import "./SubscriptionCard.css";
 
-export default function SubscriptionCard({
-  subscriptions,
-  selected,
-  toggleSubscription,
-}) {
+export default function SubscriptionCard({ subscriptions }) {
+  const navigate = useNavigate(); // 🔴 (추가됨) 페이지 이동 함수
+
+  const handleSubscriptionClick = (subscriptionId) => {
+    navigate(`/subscription/${subscriptionId}`); // 🔴 (추가됨) 상세 페이지로 이동
+  };
+
   return (
     <div className="subscription-card-grid">
       {subscriptions.map((sub) => (
@@ -16,8 +19,8 @@ export default function SubscriptionCard({
           className="subscription-card-item"
           sx={{
             borderRadius: 8,
-            maxWidth: "100%", // 그리드 레이아웃 대응
-            height: 250,     // 카드 높이 줄이기
+            maxWidth: "100%",
+            height: 250,
             padding: "12px",
             textAlign: "center",
           }}
@@ -38,17 +41,16 @@ export default function SubscriptionCard({
                   src={sub.imageUrl}
                   alt={sub.name}
                   className="subscription-card-img"
+                  onClick={() => handleSubscriptionClick(sub.id)} // 🔴 (추가됨) 클릭 시 상세 페이지 이동
+                  style={{ cursor: "pointer" }} // 🔴 (추가됨) 마우스 오버 시 손가락 모양 표시
                 />
               </div>
             )}
 
             <p className="subscription-card-name">{sub.name}</p>
-            
-            {/* 가격 표시 */}
+
             {sub.price && (
-              <p className="subscription-card-price">
-                {sub.price} / 달
-              </p>
+              <p className="subscription-card-price">{sub.price} / 달</p>
             )}
           </CardContent>
         </Card>

@@ -3,7 +3,7 @@
 .info.type2 {
   padding: 20px 0;
   margin: 20px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #327bf0c4;
 }
 
 .info-name .card_name h1 {
@@ -33,7 +33,6 @@
 }
 
 .info-benefit li span {
-  color: #777;
   width: 170px;
   font-size: 16px;
 }
@@ -42,12 +41,13 @@
   font-weight: bold;
   font-size: 16px;
 }
+
 .divider {
   width: 100%;
-  height: 1px;
-  background-color: #ccc;
+  height: 0px; /* ✅ height 0px 설정 */
+  border-top: 1px solid #327bf0; /* ✅ 1px 테두리로 선 만들기 */
   margin: 15px 0;
-  margin-top: 50px; /* 원하는 여백 크기로 조정 가능 */
+  margin-top: 50px;
 }
 
 .product-detail {
@@ -56,11 +56,11 @@
 
 /* styles.css */
 .step-badge {
-  border: 1px solid brown;
+  border: 1px solid #327bf0c4;
   border-radius: 20px;
   padding: 8px 16px;
   display: inline-block;
-  color: brown;
+  color: black;
   margin-top: 20px; /* 상단 여백 추가 */
 }
 
