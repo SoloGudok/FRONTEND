@@ -72,6 +72,10 @@
   width: 95%;
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
 /* recommend Card */
 #rccd-container {
   display: grid;
@@ -83,6 +87,8 @@
 
 #rcss-bottom {
   height: 50px;
+  width: 95%;
+  text-align: right;
 }
 
 .charts {

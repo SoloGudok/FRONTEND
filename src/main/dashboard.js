@@ -219,7 +219,9 @@ function Dashboard() {
         createdAt: cards[cardIndex].created_at,
       };
 
-      navigate("/detail", { state: selectedCard });
+      navigate('/detail', { state: selectedCard });
+      window.location.reload();
+
     } catch (error) {
       console.error("Error fetching image details:", error);
     }
@@ -293,44 +295,32 @@ function Dashboard() {
       </div>
       <h3> 고객님께 추천하는 구독서비스에요! </h3>
       <div id="rcss-container">
-        <>
-          <Swiper
-            id="swiper-recommendationSubscription"
-            slidesPerView={4} // 보여주는 슬라이스 수
-            spaceBetween={20} // 사진간 간격
-            centerInsufficientSlides={true} // 슬라이드 갯수의 중간 값을 중앙으로 보이게 함.
-            freeMode={true} // 부드럽게 넘기기
-            modules={[FreeMode]}
-          >
-            {recommendSubscribingImg?.map((item, index) => (
-              <SwiperSlide key={index}>
-                <div>
-                  <img
-                    src={item.subscription_img_url}
-                    className="sub-icon"
-                    alt={`subscription-icon-${index}`}
-                  />
-                </div>
-                <div className="rcss-name">
-                  <h5>{item.name}</h5>
-                </div>
-              </SwiperSlide>
-            )) || <p>Loading...</p>}
-          </Swiper>
-        </>
+          <>
+            <Swiper id="swiper-recommendationSubscription"
+              slidesPerView={4} // 보여주는 슬라이스 수
+              spaceBetween={20} // 사진간 간격
+              centerInsufficientSlides={true} // 슬라이드 갯수의 중간 값을 중앙으로 보이게 함.
+              freeMode={true} // 부드럽게 넘기기
+              modules={[FreeMode]}
+            >
+              {recommendSubscribingImg?.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <div><img src={item.subscription_img_url} className="sub-icon" alt={`subscription-icon-${index}`} /></div>
+                  <div className="rcss-name"><h5 >{item.name}</h5></div>
+                </SwiperSlide>
+              )) || <p>Loading...</p>}
+            </Swiper>
+          </>
+        
+        <div id="rcss-container_bottom" onClick={() => window.location.href = "/cards"}><h4 class = "cursor-pointer">더보기 &gt; </h4></div>
 
-        <div
-          id="rcss-container_bottom"
-          onClick={() => (window.location.href = "/cards")}
-        >
-          <h4>더보기 &gt; </h4>
-        </div>
       </div>
 
       <h3> 고객님을 위한 카드추천! </h3>
       {loading ? (
         <>
           <div id="rccd-container">
+
             {cards.map((card, index) => (
               <div key={index} id={`rccd${index + 1}`}>
                 <img
@@ -349,7 +339,8 @@ function Dashboard() {
               </div>
             ))}
           </div>
-          <div id="rcss-bottom"></div>
+            <div id="rcss-bottom" onClick={() => window.location.href = "/cards"}><h4 class = "cursor-pointer">더보기 &gt; </h4></div>
+
           <MenuFooter />
         </>
       ) : (
