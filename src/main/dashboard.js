@@ -60,7 +60,7 @@ function Dashboard() {
         card: responses[4].data,
       };
 
-      console.log(a); // 데이터 확인
+      // console.log(a); // 데이터 확인
       function extractChartData(chartName, key) {
         if (a[chartName] && Array.isArray(a[chartName])) {
           return a[chartName].map((item) => item[key]); // 동적으로 객체 접근
@@ -93,18 +93,11 @@ function Dashboard() {
           label: "# of Votes",
           data: chart2Datas,
           backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
+            "rgba(50, 123, 240, 1)",
+            "rgb(122, 171, 251)",
+            "rgb(171, 202, 254)",
+            "rgb(204, 215, 234)",
           ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-          ],
-          borderWidth: 1,
         },
       ],
     };
@@ -158,18 +151,11 @@ function Dashboard() {
           label: "# of Votes",
           data: chart1Datas,
           backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
+            "rgba(50, 123, 240, 1)",
+            "rgb(122, 171, 251)",
+            "rgb(171, 202, 254)",
+            "rgb(204, 215, 234)",
           ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-          ],
-          borderWidth: 1,
         },
       ],
     };
@@ -278,41 +264,44 @@ function Dashboard() {
         )) || <p>Loading...</p>}
       </Swiper>
       <div>
-        <Swiper id="swiper-charts" spaceBetween={30} centeredSlides={true}>
+        <Swiper id="swiper-charts" spaceBetween={30} centeredSlides={true}
+        pagination={true} modules={[Pagination]}>
           <SwiperSlide>
-            <div class="charts-ment">이달의 소비 지출내역</div>
+            <div class="charts-ment">이달의 소비 지출내역</div><br/>
             <div class="charts">
               <DoughnutChart />
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div class="charts-ment">이달의 구독 지출내역 Top3</div>
+            <div class="charts-ment">이달의 구독 지출내역 Top3</div><br/>
             <div class="charts">
               <BarChart />
             </div>
           </SwiperSlide>
         </Swiper>
       </div>
-      <h3> 고객님께 추천하는 구독서비스에요! </h3>
+      <br/><h3> 고객님께 추천하는 구독서비스에요! </h3>
       <div id="rcss-container">
-          <>
-            <Swiper id="swiper-recommendationSubscription"
-              slidesPerView={4} // 보여주는 슬라이스 수
-              spaceBetween={20} // 사진간 간격
-              centerInsufficientSlides={true} // 슬라이드 갯수의 중간 값을 중앙으로 보이게 함.
-              freeMode={true} // 부드럽게 넘기기
-              modules={[FreeMode]}
-            >
-              {recommendSubscribingImg?.map((item, index) => (
-                <SwiperSlide key={index}>
+        <>
+          <Swiper id="swiper-recommendationSubscription"
+            slidesPerView={4} // 보여주는 슬라이스 수
+            spaceBetween={20} // 사진간 간격
+            centerInsufficientSlides={true} // 슬라이드 갯수의 중간 값을 중앙으로 보이게 함.
+            freeMode={true} // 부드럽게 넘기기
+            modules={[FreeMode]}
+          >
+            {recommendSubscribingImg?.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div class="sub-outline">
                   <div><img src={item.subscription_img_url} className="sub-icon" alt={`subscription-icon-${index}`} /></div>
-                  <div className="rcss-name"><h5 >{item.name}</h5></div>
-                </SwiperSlide>
-              )) || <p>Loading...</p>}
-            </Swiper>
-          </>
-        
-        <div id="rcss-container_bottom" onClick={() => window.location.href = "/cards"}><h4 class = "cursor-pointer">더보기 &gt; </h4></div>
+                  <div className="rcss-name sub-outline-title">{item.name}</div>
+                </div>
+              </SwiperSlide>
+            )) || <p>Loading...</p>}
+          </Swiper>
+        </>
+
+        <div id="rcss-container_bottom" onClick={() => window.location.href = "/subscriptions"}><h4 class="cursor-pointer">더보기 &gt; </h4></div>
 
       </div>
 
@@ -339,7 +328,7 @@ function Dashboard() {
               </div>
             ))}
           </div>
-            <div id="rcss-bottom" onClick={() => window.location.href = "/cards"}><h4 class = "cursor-pointer">더보기 &gt; </h4></div>
+          <div id="rcss-bottom" onClick={() => window.location.href = "/cards"}><h4 class="cursor-pointer">더보기 &gt; </h4></div>
 
           <MenuFooter />
         </>
