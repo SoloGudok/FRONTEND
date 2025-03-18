@@ -1,0 +1,69 @@
+/* 전체 컨테이너 */
+.subscription-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 구독 리스트 제목 */
+h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* 구독 리스트 스타일 */
+.subscription-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 개별 구독 아이템 */
+.subscription-item {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 조합 구독 (여러 개 아이콘) */
+.subscription-item.combo {
+  justify-content: space-between;
+}
+
+/* 구독 아이콘 */
+.subscription-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+/* 구독 정보 */
+.subscription-info {
+  flex-grow: 1;
+}
+
+.subscription-info h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.subscription-info p {
+  font-size: 12px;
+  color: gray;
+}
+
+/* 조합 구독 아이콘들 */
+.subscription-icons {
+  display: flex;
+  gap: 5px;
+}
+
+/* 스위치 버튼 */
+.MuiSwitch-root {
+  margin-left: auto;
+}

@@ -36,3 +36,24 @@
   justify-content: space-between;
   width: 100%;
 }
+
+/* ✅ "결제하기" 버튼 위에 여백 추가 */
+
+.payment-button-final {
+  margin-top: 20px; /* 원하는 만큼 조절 가능 */
+  margin-bottom: 20px; /* 원하는 만큼 조절 가능 */
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 400px;
+  height: 50px;
+  border-radius: 10px; /* ✅ 버튼 둥글게 */
+}
+
+.payment-button-final:hover {
+  background-color: #0056b3;
+}

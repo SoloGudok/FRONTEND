@@ -1,0 +1,80 @@
+/* 🔹 전체 컨테이너 스타일 */
+.subscription-detail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  min-height: 100vh;
+}
+
+/* 🔹 이미지 스타일 (모서리 둥글게) */
+.subscription-detail-container img {
+  width: 300px;
+  object-fit: cover;
+  border-radius: 15px; /* ✅ 모서리 둥글게 */
+  box-shadow: 4px 4px 10px rgba(50, 123, 240, 0.3);
+}
+
+/* 🔹 정보 섹션 */
+.info.type2 {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  text-align: left;
+  border-bottom: none !important;
+}
+
+/* 🔹 구독 이름 */
+.subscription_name h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* 🔹 설명 */
+.sub-summary {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* 🔹 구독료 리스트 (li 점 없애기) */
+.sub-content {
+  list-style: none; /* ✅ li 점 없애기 */
+  padding: 0;
+  margin-top: 10px;
+}
+
+.sub-content li {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.sub-content li:last-child {
+  border-bottom: none;
+}
+
+/* 🔹 구독 신청 버튼 (너가 원하는 스타일 적용!) */
+.subscribe-button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 10px; /* ✅ 버튼 둥글게 */
+  cursor: pointer;
+  font-size: 16px;
+  width: 400px;
+  height: 50px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.subscribe-button:hover {
+  background-color: #0056b3;
+}
