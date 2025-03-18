@@ -304,7 +304,7 @@ function Dashboard() {
                 </SwiperSlide>
               )) || <p>Loading...</p>}
             </Swiper>
-          </>1
+          </>
         
         <div id="rcss-container_bottom" onClick={() => window.location.href = "/cards"}><h4 class = "cursor-pointer">더보기 &gt; </h4></div>
       </div>
@@ -327,7 +327,7 @@ function Dashboard() {
               ))
             }
           </div>
-            <div id="rcss-bottom"></div>
+            <div id="rcss-bottom" onClick={() => window.location.href = "/cards"}><h4 class = "cursor-pointer">더보기 &gt; </h4></div>
           <MenuFooter />
         </>
       ) : (
