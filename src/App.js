@@ -3,12 +3,18 @@ import Layout from "./Layout";
 import "./App.css";
 import Dashboard from "./main/dashboard";
 import Category from "./main/category";
+
 import Membership from "./subscription/membership";
+
 import SubscriptionList from "./subscription/list";
 import CardList from "./card/CardList"; // CardList 컴포넌트 import
 import "./card/list.css";
 import Payment from "./subscription/Payment";
 import Event from "./others/Event";
+
+import SubscriptionDetail from "./subscription/SubscriptionDetail"; // 🔴 (추가됨) 상세 페이지 추가
+import MySubscription from "./mypage/MySubscription"; // 🔴 (추가됨)
+
 import CancelForm from "./mypage/cancelForm";
 import CancelCheck from "./mypage/cancelCheck";
 
@@ -24,7 +30,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="/detail" element={<Detail />} />
             <Route path="/category" element={<Category />} />
-            {/* 카드 페이지 (CardList 컴포넌트를 /cards 경로로 설정) */}
+            {/* 카드 페이지 */}
             <Route path="/cards" element={<CardList />} />
             <Route path="/membership" element={<Membership />} />
             <Route path="/event" element={<Event />} />
@@ -34,6 +40,14 @@ function App() {
               element={<SubscriptionList />}
             />
             <Route path="/payment" element={<Payment />} /> {/* ✅ 추가 */}
+            <Route
+              path="/subscription/:subscriptionId"
+              element={<SubscriptionDetail />}
+            />
+            <Route
+              path="/my-subscriptions/:userId"
+              element={<MySubscription />}
+            />
             <Route path="/mypage/cancelForm" element={<CancelForm />} />
             <Route path="/mypage/cancelCheck" element={<CancelCheck />} />
             {/* 🔥 추가! */}
