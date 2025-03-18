@@ -75,10 +75,8 @@ export default function Membership() {
         <img
           src={membershipImg}
           style={{
-            width: "350px",
-            height: "350px",
+            width: "550px",
             objectFit: "cover",
-            borderRadius: "10px", // 모서리를 둥글게 (10px 라운드)
             boxShadow: "4px 4px 10px rgba(50, 123, 240, 0.3)", // 파란색 계열 그림자 효과
           }}
           alt="멤버십 이미지"
