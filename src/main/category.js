@@ -355,7 +355,7 @@ function Category() {
         </div>
 
         <div id="category-row4">
-          <h3>OOO님과 비슷한 연령대의 평균 {categoryMap[selectedValue]} 소비</h3>
+          <h3>송예진님과 비슷한 연령대의 평균 {categoryMap[selectedValue]} 소비</h3>
 
           {chartLoading ? (
             <p>차트 로딩 중...</p>
@@ -367,8 +367,8 @@ function Category() {
                   <BarChart1 />
                 </div>
                 <div className="charts-summary">
-                  <p>나의 구독소비: {chartData.userSubscriptionExpenditure.toLocaleString()}원</p>
-                  <p>평균 구독소비: {chartData.avgSubscriptionExpenditure.toLocaleString()}원</p>
+                  {/* <p>나의 구독소비: {chartData.userSubscriptionExpenditure.toLocaleString()}원</p>
+                  <p>평균 구독소비: {chartData.avgSubscriptionExpenditure.toLocaleString()}원</p> */}
                 </div>
               </div>
 
@@ -378,8 +378,10 @@ function Category() {
                   <BarChart2 />
                 </div>
                 <div className="charts-summary">
-                  <p>나의 일반소비: {chartData.userNonSubscriptionExpenditure.toLocaleString()}원</p>
-                  <p>평균 일반소비: {chartData.avgNonSubscriptionExpenditure.toLocaleString()}원</p>
+                  {/* <p>나의 일반소비: {chartData.userNonSubscriptionExpenditure.toLocaleString()}원</p>
+                  <p>평균 일반소비: {chartData.avgNonSubscriptionExpenditure.toLocaleString()}원</p> */}
+                  <p>             </p>
+                  <p>             </p>
                 </div>
               </div>
             </>
