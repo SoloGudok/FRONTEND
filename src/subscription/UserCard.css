@@ -25,7 +25,7 @@
 }
 
 .card-img:hover {
-  transform: rotateY(180deg); /* 이미지 좌우 반전 */
+  transform: rotate(-90deg) rotateX(180deg); /* 이미지 좌우 반전 */
 }
 
 /* 빈 카드 UI */

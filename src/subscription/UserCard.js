@@ -47,8 +47,10 @@ export default function UserCard() {
 
   return (
     <div>
+      <h3 style={{ textAlign: "left", marginLeft: "40px" }}>결제수단</h3>
+      <h4 style={{ textAlign: "left", marginLeft: "40px" }}>카드</h4>
       {/* 카드 이미지가 있을 경우 렌더링 */}
-      <div className="card-container">
+      <div className="card-container" style={{ marginTop: "-45px" }}>
         <div className="card-wrapper">
           {cardImgUrls.map((url, index) => (
             <img

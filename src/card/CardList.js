@@ -121,11 +121,11 @@ function CardList() {
         <IconButton
           onClick={goToPrevSlide}
           style={{
-            backgroundColor: "white",
             padding: "26px",
             marginLeft: "-10px",
             color: "gray",
           }}
+          disableRipple // 리플 효과 비활성화
         >
           <ChevronLeftIcon fontSize="medium" />
         </IconButton>

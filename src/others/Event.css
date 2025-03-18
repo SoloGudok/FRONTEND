@@ -4,7 +4,8 @@
   position: relative; /* 상대 위치 설정 */
   display: flex;
   align-items: center;
-  justify-content: center; /* 중앙 정렬 */
+  justify-content: space-between; /* 중앙 정렬 */
+  width: 600px;
   padding: 10px 0px 0px 0px;
   background-color: #fff;
   border-bottom: 2px solid #d0e3ff;
@@ -29,10 +30,9 @@
 .event-header-center {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-grow: 1; /* 중앙 정렬 */
   gap: 8px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%); /* 가로 중앙 정렬 */
 }
 
 /* 캐릭터 이미지 */
@@ -87,6 +87,10 @@
   font-size: 14px;
   color: gray;
   margin-bottom: 0px;
+}
+
+.event-item:hover {
+  transform: scale(1.1);
 }
 
 /* 반응형: 화면이 작을 때 2열로 변경 */

@@ -13,6 +13,7 @@ const Payment = () => {
   const [selectedSubscriptions, setSelectedSubscriptions] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [discountedPrice, setDiscountedPrice] = useState(0);
+  const [selectedCard, setSelectedCard] = useState(null); // 선택된 카드 상태 추가
 
   useEffect(() => {
     // ✅ 세션 스토리지에서 선택한 구독 데이터 불러오기
@@ -30,8 +31,15 @@ const Payment = () => {
       setDiscountedPrice(Math.round(total * 0.9)); // 10% 할인 적용
     }
   }, []);
+  const handleCardSelect = (cardId) => {
+    setSelectedCard(cardId); // 선택된 카드 ID 상태 업데이트
+  };
 
   const processPayment = () => {
+    if (!selectedCard) {
+      alert("카드를 선택해주세요!");
+      return;
+    }
     if (selectedSubscriptions.length !== 3) {
       alert("구독 서비스를 정확히 3개 선택해야 합니다!");
       return;
