@@ -3,22 +3,19 @@ import Layout from "./Layout";
 import "./App.css";
 import Dashboard from "./main/dashboard";
 import Category from "./main/category";
-
 import Membership from "./subscription/membership";
-
 import SubscriptionList from "./subscription/list";
 import CardList from "./card/CardList"; // CardList 컴포넌트 import
 import "./card/list.css";
-import Payment from "./subscription/Payment";
 import Event from "./others/Event";
-
+import Payment from "./subscription/Payment";
+import Detail from "./card/Detail";
 import SubscriptionDetail from "./subscription/SubscriptionDetail"; // 🔴 (추가됨) 상세 페이지 추가
 import MySubscription from "./mypage/MySubscription"; // 🔴 (추가됨)
 
 import CancelForm from "./mypage/cancelForm";
 import CancelCheck from "./mypage/cancelCheck";
 
-import Detail from "./card/Detail";
 function App() {
   return (
     <div className="App">
@@ -39,6 +36,7 @@ function App() {
               path="/subscriptions/:categoryId"
               element={<SubscriptionList />}
             />
+            {/* 🔥 추가! */}
             <Route path="/payment" element={<Payment />} /> {/* ✅ 추가 */}
             <Route
               path="/subscription/:subscriptionId"

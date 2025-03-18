@@ -34,7 +34,7 @@
 }
 
 #swiper-charts {
-  height: 180px;
+  height: 200px;
   z-index: 0;
 }
 
@@ -45,7 +45,7 @@
 /* recommend susbscription */
 #rcss-container {
   display: grid;
-  grid-template-rows: 200px 150px;
+  grid-template-rows: 160px 150px;
 }
 
 #rcss-main {
@@ -68,7 +68,7 @@
 
 #rcss-container {
   display: grid;
-  height: 250px;
+  height: 200px;
 }
 #rcss-container_bottom {
   text-align: right;
@@ -83,15 +83,18 @@
 #rccd-container {
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 350px 175px;
+  grid-template-rows: 400px 225px;
   align-items: center;
+  justify-content: center;
   /* background-color: gray; */
 }
 
 #rcss-bottom {
-  height: 50px;
+  display: grid;
+  height: 100px;
   width: 95%;
   text-align: right;
+  align-items: center;
 }
 
 .charts {
@@ -122,6 +125,36 @@
 
 .cardImg {
   cursor: pointer;
-  height: 40%;
-  width: 40%;
+  height: 50%;
+  width: 50%;
+}
+
+.sub-outline {
+    width: 110px; /* 카드 크기 */
+    height: 110px;
+    background-color: white; /* 배경색 */
+    border: 1px solid rgb(212, 212, 212);
+    border-radius: 20px; /* 모서리 둥글게 */
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+}
+
+.sub-outline img {
+  width: 80px; /* 로고 크기 */
+  height: auto;
+  
+  margin-bottom: 15px; /* 간격 */
+}
+
+.sub-outline-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 5px;
 }

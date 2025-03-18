@@ -12,12 +12,12 @@
   gap: 50px; /* 카드 간의 간격 */
   padding: -90px; /* 카드 그리드 안의 여백 */
   row-gap: 10px; /* 행 간격 줄이기 */
-  margin-bottom: -10px;
+  margin-bottom: -5px;
 }
 /* Swiper 컨테이너 스타일 */
 .swiper {
   width: 100%;
-  padding-bottom: 30px; /* 아래 여백 */
+  padding-bottom: -10px; /* 아래 여백 */
 }
 
 /* 개별 슬라이더 카드 스타일 */
@@ -45,6 +45,13 @@
   border-radius: 4px;
 }
 
+/* 카드 이미지 스타일 */
+.swiper-slide .card .card-images {
+  width: 70%;
+  height: 190px;
+  border-radius: 4px;
+}
+
 /* 카드 제목 스타일 */
 .card h3 {
   font-size: 18px;
@@ -58,15 +65,24 @@
 }
 
 /* 슬라이드 간 간격 */
-.swiper-slide #cardlist-swiper{
+.swiper-slide #cardlist-slide {
   justify-content: center;
   align-items: center;
   padding: 0 0px; /* 좌우 여백 */
   background-color: #9bc8fe73;
-  min-height: 390px; /* 최소 높이 설정 */
-  margin-top: 10px; /* 위쪽 여백 추가 */
+  min-height: 190px; /* 최소 높이 설정 */
+  margin-top: -10px; /* 위쪽 여백 추가 */
   margin-bottom: -20px;
   display: flex; /* Flexbox를 사용하여 자식 요소를 정렬 */
+}
+
+.swiper-slide .card .card-images .card-image {
+  align-items: center;
+  margin-top: 180px;
+  margin-right: 50px;
+  width: 300px; /* 원하는 가로 크기 */
+  height: 300px; /* 원하는 세로 크기 */
+  object-fit: contain;
 }
 
 /* Swiper 네비게이션 버튼 스타일 */
@@ -110,7 +126,6 @@
 .card-images {
   padding-top: 30px;
   margin-left: 10px;
-
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
   height: 100%; /* 부모 요소의 높이에 맞게 설정 */
@@ -161,16 +176,22 @@
 }
 /* Swiper 슬라이드 내 카드에만 배경색 적용 */
 .swiper-slide .card {
-  margin-right: 10px;
-  justify-content: center;
-  padding-top: 10px;
-  margin-top: 5px;
   padding-bottom: 50px;
-  background-color: #f0f0f0; /* 원하는 배경색 */
+  height: 380px; /* 고정 높이 */
+  width: 300px; /* 필요시 가로폭 고정 */
+  margin-left: 150px;
+  padding: 10px 0 50px 0; /* padding-top/bottom 합침 */
+  background-color: #f0f0f0c2;
+
+  display: flex; /* flexbox 적용 */
+  flex-direction: column; /* 세로 정렬 */
+  justify-content: center; /* 세로 방향 중앙 정렬 */
+  align-items: center; /* 가로 방향 중앙 정렬 */
 }
 .swiper-slide .card h3 {
-  padding-top: -20px; /* h 태그 위 간격 */
+  margin-bottom: -10px;
+  padding-top: 130px; /* h 태그 위 간격 */
 }
 .swiper-slide .card p {
-  padding-bottom: -30px; /* p 태그 위 간격 */
+  padding-bottom: -90px; /* p 태그 위 간격 */
 }

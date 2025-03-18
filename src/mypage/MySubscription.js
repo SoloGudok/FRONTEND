@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Switch from "@mui/material/Switch";
 import axios from "axios";
-import "./MySubscription.css";
+
+import "./MySubscription.css"; // 스타일 파일 추가
+import { PieChart } from "@mui/x-charts/PieChart";
 
 const API_BASE_URL = "http://localhost:8090/api/v1/subscription";
 
@@ -87,6 +89,22 @@ const MySubscription = () => {
   return (
     <div className="subscription-container">
       <h2>나의 구독중인 서비스</h2>
+
+      {/* <h2>이번 달 소비내역</h2>
+      <PieChart
+      series={[
+        {
+          data: [
+            { id: 0, value: 10, label: '구독' },
+            { id: 1, value: 15, label: '총 소비' },
+            
+          ],
+        },
+      ]}
+      width={400}
+      height={200}
+    /> */}
+      <h2>나의 구독 서비스 (User ID: {userId})</h2>
 
       {/* ✅ 개별 구독 서비스 리스트 */}
       <div className="subscription-list">
