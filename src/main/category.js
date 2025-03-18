@@ -26,8 +26,18 @@ function Category() {
   const [totalIncome, setTotalIncome] = useState(0);
   const [selectedValue, setSelectedValue] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [chartLoading, setChartLoading] = useState(false); //chart값 추가
   const [date, setDate] = useState(new Date());
   const datePickerRef = useRef(null);
+
+    // 차트 데이터를 저장할 state
+    const [chartData, setChartData] = useState({
+      userSubscriptionExpenditure: 0,
+      userNonSubscriptionExpenditure: 0,
+      avgSubscriptionExpenditure: 0,
+      avgNonSubscriptionExpenditure: 0
+    });
+  
 
   const getFirstDayOfMonth = (date) => {
     return new Date(date.getFullYear(), date.getMonth(), 2).toISOString().split('T')[0];
@@ -69,20 +79,54 @@ function Category() {
     }
   };
 
+  // 차트 데이터를 가져오는 함수
+  const fetchChartData = async () => {
+    setChartLoading(true);
+    try {
+      const requestBody = {
+        categoryId: selectedValue,
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        userId: 1 // 현재 로그인한 사용자 ID (실제로는 로그인 정보에서 가져와야 함)
+      };
+
+      console.log("차트 요청 데이터:", JSON.stringify(requestBody, null, 2));
+
+      const response = await axios.post("http://localhost:8090/api/v1/expenditure/chart", requestBody, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = response.data;
+      console.log("차트 응답 데이터:", data);
+
+      setChartData({
+        userSubscriptionExpenditure: data.userSubscriptionExpenditure || 0,
+        userNonSubscriptionExpenditure: data.userNonSubscriptionExpenditure || 0,
+        avgSubscriptionExpenditure: data.avgSubscriptionExpenditure || 0,
+        avgNonSubscriptionExpenditure: data.avgNonSubscriptionExpenditure || 0
+      });
+    } catch (error) {
+      console.error("차트 데이터 로드 실패:", error);
+    } finally {
+      setChartLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchExpenditures(selectedValue);
+    fetchChartData();
   }, [date, selectedValue]);
-
 
   const BarChart1 = () => {
     const data = {
       // labels: subScription_Labels,
-      labels: ["구독소비1", "구독소비2"],
+      labels: ["나의 구독소비", "같은 연령대의 평균 구독소비"],
       datasets: [
         {
-          label: '# of Votes',
-          //data: chart2Datas,
-          data: [totalIncome, 20000],
+          label: '구독소비 비교',
+          data: [chartData.userSubscriptionExpenditure, chartData.avgSubscriptionExpenditure],
           backgroundColor: [
             'rgba(54, 162, 235, 0.2)',
             'rgba(75, 192, 192, 0.2)',
@@ -103,6 +147,13 @@ function Category() {
       plugins: {
         legend: {
           display: false // 레이블 숨기기
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return `${context.raw.toLocaleString()}원`;
+            }
+          }
         }
       },
       scales: {
@@ -112,6 +163,11 @@ function Category() {
           },
           border: {
             display: false // X축 경계선 숨기기
+          },
+          ticks: {
+            callback: function(value) {
+              return value.toLocaleString() + '원';
+            }
           }
         },
         y: {
@@ -141,13 +197,11 @@ function Category() {
   
   const BarChart2 = () => {
     const data = {
-      // labels: subScription_Labels,
-      labels: ["구독 외 소비1", "구독 외 소비2"],
+      labels: ["나의 일반소비", "평균 일반소비"],
       datasets: [
         {
-          label: '# of Votes',
-          //data: chart2Datas,
-          data: [15000, 20000],
+          label: '일반소비 비교',
+          data: [chartData.userNonSubscriptionExpenditure, chartData.avgNonSubscriptionExpenditure],
           backgroundColor: [
             'rgba(54, 162, 235, 0.2)',
             'rgba(75, 192, 192, 0.2)',
@@ -160,7 +214,8 @@ function Category() {
         },
       ],
     };
-  
+
+
     const options = {
       responsive: false,
       indexAxis: "y",
@@ -168,6 +223,13 @@ function Category() {
       plugins: {
         legend: {
           display: false // 레이블 숨기기
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return `${context.raw.toLocaleString()}원`;
+            }
+          }
         }
       },
       scales: {
@@ -177,6 +239,11 @@ function Category() {
           },
           border: {
             display: false // X축 경계선 숨기기
+          },
+          ticks: {
+            callback: function(value) {
+              return value.toLocaleString() + '원';
+            }
           }
         },
         y: {
@@ -288,21 +355,35 @@ function Category() {
         </div>
 
         <div id="category-row4">
-          <h3>OOO님과 비슷한 연령대의 평균 도서 소비</h3>
+          <h3>OOO님과 비슷한 연령대의 평균 {categoryMap[selectedValue]} 소비</h3>
 
-          <div class="charts-cell">
-            <div>구독소비</div>
-            <div class="charts">
-              <BarChart1 />
-            </div>
-          </div>
+          {chartLoading ? (
+            <p>차트 로딩 중...</p>
+          ) : (
+            <>
+              <div className="charts-cell">
+                <div>구독소비</div>
+                <div className="charts">
+                  <BarChart1 />
+                </div>
+                <div className="charts-summary">
+                  <p>나의 구독소비: {chartData.userSubscriptionExpenditure.toLocaleString()}원</p>
+                  <p>평균 구독소비: {chartData.avgSubscriptionExpenditure.toLocaleString()}원</p>
+                </div>
+              </div>
 
-          <div class="charts-cell">
-            <div>구독 외 소비</div>
-            <div class="charts">
-              <BarChart2 />
-            </div>
-          </div>
+              <div className="charts-cell">
+                <div>구독 외 소비</div>
+                <div className="charts">
+                  <BarChart2 />
+                </div>
+                <div className="charts-summary">
+                  <p>나의 일반소비: {chartData.userNonSubscriptionExpenditure.toLocaleString()}원</p>
+                  <p>평균 일반소비: {chartData.avgNonSubscriptionExpenditure.toLocaleString()}원</p>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <MenuFooter />
