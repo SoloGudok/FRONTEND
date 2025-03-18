@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Switch from "@mui/material/Switch";
 import axios from "axios";
+
 import "./MySubscription.css"; // 스타일 파일 추가
-import { PieChart } from '@mui/x-charts/PieChart';
+import { PieChart } from "@mui/x-charts/PieChart";
 
-
-const API_BASE_URL = "http://localhost:8090/api/v1/subscription"; // API 주소
+const API_BASE_URL = "http://localhost:8090/api/v1/subscription";
 
 const MySubscription = () => {
-  const { userId } = useParams(); // ✅ URL에서 userId 가져오기
+  const { userId } = useParams();
+  const navigate = useNavigate();
   const [individualSubscriptions, setIndividualSubscriptions] = useState([]);
   const [combinationSubscriptions, setCombinationSubscriptions] = useState([]);
-  const [switchStates, setSwitchStates] = useState(() => {
-    return JSON.parse(localStorage.getItem("switchStates")) || {};
-  });
+  const [switchStates, setSwitchStates] = useState({});
 
-  // ✅ API에서 구독 리스트 가져오는 함수
   useEffect(() => {
     if (!userId) return;
 
@@ -27,11 +25,36 @@ const MySubscription = () => {
           axios.get(`${API_BASE_URL}/combination`, { params: { userId } }),
         ]);
 
-        console.log("📌 개별 구독 데이터:", individualRes.data); // ✅ 로그 추가
-        console.log("📌 조합 구독 데이터:", combinationRes.data); // ✅ 로그 추가
+        console.log("📌 개별 구독 데이터:", individualRes.data);
+        console.log("📌 조합 구독 데이터:", combinationRes.data);
 
-        setIndividualSubscriptions(individualRes.data);
-        setCombinationSubscriptions(combinationRes.data);
+        // 🔹 구독이 만료된 항목은 제외
+        const validIndividualSubs = individualRes.data.filter(
+          (sub) =>
+            !sub.terminationDate || new Date(sub.terminationDate) > new Date()
+        );
+        const validCombinationSubs = combinationRes.data.filter(
+          (combo) =>
+            !combo.terminationDate ||
+            new Date(combo.terminationDate) > new Date()
+        );
+
+        setIndividualSubscriptions(validIndividualSubs);
+        setCombinationSubscriptions(validCombinationSubs);
+
+        // ✅ 스위치 상태 설정 (서버에서 받은 `isActive` 값 반영)
+        setSwitchStates((prevStates) => {
+          const newStates = { ...prevStates }; // 기존 상태 유지
+
+          validIndividualSubs.forEach((sub) => {
+            newStates[sub.id] = sub.isActive ?? true; // 기본값 true
+          });
+          validCombinationSubs.forEach((combo) => {
+            newStates[combo.membershipId] = combo.isActive ?? true;
+          });
+
+          return newStates;
+        });
       } catch (err) {
         console.error("❌ 구독 정보를 불러오는 중 오류 발생:", err);
       }
@@ -40,21 +63,33 @@ const MySubscription = () => {
     fetchSubscriptions();
   }, [userId]);
 
-  // ✅ 스위치 토글 핸들러 (🚀 오류 해결)
-  const handleSwitchToggle = (id) => {
+  const handleSwitchToggle = (id, type, categoryId = null) => {
+    if (!switchStates[id]) return; // 🔹 해지된 구독은 다시 ON 불가
+
     setSwitchStates((prevStates) => {
       const newStates = {
         ...prevStates,
-        [id]: !prevStates[id],
+        [id]: false, // 🔹 OFF로 변경
       };
-      localStorage.setItem("switchStates", JSON.stringify(newStates)); // ✅ 상태 저장
       console.log(`🛠️ 구독 ${id} 상태 변경:`, newStates[id]);
+
+      // 🔹 개별 구독 → subscription_id 전달
+      if (type === "individual") {
+        navigate(`/mypage/cancelForm?subscription_id=${id}`);
+      }
+      // 🔹 조합 구독 → category_id 전달
+      else if (type === "combo" && categoryId) {
+        navigate(`/mypage/cancelCheck?category_id=${categoryId}`);
+      }
+
       return newStates;
     });
   };
 
   return (
     <div className="subscription-container">
+      <h2>나의 구독중인 서비스</h2>
+
       {/* <h2>이번 달 소비내역</h2>
       <PieChart
       series={[
@@ -70,16 +105,13 @@ const MySubscription = () => {
       height={200}
     /> */}
       <h2>나의 구독 서비스 (User ID: {userId})</h2>
-      
+
       {/* ✅ 개별 구독 서비스 리스트 */}
       <div className="subscription-list">
         {individualSubscriptions.map((sub) => (
           <div key={sub.id} className="subscription-item">
             <img
-              src={
-                `http://localhost:8090/static/subscription_img/${sub.imageUrl}` ||
-                "/default-image.jpg"
-              }
+              src={`${sub.imageUrl}` || "/default-image.jpg"}
               alt={sub.name}
               className="subscription-logo"
             />
@@ -93,7 +125,8 @@ const MySubscription = () => {
             </div>
             <Switch
               checked={switchStates[sub.id] || false}
-              onChange={() => handleSwitchToggle(sub.id)} // ✅ 오류 해결
+              onChange={() => handleSwitchToggle(sub.id, "individual")}
+              disabled={!switchStates[sub.id]} // 🔹 OFF 상태면 다시 ON 불가
             />
           </div>
         ))}
@@ -108,28 +141,30 @@ const MySubscription = () => {
               {combo.subscriptions.map((sub) => (
                 <img
                   key={sub.id}
-                  src={`http://localhost:8090/static/subscription_img/${sub.imageUrl}`}
+                  src={sub.imageUrl}
                   alt={sub.name}
                   className="subscription-logo"
                 />
               ))}
             </div>
             <div className="subscription-info">
-              {/* <p>{combo.subscriptions.map((sub) => sub.name).join(" + ")}</p> */}
               <p>
-                <p>
-                  결제일:{" "}
-                  {combo.terminationDate
-                    ? new Date(combo.terminationDate)
-                        .toISOString()
-                        .split("T")[0]
-                    : "정보 없음"}
-                </p>
+                결제일:{" "}
+                {combo.terminationDate
+                  ? new Date(combo.terminationDate).toISOString().split("T")[0]
+                  : "정보 없음"}
               </p>
             </div>
             <Switch
               checked={switchStates[combo.membershipId] || false}
-              onChange={() => handleSwitchToggle(combo.membershipId)} // ✅ 오류 해결
+              onChange={() =>
+                handleSwitchToggle(
+                  combo.membershipId,
+                  "combo",
+                  combo.categoryId
+                )
+              }
+              disabled={!switchStates[combo.membershipId]} // 🔹 OFF 상태면 다시 ON 불가
             />
           </div>
         ))}

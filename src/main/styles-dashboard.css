@@ -11,6 +11,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 600px; /* 원하는 크기로 조절 */
+  height: 600px; /* 정사각형 유지 */
 }
 
 .swiper-slide img {
@@ -21,7 +23,8 @@
 }
 
 #swiper-advertisement {
-  height: 300px;
+  width: 600px; /* 정사각형 크기 설정 */
+  height: 600px;
   z-index: 0;
 }
 
@@ -72,7 +75,7 @@
   width: 95%;
 }
 
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
 
