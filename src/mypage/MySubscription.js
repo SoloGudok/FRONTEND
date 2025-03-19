@@ -4,7 +4,7 @@ import Switch from "@mui/material/Switch";
 import axios from "axios";
 
 import "./MySubscription.css"; // 스타일 파일 추가
-// import { PieChart } from "@mui/x-charts/PieChart";
+import { PieChart } from "@mui/x-charts/PieChart";
 
 const API_BASE_URL = "http://localhost:8090/api/v1/subscription";
 
@@ -75,7 +75,7 @@ const MySubscription = () => {
 
       // 🔹 개별 구독 → subscription_id 전달
       if (type === "individual") {
-        navigate(`/mypage/cancelForm?subscription_id=${id}`);
+        navigate(`/mypage/cancelForm?id=${id}`);
       }
       // 🔹 조합 구독 → category_id 전달
       else if (type === "combo" && categoryId) {
