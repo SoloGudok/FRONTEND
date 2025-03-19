@@ -45,7 +45,7 @@ const MenuFooter = () => {
           </span>
         </a>
 
-        <a href="#">
+        <a href="/my-subscriptions/1">
           <span className="menu-footer-button">
             <span className="menu-footer-button-item">
               <span className="menu-footer-button-item-img">

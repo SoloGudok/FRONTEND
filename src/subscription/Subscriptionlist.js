@@ -63,7 +63,7 @@ export default function Subscriptionlist({
                 }}
               >
                 <img
-                  src={`http://localhost:8090/static/subscription_img/${sub.imageUrl}`}
+                  src={sub.imageUrl}
                   alt={sub.name}
                   onClick={() => toggleSubscription(sub)}
                   className="subscription-img"

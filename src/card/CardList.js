@@ -6,7 +6,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Card from "./Card";
-import Categorymenu from "../components/Categorymenu";
+import CategoryCard from "./CategoryCard";
+import "./CategoryCard.css";
 import MenuFooter from "../components/MenuFooter";
 import FilterCardList from "./FilterCardList";
 import "./list.css";
@@ -91,7 +92,7 @@ function CardList() {
   return (
     <>
       <Swiper
-        id="cardlist-swiper"
+        id="cardlist-slide"
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={1}
@@ -114,17 +115,17 @@ function CardList() {
 
       <div
         className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 rounded-full shadow-md flex items-center gap-2"
-        style={{ marginBottom: "0px", marginTop: "-30px" }}
+        style={{ marginBottom: "-10px", marginTop: "-30px" }}
       >
         {/* 이전 버튼 */}
         <IconButton
           onClick={goToPrevSlide}
           style={{
-            backgroundColor: "white",
             padding: "26px",
             marginLeft: "-10px",
-            color: "black",
+            color: "gray",
           }}
+          disableRipple // 리플 효과 비활성화
         >
           <ChevronLeftIcon fontSize="medium" />
         </IconButton>
@@ -137,6 +138,7 @@ function CardList() {
             backgroundColor: "white",
             padding: "1px",
             marginLeft: "-30px",
+            color: "gray",
           }}
         >
           {isPlaying ? (
@@ -156,14 +158,14 @@ function CardList() {
         {/* 다음 버튼 */}
         <IconButton
           onClick={goToNextSlide}
-          style={{ backgroundColor: "white", padding: "1px", color: "black" }}
+          style={{ backgroundColor: "white", padding: "1px", color: "gray" }}
         >
           <NavigateNextIcon fontSize="medium" />
         </IconButton>
       </div>
 
-      <Categorymenu
-        setSelectedCategory={setSelectedCategory}
+      <CategoryCard
+        onCategorySelect={setSelectedCategory}
         className="category-menu"
       />
 

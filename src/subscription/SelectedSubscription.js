@@ -13,11 +13,7 @@ export const SubscriptionList = ({
     <ul className="subscription-list">
       {subscriptions.map((sub) => (
         <li key={sub.id} className="subscription-item">
-          <img
-            src={`http://localhost:8090/static/subscription_img/${sub.imageUrl}`}
-            alt={sub.name}
-            className="subscription-img"
-          />
+          <img src={sub.imageUrl} alt={sub.name} className="subscription-img" />
           <Typography
             variant="body1"
             className={showDelete ? "" : "subscription-name"}

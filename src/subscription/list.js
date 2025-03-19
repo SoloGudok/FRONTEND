@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Categorymenu from "../components/Categorymenu";
 import Subscriptionlist from "./SubscriptionCard";
+import MenuFooter from "../components/MenuFooter";
 
 import "./membership.css"; // CSS 파일 import
 
@@ -28,7 +29,6 @@ export default function Membership() {
   }, [currentCategoryId]); // 카테고리 ID가 변경될 때마다 실행
 
   // ✅ 구독 선택/취소 함수
-  
 
   // 카테고리 변경 핸들러
   const handleCategoryChange = (categoryId) => {
@@ -36,29 +36,25 @@ export default function Membership() {
   };
 
   return (
-    <div className="min-h-screen p-4 bg-gray-100 flex flex-col items-center">
-      <h1>구독 리스트</h1>
+    <>
+      <div className="min-h-screen p-4 bg-gray-100 flex flex-col items-center">
+        <h1>구독 리스트</h1>
 
-   
-      <Categorymenu onCategorySelect={handleCategoryChange} />
+        <Categorymenu onCategorySelect={handleCategoryChange} />
 
-      <div className="w-full mt-4">
-        {/* ✅ 구독 목록이 존재할 때만 렌더링 */}
-        {subscriptions.length > 0 ? (
-          <Subscriptionlist
-            subscriptions={subscriptions}
-            selected={selected}
-          
-          />
-        ) : (
-          <p className="text-center">구독 데이터를 불러오는 중...</p>
-        )}
-        
-
-     
-
-       
+        <div className="w-full mt-4">
+          {/* ✅ 구독 목록이 존재할 때만 렌더링 */}
+          {subscriptions.length > 0 ? (
+            <Subscriptionlist
+              subscriptions={subscriptions}
+              selected={selected}
+            />
+          ) : (
+            <p className="text-center">구독 데이터를 불러오는 중...</p>
+          )}
+        </div>
       </div>
-    </div>
+      <MenuFooter />
+    </>
   );
 }
