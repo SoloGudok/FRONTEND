@@ -7,6 +7,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import MenuFooter from "../components/MenuFooter";
 
 const Payment = () => {
   // ✅ 선택한 구독 리스트 상태 추가 (이전 코드에서 누락됨)
@@ -85,60 +86,63 @@ const Payment = () => {
   };
 
   return (
-    <div>
-      <h1>결제 페이지</h1>
-      <h2>결제 진행</h2>
-      <div className="divider"></div>
-      <ul className="subscription-list">
-        {selectedSubscriptions.map((sub) => (
-          <li key={sub.id} className="subscription-item">
-            <img
-              src={`http://localhost:8090/static/subscription_img/${sub.imageUrl}`}
-              alt={sub.name}
-              className="subscription-img"
-            />
-            <Typography variant="body1" className="subscription-name">
-              {sub.name}
-            </Typography>
-            <Typography className="subscription-price">
-              {sub.price} won
-            </Typography>
-          </li>
-        ))}
-      </ul>
-      {/* ✅ 결제카드 선택 UI */}
-      <UserCard />
+    <>
+      <div>
+        <h1>결제 페이지</h1>
+        <h2>결제 진행</h2>
+        <div className="divider"></div>
+        <ul className="subscription-list">
+          {selectedSubscriptions.map((sub) => (
+            <li key={sub.id} className="subscription-item">
+              <img
+                src={`http://localhost:8090/static/subscription_img/${sub.imageUrl}`}
+                alt={sub.name}
+                className="subscription-img"
+              />
+              <Typography variant="body1" className="subscription-name">
+                {sub.name}
+              </Typography>
+              <Typography className="subscription-price">
+                {sub.price} won
+              </Typography>
+            </li>
+          ))}
+        </ul>
+        {/* ✅ 결제카드 선택 UI */}
+        <UserCard />
 
-      {/* ✅ 최종 결제 금액 아코디언 UI */}
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ArrowDownwardIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          <div className="accordion-header">
-            <Typography component="span">최종 결제 금액</Typography>
-            <Typography component="span" className="discounted-price">
-              {discountedPrice} 원
-            </Typography>
-          </div>
-        </AccordionSummary>
+        {/* ✅ 최종 결제 금액 아코디언 UI */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ArrowDownwardIcon />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            <div className="accordion-header">
+              <Typography component="span">최종 결제 금액</Typography>
+              <Typography component="span" className="discounted-price">
+                {discountedPrice} 원
+              </Typography>
+            </div>
+          </AccordionSummary>
 
-        <AccordionDetails>
-          <div className="accordion-details">
-            <Typography>총 금액</Typography>
-            <Typography>{totalPrice} 원</Typography>
-          </div>
-          <div className="accordion-details">
-            <Typography>10% 할인 적용 금액</Typography>
-            <Typography className="discounted-price">
-              {discountedPrice} 원
-            </Typography>
-          </div>
-        </AccordionDetails>
-      </Accordion>
-      <button onClick={processPayment}>결제하기</button>
-    </div>
+          <AccordionDetails>
+            <div className="accordion-details">
+              <Typography>총 금액</Typography>
+              <Typography>{totalPrice} 원</Typography>
+            </div>
+            <div className="accordion-details">
+              <Typography>10% 할인 적용 금액</Typography>
+              <Typography className="discounted-price">
+                {discountedPrice} 원
+              </Typography>
+            </div>
+          </AccordionDetails>
+        </Accordion>
+        <button onClick={processPayment}>결제하기</button>
+      </div>
+      <MenuFooter />
+    </>
   );
 };
 
