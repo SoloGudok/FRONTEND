@@ -8,6 +8,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import CardListComponent from "../components/CardListComponent"; // 🔥 카드 추천 컴포넌트 추가
+import MenuFooter from "../components/MenuFooter";
 
 const SubscriptionDetail = () => {
   const { subscriptionId } = useParams();
@@ -63,67 +64,70 @@ const SubscriptionDetail = () => {
   if (error) return <p>❌ 오류 발생: {error.message}</p>;
 
   return (
-    <div className="subscription-detail-container">
-      <img
-        src={
-          subscription.imageUrl ? subscription.imageUrl : "/default-image.jpg"
-        }
-        style={{
-          width: "200px",
-          objectFit: "cover",
-          boxShadow: "4px 4px 10px rgba(50, 123, 240, 0.3)",
-        }}
-        alt="구독 서비스 이미지"
-      />
+    <>
+      <div className="subscription-detail-container">
+        <img
+          src={
+            subscription.imageUrl ? subscription.imageUrl : "/default-image.jpg"
+          }
+          style={{
+            width: "200px",
+            objectFit: "cover",
+            boxShadow: "4px 4px 10px rgba(50, 123, 240, 0.3)",
+          }}
+          alt="구독 서비스 이미지"
+        />
 
-      <div className="info type2">
-        <div className="info-name">
-          <div className="subscription_name">
-            <h1>{subscription.name || "구독 이름 없음"}</h1>
+        <div className="info type2">
+          <div className="info-name">
+            <div className="subscription_name">
+              <h1>{subscription.name || "구독 이름 없음"}</h1>
+            </div>
           </div>
+          <p className="sub-summary">
+            {subscription.content || "설명이 없습니다."}
+          </p>
+          <ul className="sub-content">
+            <li>
+              <b>
+                {subscription.price
+                  ? `월 ${subscription.price}원`
+                  : "가격 정보 없음"}
+              </b>
+            </li>
+          </ul>
         </div>
-        <p className="sub-summary">
-          {subscription.content || "설명이 없습니다."}
-        </p>
-        <ul className="sub-content">
-          <li>
-            <b>
-              {subscription.price
-                ? `월 ${subscription.price}원`
-                : "가격 정보 없음"}
-            </b>
-          </li>
-        </ul>
+
+        {/* 🔥 다이얼로그 먼저 띄우는 결제 버튼 */}
+        <button className="subscribe-button" onClick={handleOpenDialog}>
+          결제하기
+        </button>
+
+        {/* ✅ 다이얼로그 추가 (구독 조합과 동일) */}
+        <Dialog
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+          aria-labelledby="payment-dialog-title"
+          aria-describedby="payment-dialog-description"
+        >
+          <DialogTitle id="payment-dialog-title">잠시만요!👋🏻</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="payment-dialog-description">
+              신한카드 발급 받고 더 다양한 혜택을 받아보세요!
+              <br />
+            </DialogContentText>
+            <CardListComponent />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDialogOpen(false)}>취소</Button>
+            <Button onClick={handleProceedToPayment} autoFocus>
+              결제 하러 가기
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
-
-      {/* 🔥 다이얼로그 먼저 띄우는 결제 버튼 */}
-      <button className="subscribe-button" onClick={handleOpenDialog}>
-        결제하기
-      </button>
-
-      {/* ✅ 다이얼로그 추가 (구독 조합과 동일) */}
-      <Dialog
-        open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-        aria-labelledby="payment-dialog-title"
-        aria-describedby="payment-dialog-description"
-      >
-        <DialogTitle id="payment-dialog-title">잠시만요!👋🏻</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="payment-dialog-description">
-            신한카드 발급 받고 더 다양한 혜택을 받아보세요!
-            <br />
-          </DialogContentText>
-          <CardListComponent />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDialogOpen(false)}>취소</Button>
-          <Button onClick={handleProceedToPayment} autoFocus>
-            결제 하러 가기
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+      <MenuFooter />
+    </>
   );
 };
 
