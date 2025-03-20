@@ -20,6 +20,7 @@ import { AppProvider } from "@toolpad/core/AppProvider";
 import { SignInPage } from "@toolpad/core/SignInPage";
 import { useTheme } from "@mui/material/styles";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import MenuFooter from "../components/MenuFooter";
 
 const providers = [{ id: "credentials", name: "Email and Password" }];
 
@@ -167,55 +168,58 @@ export default function SlotsSignIn() {
   }
 
   return (
-    <AppProvider theme={theme}>
-      <SignInPage
-        signIn={handleSubmit}
-        slots={{
-          title: Title,
-          subtitle: Subtitle,
-          emailField: CustomEmailField,
-          passwordField: CustomPasswordField,
-          submitButton: () => (
-            <Button
-              type="submit"
-              variant="outlined"
-              color="info"
-              size="small"
-              disableElevation
-              fullWidth
-              sx={{ my: 2 }}
-              onClick={handleSubmit}
-            >
-              해지 신청
-            </Button>
-          ),
-          rememberMe: () => (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="tandc"
-                  value="true"
-                  color="primary"
-                  sx={{
-                    padding: 0.5,
-                    "& .MuiSvgIcon-root": { fontSize: 20 },
-                  }}
-                  checked={agreed}
-                  onChange={handleAgreementChange}
-                />
-              }
-              slotProps={{
-                typography: {
-                  fontSize: 14,
-                },
-              }}
-              color="textSecondary"
-              label="해지 신청에 동의합니다."
-            />
-          ),
-        }}
-        providers={providers}
-      />
-    </AppProvider>
+    <>
+      <AppProvider theme={theme}>
+        <SignInPage
+          signIn={handleSubmit}
+          slots={{
+            title: Title,
+            subtitle: Subtitle,
+            emailField: CustomEmailField,
+            passwordField: CustomPasswordField,
+            submitButton: () => (
+              <Button
+                type="submit"
+                variant="outlined"
+                color="info"
+                size="small"
+                disableElevation
+                fullWidth
+                sx={{ my: 2 }}
+                onClick={handleSubmit}
+              >
+                해지 신청
+              </Button>
+            ),
+            rememberMe: () => (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="tandc"
+                    value="true"
+                    color="primary"
+                    sx={{
+                      padding: 0.5,
+                      "& .MuiSvgIcon-root": { fontSize: 20 },
+                    }}
+                    checked={agreed}
+                    onChange={handleAgreementChange}
+                  />
+                }
+                slotProps={{
+                  typography: {
+                    fontSize: 14,
+                  },
+                }}
+                color="textSecondary"
+                label="해지 신청에 동의합니다."
+              />
+            ),
+          }}
+          providers={providers}
+        />
+      </AppProvider>
+      <MenuFooter />
+    </>
   );
 }
