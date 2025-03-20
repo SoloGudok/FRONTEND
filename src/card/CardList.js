@@ -16,7 +16,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import PauseIcon from "@mui/icons-material/Pause";
 import IconButton from "@mui/material/IconButton"; // IconButton 임포트
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-//import VideoModal from "./VideoModal"; // 모달 import
+import VideoModal from "./VideoModal"; // 모달 import
 import CardAds from "./CardAds"; // 광고 카드 컴포넌트 임포트
 
 function CardList() {
@@ -81,7 +81,7 @@ function CardList() {
   return (
     <>
       {/* === 모달 팝업 === */}
-      {/* <VideoModal isOpen={isModalOpen} onClose={handleCloseModal} /> */}
+      <VideoModal isOpen={isModalOpen} onClose={handleCloseModal} />
 
       <CategoryCard
         onCategorySelect={setSelectedCategory}
