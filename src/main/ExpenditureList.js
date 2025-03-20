@@ -9,16 +9,25 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 import './ExpenditureList.css';
-// import dayjs from 'dayjs';
 import MenuFooter from "../components/MenuFooter";
 
-//datepicker
-import dayjs, { Dayjs } from 'dayjs';
+// datepicker
+import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+// Transition for the bottom popup
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const categories = [
     { id: 0, name: "전체", emoji: "🔍" }, // 전체 카테고리 추가
@@ -32,8 +41,14 @@ const categories = [
     { id: 8, name: "영상", emoji: "🎥" },
     { id: 9, name: "음악", emoji: "🎵" },
     { id: 10, name: "도서", emoji: "📚" },
-  ];
+];
 
+// Day of week function
+const getDayOfWeek = (date) => {
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
+  const dayIndex = new Date(date).getDay();
+  return days[dayIndex];
+};
 
 const ExpenditureList = () => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -45,14 +60,39 @@ const ExpenditureList = () => {
     const [hasNext, setHasNext] = useState(true); // 🔹 다음 데이터 존재 여부
     const [isFetching, setIsFetching] = useState(false); // 🔹 데이터 로딩 중 여부
     const [open, setOpen] = useState(false);
-    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [showDatePickerDialog, setShowDatePickerDialog] = useState(false);
     const anchorRef = useRef(null);
-
-    //추가가
-    const datePickerRef = useRef(null);
     
     // 현재 월을 기반으로 dayjs 객체 생성
     const [selectedDate, setSelectedDate] = useState(dayjs(currentMonth));
+    // 추가: 현재 뷰 상태 (month 또는 year)
+    const [datePickerView, setDatePickerView] = useState('month');
+    
+    // Group expenditures by date
+    const groupedExpenditures = () => {
+      const grouped = {};
+      
+      expenditures.forEach(item => {
+        const dateKey = item.date.join('-');
+        if (!grouped[dateKey]) {
+          grouped[dateKey] = [];
+        }
+        grouped[dateKey].push(item);
+      });
+      
+      // Sort dates in descending order (newest first)
+      return Object.keys(grouped)
+        .sort((a, b) => new Date(b) - new Date(a))
+        .map(date => ({
+          date,
+          items: grouped[date]
+        }));
+    };
+
+    // Find category by ID
+    const getCategoryById = (id) => {
+      return categories.find(cat => cat.id === id) || { emoji: "🔍", name: "기타" };
+    };
     
     // DatePicker에서 날짜가 변경될 때 호출
     const handleDateChange = (newDate) => {
@@ -61,24 +101,21 @@ const ExpenditureList = () => {
     
     // 날짜 선택 적용
     const handleApplyDate = () => {
-      const newDate = selectedDate.toDate();
-      setCurrentMonth(newDate);
-      setShowDatePicker(false);
+        const newDate = selectedDate.toDate();
+        setCurrentMonth(newDate);
+        setShowDatePickerDialog(false);
+        // 다이얼로그가 닫힐 때 뷰를 다시 month로 리셋
+        setDatePickerView('month');
     };
     
     // 날짜 선택 취소
     const handleCancelDatePicker = () => {
         setSelectedDate(dayjs(currentMonth)); // 원래 값으로 복원
-        setShowDatePicker(false);
+        setShowDatePickerDialog(false);
+        // 다이얼로그가 닫힐 때 뷰를 다시 month로 리셋
+        setDatePickerView('month');
     };
     
-    // DatePicker 외부 클릭 감지
-    const handleClickAwayDatePicker = (event) => {
-        if (datePickerRef.current && !datePickerRef.current.contains(event.target)) {
-            setShowDatePicker(false);
-        }
-    };
-      
     // 🔹 소비 내역 불러오기 (무한 스크롤 적용)
     const fetchExpenditureData = useCallback(async (date, isLoadMore) => {
       // 이미 데이터를 가져오는 중이면 중복 요청 방지
@@ -114,7 +151,7 @@ const ExpenditureList = () => {
           startDate,
           endDate,
           categoryId: requestCategoryId,
-          size: 15,
+          size: 10,
         });
     
         console.log("📌 API 응답 데이터:", response.data);
@@ -148,16 +185,20 @@ const ExpenditureList = () => {
       return () => window.removeEventListener('scroll', handleScroll);
     }, [fetchExpenditureData, hasNext, isFetching]);
   
-    const handleNextMonth = () => {
+    const handleNextMonth = (e) => {
+      e.stopPropagation(); // 버튼 클릭이 상위 요소로 전파되지 않도록 방지
       const nextMonth = new Date(currentMonth);
       nextMonth.setMonth(currentMonth.getMonth() + 1);
       setCurrentMonth(nextMonth);
+      setSelectedDate(dayjs(nextMonth));
     };
   
-    const handlePrevMonth = () => {
+    const handlePrevMonth = (e) => {
+      e.stopPropagation(); // 버튼 클릭이 상위 요소로 전파되지 않도록 방지
       const prevMonth = new Date(currentMonth);
       prevMonth.setMonth(currentMonth.getMonth() - 1);
       setCurrentMonth(prevMonth);
+      setSelectedDate(dayjs(prevMonth));
     };
   
     // 🔹 컴포넌트 마운트 또는 월/카테고리 변경 시 데이터 로드
@@ -207,23 +248,20 @@ const ExpenditureList = () => {
       setCategoryId(categories[index].id);
       setOpen(false);
     };
+    
+    // 뷰 변경 핸들러 (month -> year)
+    const handleViewChange = () => {
+      setDatePickerView(datePickerView === 'month' ? 'year' : 'month');
+    };
   
     return (
     <>
       <div className="expenditure-list">
         <header>
-          <h2 onClick={() => setShowDatePicker(true)}>
-          <LocalizationProvider dateAdapter={AdapterDayjs} dateFormats={{ monthShort: `M` }}>
-            <DemoContainer components={['DatePicker', 'DatePicker']}>
-              <DatePicker
-                label="Controlled picker"
-                showDaysOutsideCurrentMonth
-                value={value}
-                onChange={(newValue) => setValue(newValue)}
-              />
-            </DemoContainer>
-          </LocalizationProvider>  
-          <button onClick={handlePrevMonth}>&lt;</button> {currentMonth.getFullYear()}년 {currentMonth.getMonth() + 1}월 <button onClick={handleNextMonth}>&gt;</button>
+          <h2 className="month-display" onClick={() => setShowDatePickerDialog(true)}>
+            <button onClick={handlePrevMonth} className="month-nav-btn">&lt;</button> 
+            <span className="month-year-text">{currentMonth.getFullYear()}년 {currentMonth.getMonth() + 1}월</span> 
+            <button onClick={handleNextMonth} className="month-nav-btn">&gt;</button>
           </h2>
         </header>
   
@@ -257,27 +295,112 @@ const ExpenditureList = () => {
           </Popper>
         </div>
   
-        <ul className="expenditure-items">
-          {expenditures.length > 0 ? (
-            expenditures.map((item) => (
-              <li key={item.id}>
-                <div>{item.date.join('-')}</div>
-                <div>{item.description}</div>
-                <div>{item.amount.toLocaleString()}원</div>
-              </li>
-            ))
+        <div className="expenditure-groups">
+          {groupedExpenditures().length > 0 ? (
+            groupedExpenditures().map((group) => {
+              // Extract date components
+              const dateParts = group.date.split('-');
+              const dateObj = new Date(group.date);
+              const dayOfWeek = getDayOfWeek(dateObj);
+              
+              return (
+                <div key={group.date} className="date-group">
+                  <div className="date-header">
+                    <span className="date-day">{dateParts[2]}일 {dayOfWeek}요일</span>
+                  </div>
+                  <ul className="date-items">
+                    {group.items.map((item) => {
+                      const category = getCategoryById(item.categoryId);
+                      const isAllCategory = categoryId === 0 || categoryId === null;
+                      
+                      return (
+                        <li key={item.id} className="expenditure-item">
+                          {/* 카테고리가 '전체'일 때만 아이콘 표시 */}
+                          {isAllCategory && (
+                            <div className="item-category">{category.emoji}</div>
+                          )}
+                          <div className="item-description" 
+                            style={{ 
+                              gridColumn: isAllCategory ? '2' : '1 / span 2',
+                              paddingLeft: isAllCategory ? '10px' : '10px'
+                            }}>
+                            {item.description}
+                          </div>
+                          <div className="item-amount">{item.amount.toLocaleString()}원</div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })
           ) : !isFetching && (
-            <li className="no-data">데이터가 없습니다.</li>
+            <div className="no-data">데이터가 없습니다.</div>
           )}
-        </ul>
+        </div>
   
         {/* 로딩 표시 */}
         {isFetching && <p className="loading-text">데이터를 불러오는 중...</p>}
-  
-        
-
-         
       </div>
+      
+      {/* 하단에서 올라오는 날짜 선택 Dialog */}
+      <Dialog
+        open={showDatePickerDialog}
+        TransitionComponent={Transition}
+        keepMounted
+        fullWidth
+        maxWidth="xs"
+        onClose={() => {
+          setShowDatePickerDialog(false);
+          setDatePickerView('month'); // 다이얼로그가 닫힐 때 뷰를 다시 month로 리셋
+        }}
+        PaperProps={{
+          style: {
+            margin: 0,
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            bottom: 0,
+            position: 'absolute',
+            width: '100%'
+          },
+        }}
+      >
+        <DialogTitle>
+          날짜 선택
+          <Button 
+            onClick={handleViewChange} 
+            color="primary" 
+            style={{ marginLeft: 10, fontSize: '0.75rem' }}
+          >
+            
+          </Button>
+        </DialogTitle>
+        <DialogContent>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={['DatePicker']}>
+              <DatePicker
+                view={datePickerView}
+                openTo={datePickerView}
+                views={['year', 'month']}
+                value={selectedDate}
+                onChange={handleDateChange}
+                format="YYYY년 MM월"
+                sx={{ width: '100%' }}
+                onViewChange={(newView) => {
+                  setDatePickerView(newView);
+                }}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDatePicker}>취소</Button>
+          <Button onClick={handleApplyDate} variant="contained" color="primary">
+            적용
+          </Button>
+        </DialogActions>
+      </Dialog>
+      
       <MenuFooter />
     </>
     );
