@@ -10,8 +10,15 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import './ExpenditureList.css';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 import MenuFooter from "../components/MenuFooter";
+
+//datepicker
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const categories = [
     { id: 0, name: "전체", emoji: "🔍" }, // 전체 카테고리 추가
@@ -40,13 +47,38 @@ const ExpenditureList = () => {
     const [open, setOpen] = useState(false);
     const [showDatePicker, setShowDatePicker] = useState(false);
     const anchorRef = useRef(null);
-    const [selectedDate, setSelectedDate] = useState(dayjs()); // 선택한 날짜 상태 추가
+
+    //추가가
+    const datePickerRef = useRef(null);
     
+    // 현재 월을 기반으로 dayjs 객체 생성
+    const [selectedDate, setSelectedDate] = useState(dayjs(currentMonth));
+    
+    // DatePicker에서 날짜가 변경될 때 호출
+    const handleDateChange = (newDate) => {
+        setSelectedDate(newDate);
+    };
+    
+    // 날짜 선택 적용
     const handleApplyDate = () => {
-        setCurrentMonth(selectedDate.toDate()); // 선택한 날짜를 currentMonth에 반영
+      const newDate = selectedDate.toDate();
+      setCurrentMonth(newDate);
+      setShowDatePicker(false);
+    };
+    
+    // 날짜 선택 취소
+    const handleCancelDatePicker = () => {
+        setSelectedDate(dayjs(currentMonth)); // 원래 값으로 복원
         setShowDatePicker(false);
     };
     
+    // DatePicker 외부 클릭 감지
+    const handleClickAwayDatePicker = (event) => {
+        if (datePickerRef.current && !datePickerRef.current.contains(event.target)) {
+            setShowDatePicker(false);
+        }
+    };
+      
     // 🔹 소비 내역 불러오기 (무한 스크롤 적용)
     const fetchExpenditureData = useCallback(async (date, isLoadMore) => {
       // 이미 데이터를 가져오는 중이면 중복 요청 방지
@@ -82,7 +114,7 @@ const ExpenditureList = () => {
           startDate,
           endDate,
           categoryId: requestCategoryId,
-          size: 10,
+          size: 15,
         });
     
         console.log("📌 API 응답 데이터:", response.data);
@@ -181,6 +213,16 @@ const ExpenditureList = () => {
       <div className="expenditure-list">
         <header>
           <h2 onClick={() => setShowDatePicker(true)}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} dateFormats={{ monthShort: `M` }}>
+            <DemoContainer components={['DatePicker', 'DatePicker']}>
+              <DatePicker
+                label="Controlled picker"
+                showDaysOutsideCurrentMonth
+                value={value}
+                onChange={(newValue) => setValue(newValue)}
+              />
+            </DemoContainer>
+          </LocalizationProvider>  
           <button onClick={handlePrevMonth}>&lt;</button> {currentMonth.getFullYear()}년 {currentMonth.getMonth() + 1}월 <button onClick={handleNextMonth}>&gt;</button>
           </h2>
         </header>
