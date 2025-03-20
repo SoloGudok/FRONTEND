@@ -7,7 +7,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import MenuFooter from "../components/MenuFooter";
 
 const Payment = () => {
   // ✅ 선택한 구독 리스트 상태 추가 (이전 코드에서 누락됨)
@@ -140,8 +139,7 @@ const Payment = () => {
           </AccordionDetails>
         </Accordion>
         <button onClick={processPayment}>결제하기</button>
-      </div>
-      <MenuFooter />
+      </div>{" "}
     </>
   );
 };
