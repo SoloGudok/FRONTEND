@@ -1,15 +1,7 @@
 /* 전체 컨테이너 */
 .subscription-container {
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
   padding: 20px;
-}
-
-/* 구독 리스트 제목 */
-h2 {
-  font-size: 18px;
-  margin-bottom: 10px;
 }
 
 /* 구독 리스트 스타일 */
@@ -23,10 +15,14 @@ h2 {
 .subscription-item {
   display: flex;
   align-items: center;
-  background: white;
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: white; /* 배경색 */
+
+  width: 80%; /* ✅ 너비를 80%로 설정 */
+  margin: 0 auto; /* ✅ 중앙 정렬 */
+
+  border: 2px solid #ddd; /* ✅ 테두리 추가 */
 }
 
 /* 조합 구독 (여러 개 아이콘) */
@@ -67,4 +63,3 @@ h2 {
 .MuiSwitch-root {
   margin-left: auto;
 }
-

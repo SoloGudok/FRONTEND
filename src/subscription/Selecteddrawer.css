@@ -54,6 +54,7 @@
   width: fit-content;
   z-index: 9999; /* ✅ 버튼을 최상단으로 올리기 */
   pointer-events: auto; /* ✅ 클릭 가능하게 설정 */
+  margin-bottom: 50px;
 }
 
 .payment-button {
