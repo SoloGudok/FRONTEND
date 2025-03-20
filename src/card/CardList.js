@@ -16,28 +16,17 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import PauseIcon from "@mui/icons-material/Pause";
 import IconButton from "@mui/material/IconButton"; // IconButton 임포트
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+//import VideoModal from "./VideoModal"; // 모달 import
+import CardAds from "./CardAds"; // 광고 카드 컴포넌트 임포트
 
 function CardList() {
   const [filteredCards, setFilteredCards] = useState([]);
-  const [allCards, setAllCards] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(1);
   const swiperRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true); // 슬라이드가 재생 중인지 여부
-
-  useEffect(() => {
-    const allCards = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8090/api/v1/card/filter"
-        );
-        setAllCards(response.data);
-      } catch (error) {
-        console.error("Error fetching filtered cards:", error);
-      }
-    };
-    allCards();
-  }, []);
+  const [isModalOpen, setIsModalOpen] = useState(true); // 처음부터 열림
+  const handleCloseModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     const fetchFilteredCards = async () => {
@@ -91,19 +80,29 @@ function CardList() {
 
   return (
     <>
+      {/* === 모달 팝업 === */}
+      {/* <VideoModal isOpen={isModalOpen} onClose={handleCloseModal} /> */}
+
+      <CategoryCard
+        onCategorySelect={setSelectedCategory}
+        className="category-menu"
+      />
+
+      {/* === FilterCardList 대신 직접 슬라이드 구현 === */}
       <Swiper
-        id="cardlist-slide"
+        id="filtered-cardlist-slide"
         modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={20}
-        slidesPerView={1}
+        spaceBetween={-100}
+        slidesPerView={1.5} // 1.5개 보여줌
+        centeredSlides={true}
         navigation
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         onSlideChange={(swiper) => setCurrentSlide(swiper.realIndex + 1)}
         speed={600}
         ref={swiperRef}
       >
-        {allCards.length > 0 ? (
-          allCards.map((card) => (
+        {filteredCards.length > 0 ? (
+          filteredCards.map((card) => (
             <SwiperSlide key={card.id}>
               <Card card={card} />
             </SwiperSlide>
@@ -113,6 +112,7 @@ function CardList() {
         )}
       </Swiper>
 
+      {/* === 슬라이드 컨트롤 버튼들 === */}
       <div
         className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 rounded-full shadow-md flex items-center gap-2"
         style={{ marginBottom: "-10px", marginTop: "-30px" }}
@@ -125,12 +125,12 @@ function CardList() {
             marginLeft: "-10px",
             color: "gray",
           }}
-          disableRipple // 리플 효과 비활성화
+          disableRipple
         >
           <ChevronLeftIcon fontSize="medium" />
         </IconButton>
 
-        {/* 일시 정지/재개 버튼 */}
+        {/* 일시 정지/재생 버튼 */}
         <IconButton
           onClick={handlePause}
           style={{
@@ -148,11 +148,12 @@ function CardList() {
           )}
         </IconButton>
 
+        {/* 현재 슬라이드 번호 */}
         <span
           className="text-lg font-semibold"
           style={{ position: "relative", opacity: 0.7, top: "0.9px" }}
         >
-          {currentSlide} / {allCards.length}
+          {currentSlide} / {filteredCards.length}
         </span>
 
         {/* 다음 버튼 */}
@@ -163,18 +164,8 @@ function CardList() {
           <NavigateNextIcon fontSize="medium" />
         </IconButton>
       </div>
-
-      <CategoryCard
-        onCategorySelect={setSelectedCategory}
-        className="category-menu"
-      />
-
-      <FilterCardList
-        filteredCards={filteredCards}
-        currentSlide={currentSlide}
-        setCurrentSlide={setCurrentSlide}
-        className="filter-card-list"
-      />
+      <h2 className="benefits-title">진행 중인 이벤트</h2>
+      <CardAds />
       <MenuFooter />
     </>
   );
