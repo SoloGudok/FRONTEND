@@ -59,23 +59,25 @@ function App() {
           {/* Layout을 기본 레이아웃으로 설정 */}
           <Route path="/" element={<Layout />}>
             {/* 기본 대시보드 */}
-            <Route index element={isAuthenticated ? <Dashboard /> : <Navigate to="/auth/login" />} />
+            {/* <Route index element={isAuthenticated ? <Dashboard /> : <Navigate to="/auth/login" />} /> */}
+            <Route index element={<SubscriptionList />} />
             <Route path="/auth/login" element={isAuthenticated ? <Dashboard /> : <Login onLogin={() => setIsAuthenticated(true)} />} />
-            <Route path="/detail" element={isAuthenticated ? <Detail /> : <Navigate to="/auth/login" />} />
-            <Route path="/category" element={isAuthenticated ? <Category /> : <Navigate to="/auth/login" />} />
+            <Route path="/detail" element={<Detail />} />
+            <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <SubscriptionList />} />
+            <Route path="/category" element={isAuthenticated ? <Category /> : <SubscriptionList />} />
             {/* 카드 페이지 */}
-            <Route path="/cards" element={isAuthenticated ? <CardList /> : <Navigate to="/auth/login" />} />
-            <Route path="/membership" element={isAuthenticated ? <Membership /> : <Navigate to="/auth/login" />} />
-            <Route path="/event" element={isAuthenticated ? <Event /> : <Navigate to="/auth/login" />} />
-            <Route path="/subscriptions" element={isAuthenticated ? <SubscriptionList /> : <Navigate to="/auth/login" />} />
+            <Route path="/cards" element={<CardList />} />
+            <Route path="/membership" element={isAuthenticated ? <Membership /> : <SubscriptionList />} />
+            <Route path="/event" element={<Event />} />
+            <Route path="/subscriptions" element={<SubscriptionList />} />
             <Route
               path="/subscriptions/:categoryId"
-              element={isAuthenticated ? <SubscriptionList /> : <Navigate to="/auth/login" />}
+              element={<SubscriptionList />}
             />
             <Route path="/payment" element={isAuthenticated ? <Payment /> : <Navigate to="/auth/login" />} />
             <Route
               path="/subscription/:subscriptionId"
-              element={isAuthenticated ? <SubscriptionDetail /> : <Navigate to="/auth/login" />}
+              element={<SubscriptionDetail />}
             />
             <Route
               path="/my-subscriptions/:userId"
