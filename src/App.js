@@ -16,7 +16,7 @@ import MySubscription from "./mypage/MySubscription"; // 🔴 (추가됨)
 import Login from "./login/Login";
 import CancelForm from "./mypage/cancelForm";
 import CancelCheck from "./mypage/cancelCheck";
-import {handleLogout, isTokenExpired, refreshAccessToken } from "./login/axiosConfig";
+import { handleLogout, isTokenExpired, refreshAccessToken } from "./login/axiosConfig";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => !!localStorage.getItem("accessToken"));
@@ -26,28 +26,27 @@ function App() {
       let token = localStorage.getItem("accessToken");
 
       if (!token) {
-        console.log("❌ [App] 액세스 토큰 없음, 로그아웃 처리");
+        console.log("[App] 액세스 토큰 없음, 로그아웃 처리");
         setIsAuthenticated(false);
         return;
       }
 
       if (isTokenExpired(token)) {
-        console.log("⚠️ [App] 액세스 토큰 만료됨. 갱신 시도.");
+        console.log("[App] 액세스 토큰 만료됨. 갱신 시도.");
         token = await refreshAccessToken();
       }
 
       if (token) {
-        console.log("✅ [App] 로그인 상태 유지");
+        console.log("[App] 로그인 상태 유지");
         setIsAuthenticated(true);
       } else {
-        console.log("❌ [App] 모든 토큰 만료. 로그인 페이지 이동.");
+        console.log("[App] 모든 토큰 만료. 로그인 페이지 이동.");
         setIsAuthenticated(false);
-        handleLogout(); // ✅ 모든 토큰이 만료되었을 경우 로그인 페이지 이동
       }
     };
 
     checkAndRefreshToken();
-    const interval = setInterval(checkAndRefreshToken, 60000); // ✅ 1분마다 실행
+    const interval = setInterval(checkAndRefreshToken, 60000); // 1분마다 실행
 
     return () => clearInterval(interval);
   }, []);
@@ -61,31 +60,29 @@ function App() {
             {/* 기본 대시보드 */}
             {console.log(isAuthenticated + "어센티유효상태")}
             <Route index element={isAuthenticated ? <Dashboard /> : <Navigate to="/auth/login" />} />
-            <Route path="/auth/login" element={<Login onLogin={() => setIsAuthenticated(true)} />} />
-            <Route path="/detail" element={<Detail />} />
-            <Route path="/category" element={<Category />} />
+            <Route path="/auth/login" element={isAuthenticated ? <Dashboard /> : <Login onLogin={() => setIsAuthenticated(true)} />} />
+            <Route path="/detail" element={isAuthenticated ? <Detail /> : <Navigate to="/auth/login" />} />
+            <Route path="/category" element={isAuthenticated ? <Category /> : <Navigate to="/auth/login" />} />
             {/* 카드 페이지 */}
-            <Route path="/cards" element={<CardList />} />
-            <Route path="/membership" element={<Membership />} />
-            <Route path="/event" element={<Event />} />
-            <Route path="/subscriptions" element={<SubscriptionList />} />
+            <Route path="/cards" element={isAuthenticated ? <CardList /> : <Navigate to="/auth/login" />} />
+            <Route path="/membership" element={isAuthenticated ? <Membership /> : <Navigate to="/auth/login" />} />
+            <Route path="/event" element={isAuthenticated ? <Event /> : <Navigate to="/auth/login" />} />
+            <Route path="/subscriptions" element={isAuthenticated ? <SubscriptionList /> : <Navigate to="/auth/login" />} />
             <Route
               path="/subscriptions/:categoryId"
-              element={<SubscriptionList />}
+              element={isAuthenticated ? <SubscriptionList /> : <Navigate to="/auth/login" />}
             />
-            {/* 🔥 추가! */}
-            <Route path="/payment" element={<Payment />} /> {/* ✅ 추가 */}
+            <Route path="/payment" element={isAuthenticated ? <Payment /> : <Navigate to="/auth/login" />} />
             <Route
               path="/subscription/:subscriptionId"
-              element={<SubscriptionDetail />}
+              element={isAuthenticated ? <SubscriptionDetail /> : <Navigate to="/auth/login" />}
             />
             <Route
               path="/my-subscriptions/:userId"
-              element={<MySubscription />}
+              element={isAuthenticated ? <MySubscription /> : <Navigate to="/auth/login" />}
             />
-            <Route path="/mypage/cancelForm" element={<CancelForm />} />
-            <Route path="/mypage/cancelCheck" element={<CancelCheck />} />
-            {/* 🔥 추가! */}
+            <Route path="/mypage/cancelForm" element={isAuthenticated ? <CancelForm /> : <Navigate to="/auth/login" />} />
+            <Route path="/mypage/cancelCheck" element={isAuthenticated ? <CancelCheck /> : <Navigate to="/auth/login" />} />
 
           </Route>
         </Routes>
