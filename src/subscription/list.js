@@ -6,7 +6,7 @@ import MenuFooter from "../components/MenuFooter";
 
 import "./membership.css"; // CSS 파일 import
 
-export default function Membership() {
+export default function List() {
   const [subscriptions, setSubscriptions] = useState([]); // 구독 리스트
   const [selected, setSelected] = useState([]); // 선택된 구독 리스트
   const [currentCategoryId, setCurrentCategoryId] = useState(0); // 현재 선택된 카테고리 ID (0은 전체)
@@ -40,7 +40,7 @@ export default function Membership() {
       <div className="min-h-screen p-4 bg-gray-100 flex flex-col items-center">
         <h1>구독 리스트</h1>
 
-        <Categorymenu onCategorySelect={handleCategoryChange} />
+        <Categorymenu setSelectedCategory={handleCategoryChange} />
 
         <div className="w-full mt-4">
           {/* ✅ 구독 목록이 존재할 때만 렌더링 */}
