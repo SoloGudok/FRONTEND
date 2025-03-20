@@ -13,6 +13,7 @@ import "chart.js/auto";
 import LooksOneIcon from "@mui/icons-material/LooksOne";
 import LooksTwoIcon from "@mui/icons-material/LooksTwo";
 import Looks3Icon from "@mui/icons-material/Looks3";
+import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
 
 const categories = [
   { id: 0, name: "전체", emoji: "🔍" },
@@ -333,12 +334,30 @@ function Dashboard() {
             display: "block",
             textAlign: "left",
             marginTop: "50px",
-            marginBottom: "30px",
+
             marginLeft: "50px",
           }}
         >
           고객님의 현재 구독중인 서비스
         </span>
+        <div
+          id="rcss-bottom"
+          onClick={() => (window.location.href = "/my-subscriptions/1")}
+          style={{
+            textAlign: "right",
+            marginRight: "50px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "5px", // 아이콘과 텍스트 간 간격 조절
+            justifyContent: "flex-end", // 🔹 오른쪽 정렬
+          }}
+        >
+          <h4 style={{ display: "flex", alignItems: "center" }}>
+            나의 구독 관리 하러 가기
+          </h4>
+          <ArrowCircleRightOutlinedIcon style={{ fontSize: "24px" }} />
+        </div>
 
         <div
           style={{
@@ -377,12 +396,30 @@ function Dashboard() {
             display: "block",
             textAlign: "left",
             marginTop: "50px",
-            marginBottom: "30px",
+
             marginLeft: "50px",
           }}
         >
           구독 관련 소비 패턴을 분석해 봤어요!
         </span>
+        <div
+          id="rcss-bottom"
+          onClick={() => (window.location.href = "/expenditure")}
+          style={{
+            textAlign: "right",
+            marginRight: "50px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "5px", // 아이콘과 텍스트 간 간격 조절
+            justifyContent: "flex-end", // 🔹 오른쪽 정렬
+          }}
+        >
+          <h4 style={{ display: "flex", alignItems: "center" }}>
+            구경하러 가기
+          </h4>
+          <ArrowCircleRightOutlinedIcon style={{ fontSize: "24px" }} />
+        </div>
         <div
           style={{
             width: "80%",
@@ -496,13 +533,31 @@ function Dashboard() {
               fontWeight: "bold",
               display: "block",
               textAlign: "left",
-              marginBottom: "30px",
+
               marginLeft: "50px",
               color: "gray",
             }}
           >
             고객님의 소비 패턴을 분석해서 추천 리스트를 만들어 봤어요!
           </span>
+          <div
+            id="rcss-bottom"
+            onClick={() => (window.location.href = "/subscriptions")}
+            style={{
+              textAlign: "right",
+              marginRight: "50px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "5px", // 아이콘과 텍스트 간 간격 조절
+              justifyContent: "flex-end", // 🔹 오른쪽 정렬
+            }}
+          >
+            <h4 style={{ display: "flex", alignItems: "center" }}>
+              구경하러 가기
+            </h4>
+            <ArrowCircleRightOutlinedIcon style={{ fontSize: "24px" }} />
+          </div>
           <Swiper
             slidesPerView={2}
             spaceBetween={20}
@@ -567,7 +622,7 @@ function Dashboard() {
               fontWeight: "bold",
               display: "block",
               textAlign: "left",
-              marginBottom: "30px",
+              // marginBottom: "30px",
               marginLeft: "50px",
               color: "gray",
             }}
@@ -576,6 +631,25 @@ function Dashboard() {
             <br />
             신한카드 혜택과 함께 즐겨보세요!
           </span>
+
+          <div
+            id="rcss-bottom"
+            onClick={() => (window.location.href = "/cards")}
+            style={{
+              textAlign: "right",
+              marginRight: "50px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "5px", // 아이콘과 텍스트 간 간격 조절
+              justifyContent: "flex-end", // 🔹 오른쪽 정렬
+            }}
+          >
+            <h4 style={{ display: "flex", alignItems: "center" }}>
+              구경하러 가기
+            </h4>
+            <ArrowCircleRightOutlinedIcon style={{ fontSize: "24px" }} />
+          </div>
           {loading ? (
             <section
               style={{
