@@ -16,7 +16,7 @@ const isTokenExpired = (token) => {
     try {
         const decoded = jwtDecode(token);
         const now = Date.now() / 1000; // 현재 시간(초 단위)
-        console.log(`🔍 [JWT] 토큰 만료 시간: ${decoded.exp}, 현재 시간: ${now}`);
+        // console.log(`🔍 [JWT] 토큰 만료 시간: ${decoded.exp}, 현재 시간: ${now}`);
         return decoded.exp < now; // 현재 시간이 만료 시간보다 크면 만료됨
     } catch (error) {
         console.error("[JWT] 토큰 디코딩 오류:", error);
@@ -30,13 +30,13 @@ const refreshAccessToken = async () => {
         const refreshToken = localStorage.getItem("refreshToken");
 
         if (!refreshToken) {
-            console.log("[JWT] 리프레시 토큰 없음, 로그아웃 필요");
+            // console.log("[JWT] 리프레시 토큰 없음, 로그아웃 필요");
             // handleLogout(); // ✅ 로그아웃 처리 추가
             removeToken();
             return false;
         }
 
-        console.log("[JWT] 토큰 갱신 요청 실행");
+        // console.log("[JWT] 토큰 갱신 요청 실행");
 
         const response = await axios.post("http://localhost:8090/auth/refresh", { refreshToken });
 
@@ -60,7 +60,7 @@ const refreshAccessToken = async () => {
 
 // ✅ 로그아웃 함수 추가
 const handleLogout = () => {
-    console.log("[JWT] 모든 토큰이 만료됨. 로그아웃 처리.");
+    // console.log("[JWT] 모든 토큰이 만료됨. 로그아웃 처리.");
     removeToken();
     window.location.href = "/auth/login"; // 로그인 페이지로 강제 이동
 };

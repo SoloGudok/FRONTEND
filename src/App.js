@@ -17,7 +17,7 @@ import Login from "./login/Login";
 import CancelForm from "./mypage/cancelForm";
 import CancelCheck from "./mypage/cancelCheck";
 import FirstPage from "./firstPage/FirstPage";
-import { handleLogout, isTokenExpired, refreshAccessToken } from "./login/axiosConfig";
+import { isTokenExpired, refreshAccessToken } from "./login/axiosConfig";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => !!localStorage.getItem("accessToken"));
@@ -27,21 +27,21 @@ function App() {
       let token = localStorage.getItem("accessToken");
 
       if (!token) {
-        console.log("[App] 액세스 토큰 없음, 로그아웃 처리");
+        // console.log("[App] 액세스 토큰 없음, 로그아웃 처리");
         setIsAuthenticated(false);
         return;
       }
 
       if (isTokenExpired(token)) {
-        console.log("[App] 액세스 토큰 만료됨. 갱신 시도.");
+        // console.log("[App] 액세스 토큰 만료됨. 갱신 시도.");
         token = await refreshAccessToken();
       }
 
       if (token) {
-        console.log("[App] 로그인 상태 유지");
+        // console.log("[App] 로그인 상태 유지");
         setIsAuthenticated(true);
       } else {
-        console.log("[App] 모든 토큰 만료. 로그인 페이지 이동.");
+        // console.log("[App] 모든 토큰 만료. 로그인 페이지 이동.");
         setIsAuthenticated(false);
       }
     };
@@ -59,7 +59,6 @@ function App() {
           {/* Layout을 기본 레이아웃으로 설정 */}
           <Route path="/" element={<Layout />}>
             {/* 기본 대시보드 */}
-            {console.log(isAuthenticated + "어센티유효상태")}
             <Route index element={isAuthenticated ? <Dashboard /> : <Navigate to="/auth/login" />} />
             <Route path="/auth/login" element={isAuthenticated ? <Dashboard /> : <Login onLogin={() => setIsAuthenticated(true)} />} />
             <Route path="/detail" element={isAuthenticated ? <Detail /> : <Navigate to="/auth/login" />} />
