@@ -95,7 +95,7 @@ const Payment = () => {
           {selectedSubscriptions.map((sub) => (
             <li key={sub.id} className="subscription-item">
               <img
-                src={`http://localhost:8090/static/subscription_img/${sub.imageUrl}`}
+                src={sub.imageUrl}
                 alt={sub.name}
                 className="subscription-img"
               />
