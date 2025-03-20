@@ -4,8 +4,6 @@ import Switch from "@mui/material/Switch";
 import axios from "axios";
 
 import "./MySubscription.css"; // 스타일 파일 추가
-import { colors } from "@mui/material";
-// import { PieChart } from "@mui/x-charts/PieChart";
 
 const API_BASE_URL = "http://localhost:8090/api/v1/subscription";
 
