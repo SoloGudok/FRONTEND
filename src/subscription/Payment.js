@@ -1,146 +1,213 @@
 import React, { useEffect, useState } from "react";
-import "./Payment.css"; // CSS 파일 import
-import UserCard from "./UserCard";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import "./Payment.css";
+import UserCard from "./UserCard"; // UserCard 컴포넌트 추가
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import MenuFooter from "../components/MenuFooter";
+import {
+  SubscriptionList,
+  subscriptionStorage,
+  priceCalculator,
+} from "./SelectedSubscription";
+
+import MenuFooter from "../components/MenuFooter";
+
+
 const Payment = () => {
-  // ✅ 선택한 구독 리스트 상태 추가 (이전 코드에서 누락됨)
+  const location = useLocation();
+  const navigate = useNavigate();
   const [selectedSubscriptions, setSelectedSubscriptions] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [discountedPrice, setDiscountedPrice] = useState(0);
-  const [selectedCard, setSelectedCard] = useState(null); // 선택된 카드 상태 추가
+  const [combinationType, setCombinationType] = useState(1); // 1: 조합결제, 0: 개별결제
+
+  // 다이얼로그 상태 관리
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
+  const [dialogTitle, setDialogTitle] = useState("");
+  const [isSuccessDialog, setIsSuccessDialog] = useState(false);
 
   useEffect(() => {
-    // ✅ 세션 스토리지에서 선택한 구독 데이터 불러오기
-    const storedSubscriptions = sessionStorage.getItem("selectedSubscriptions");
-    if (storedSubscriptions) {
-      const parsedSubscriptions = JSON.parse(storedSubscriptions);
-      setSelectedSubscriptions(parsedSubscriptions);
-
-      // ✅ 🔥 총 가격 및 할인된 가격 계산 추가
-      const total = parsedSubscriptions.reduce(
+    if (location.state && location.state.selectedSubscriptions) {
+      setSelectedSubscriptions(location.state.selectedSubscriptions);
+      setCombinationType(location.state.combination ?? 0);
+      const total = location.state.selectedSubscriptions.reduce(
         (sum, sub) => sum + sub.price,
         0
       );
       setTotalPrice(total);
-      setDiscountedPrice(Math.round(total * 0.9)); // 10% 할인 적용
+      setDiscountedPrice(
+        location.state.combination === 1 ? Math.floor(total * 0.9) : total
+      );
+    } else {
+      const parsedSubscriptions = subscriptionStorage.loadFromSession();
+      setSelectedSubscriptions(parsedSubscriptions);
+      setCombinationType(1);
+      const total = priceCalculator.calculateTotal(parsedSubscriptions);
+      setTotalPrice(total);
+      setDiscountedPrice(priceCalculator.calculateDiscount(total));
     }
-  }, []);
-  const handleCardSelect = (cardId) => {
-    setSelectedCard(cardId); // 선택된 카드 ID 상태 업데이트
+  }, [location]);
+
+  const openDialog = (title, message, isSuccess = false) => {
+    setDialogTitle(title);
+    setDialogMessage(message);
+    setIsSuccessDialog(isSuccess);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    if (isSuccessDialog) {
+      setTimeout(() => {
+        subscriptionStorage.clearSession();
+        navigate("/"); // 성공 시 메인 페이지로 이동
+      }, 500); // 0.5초 지연 후 페이지 이동 (UI 깜빡임 방지)
+    }
   };
 
   const processPayment = () => {
-    if (!selectedCard) {
-      alert("카드를 선택해주세요!");
-      return;
-    }
-    if (selectedSubscriptions.length !== 3) {
-      alert("구독 서비스를 정확히 3개 선택해야 합니다!");
+    const userId = 1;
+    if (!userId) {
+      openDialog("알림", "카드를 선택해주세요!");
       return;
     }
 
-    const subscriptionIds = selectedSubscriptions.map((sub) => sub.id);
+    if (combinationType === 1 && selectedSubscriptions.length !== 3) {
+      openDialog("알림", "구독 서비스를 정확히 3개 선택해야 합니다!");
+      return;
+    }
 
-    // 🔥 데이터를 보내기 전에 콘솔에 찍어보기
-    console.log("보낼 데이터:", {
-      userId: 1, // 실제 로그인된 사용자 ID로 변경 필요
-      selectedSubscriptions: subscriptionIds,
-      totalPrice: totalPrice,
-      discountedPrice: discountedPrice,
-    });
-    fetch("http://localhost:8090/api/v1/payment/payment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: 1, // 🛑 실제 로그인된 사용자 ID로 변경 필요
-        selectedSubscriptions: selectedSubscriptions.map((sub) => sub.id),
-      }),
-    })
-      .then((response) => {
-        console.log("✅ 서버 응답 상태 코드:", response.status); // 추가된 디버깅 로그
-        return response.text(); // 응답을 JSON이 아닌 text로 받기 (백엔드 응답 형식과 맞춤)
+    if (combinationType === 0) {
+      // 개별 결제 처리
+      if (selectedSubscriptions.length !== 1) {
+        openDialog("오류", "개별 결제는 하나의 구독 서비스만 선택해야 합니다!");
+        return;
+      }
+
+      const subscriptionId = selectedSubscriptions[0].id;
+
+      fetch("http://localhost:8090/api/v1/payment/single", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: 1,
+          subscriptionId: subscriptionId,
+          combination: 0,
+        }),
       })
-      .then((data) => {
-        console.log("✅ 서버 응답 내용:", data); // 추가된 디버깅 로그
-        alert(`결제가 완료되었습니다!\n서버 응답: ${data}`);
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`서버 응답 오류: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          openDialog("결제 완료", "개별 구독 결제가 완료되었습니다!", true);
+        })
+        .catch((error) => {
+          openDialog("오류", "결제 중 오류가 발생했습니다.");
+        });
+    } else {
+      // 조합 결제 처리
+      const subscriptionIds = selectedSubscriptions.map((sub) => sub.id);
 
-        // ✅ 결제 완료 후 세션 스토리지 비우기
-        sessionStorage.removeItem("selectedSubscriptions");
+      const requestBody = {
+        userId: 1,
+        selectedSubscriptions: subscriptionIds,
+        combination: 1,
+      };
 
-        // ✅ 결제 완료 페이지로 이동 (임시로 주석 처리 후 테스트)
-        // window.location.href = "/success";
+      fetch("http://localhost:8090/api/v1/payment/payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
       })
-      .catch((error) => {
-        console.error("❌ 결제 오류:", error);
-        alert("결제 중 오류가 발생했습니다.");
-      });
+        .then((response) => response.text())
+        .then((data) => {
+          openDialog("결제 완료", "구독 조합 결제가 완료되었습니다!", true);
+        })
+        .catch((error) => {
+          openDialog("오류", "결제 중 오류가 발생했습니다.");
+        });
+    }
   };
 
   return (
-    <>
-      <div>
-        <h1>결제 페이지</h1>
-        <h2>결제 진행</h2>
-        <div className="divider"></div>
-        <ul className="subscription-list">
-          {selectedSubscriptions.map((sub) => (
-            <li key={sub.id} className="subscription-item">
-              <img
-                src={`http://localhost:8090/static/subscription_img/${sub.imageUrl}`}
-                alt={sub.name}
-                className="subscription-img"
-              />
-              <Typography variant="body1" className="subscription-name">
-                {sub.name}
-              </Typography>
-              <Typography className="subscription-price">
-                {sub.price} won
-              </Typography>
-            </li>
-          ))}
-        </ul>
-        {/* ✅ 결제카드 선택 UI */}
-        <UserCard />
+    <div>
+      <h1>결제 페이지</h1>
+      <h2>
+        {combinationType === 0 ? "개별 결제 진행" : "구독 조합 결제 진행"}
+      </h2>
+      <div className="divider"></div>
 
-        {/* ✅ 최종 결제 금액 아코디언 UI */}
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ArrowDownwardIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
+      <SubscriptionList
+        subscriptions={selectedSubscriptions}
+        showDelete={false}
+      />
+
+      {/* UserCard 컴포넌트 추가 */}
+      <UserCard />
+
+      <Accordion>
+        <AccordionSummary expandIcon={<ArrowDownwardIcon />}>
+          <div className="accordion-header">
+            <Typography>최종 결제 금액</Typography>
+            <Typography className="discounted-price">
+              {discountedPrice} 원
+            </Typography>
+          </div>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div className="accordion-details">
+            <Typography>총 금액</Typography>
+            <Typography>{totalPrice} 원</Typography>
+          </div>
+        </AccordionDetails>
+      </Accordion>
+
+      <div
+        style={{ display: "flex", justifyContent: "center", margin: "20px 0" }}
+      >
+        <button className="payment-button-final" onClick={processPayment}>
+          {combinationType === 0 ? "개별 구독 결제하기" : "구독 조합 결제하기"}
+        </button>
+      </div>
+
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>
+          <h2 className="h2">{dialogTitle}</h2>{" "}
+          {/* 첫 번째 문장은 h1 태그로 변경 */}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <p className="p">{dialogMessage}</p>{" "}
+            {/* 나머지 문장은 p 태그로 변경 */}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <button
+            onClick={handleDialogClose}
+            autoFocus
+            className="custom-dialog-button"
           >
-            <div className="accordion-header">
-              <Typography component="span">최종 결제 금액</Typography>
-              <Typography component="span" className="discounted-price">
-                {discountedPrice} 원
-              </Typography>
-            </div>
-          </AccordionSummary>
-
-          <AccordionDetails>
-            <div className="accordion-details">
-              <Typography>총 금액</Typography>
-              <Typography>{totalPrice} 원</Typography>
-            </div>
-            <div className="accordion-details">
-              <Typography>10% 할인 적용 금액</Typography>
-              <Typography className="discounted-price">
-                {discountedPrice} 원
-              </Typography>
-            </div>
-          </AccordionDetails>
-        </Accordion>
-        <button onClick={processPayment}>결제하기</button>
-      </div>{" "}
-    </>
+            {isSuccessDialog ? "확인" : "닫기"}
+          </button>
+        </DialogActions>
+      </Dialog>
+      <MenuFooter />
+    </div>
   );
 };
 

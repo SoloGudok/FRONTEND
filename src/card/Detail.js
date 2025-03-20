@@ -18,7 +18,7 @@ function Detail() {
         <div id="detail-row1">
           <div id="row1-img">
             <img
-              src={cardData.imageUrl}
+              src={cardData.card_img_url}
               id="cardImg"
               className={`hover-img ${isHovered ? "rotated" : ""}`}
               onMouseEnter={() => setIsHovered(true)} // 마우스를 올리면 회전
@@ -26,8 +26,8 @@ function Detail() {
             />
           </div>
           <div id="row1-description">
-            <h2>{cardData.name}</h2>
-            <h3>{cardData.shortDescription}</h3>
+            <h2>{cardData.card_name}</h2>
+            <h3>{cardData.short_description}</h3>
           </div>
         </div>
         <div id="detail-row2">
@@ -69,14 +69,14 @@ function Detail() {
         <div id="detail-row4" class="point-box">
           회사명 : 신한카드
           <br />
-          상품명 : {cardData.name}
+          상품명 : {cardData.card_name}
           <br />
-          카드 출시 일자 :{" "}
-          {cardData.createdAt[0] +
+          카드 출시 일자 :
+          {cardData.created_at[0] +
             "." +
-            cardData.createdAt[1] +
+            cardData.created_at[1] +
             "." +
-            cardData.createdAt[2]}
+            cardData.created_at[2]}
           <br />
           계약 체결 전, 카드 상품별 연회비, 이용조건 등 상세사항은
           금융상품설명서와 약관을 확인하시기 바랍니다. 금융소비자는

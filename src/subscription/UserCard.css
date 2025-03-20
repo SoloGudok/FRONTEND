@@ -27,6 +27,11 @@
 .card-img:hover {
   transform: rotate(-90deg) rotateX(180deg); /* 이미지 좌우 반전 */
 }
+/* 클릭한 카드 이미지에 대한 스타일 */
+.card-img.clicked {
+  transform: rotate(-90deg) rotateX(180deg) scale(1.1); /* 클릭 시 약간 확대 */
+  box-shadow: 4px 8px 20px rgba(0, 0, 0, 0.3); /* 클릭 시 그림자 효과 */
+}
 
 /* 빈 카드 UI */
 .empty-card {
@@ -145,7 +150,20 @@
 .modal-actions button:hover {
   background-color: #6b97f6;
 }
+.modal-actions1 {
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+}
 
+.modal-actions1 button {
+  padding: 10px 20px;
+  background-color: #6b97f6;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
 .modal-text p {
   color: #7d7976;
   font-size: 16px;
@@ -158,4 +176,37 @@
   font-size: 20px;
   font-weight: bold;
   margin-top: 1px;
+}
+
+.selected-text {
+  margin-left: -220px;
+  margin-bottom: 380px;
+  font-size: 12px;
+  color: #ffffff; /* 텍스트 색을 흰색으로 설정 */
+  background-color: #f64210; /* 배경 색상 */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  position: absolute; /* 이미지 위에 표시되도록 설정 */
+  bottom: 10px; /* 이미지 하단에 표시 */
+  left: 50%;
+  transform: translateX(-50%); /* 중앙 정렬 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease; /* 애니메이션 효과 */
+  opacity: 0;
+  animation: fadeIn 0.5s forwards; /* 애니메이션 적용 */
+}
+
+/* 애니메이션: 텍스트가 서서히 나타나게 */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px); /* 텍스트가 아래에서 위로 올라옴 */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0); /* 원래 위치로 돌아옴 */
+  }
 }
