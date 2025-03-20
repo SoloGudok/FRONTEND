@@ -11,6 +11,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 500px; /* 원하는 크기로 조절 */
+  height: 500px; /* 정사각형 유지 */
 }
 
 .swiper-slide img {
@@ -21,58 +23,17 @@
 }
 
 #swiper-advertisement {
-  height: 300px;
+  width: 500px; /* 정사각형 크기 설정 */
+  height: 500px;
+  border-radius: 10%;
   z-index: 0;
 }
 
 #swiper-susbscription {
   height: 100px;
-  z-index: 0;
 }
 
-#swiper-charts {
-  height: 200px;
-  z-index: 0;
-}
-
-#swiper-recommendationSubscription {
-  z-index: 0;
-}
-
-/* recommend susbscription */
-#rcss-container {
-  display: grid;
-  grid-template-rows: 160px 150px;
-}
-
-#rcss-main {
-  grid-column: 1/3;
-  grid-row: 1/2;
-  /* background-color: aqua; */
-}
-
-#rcss-sub1 {
-  grid-row: 2/3;
-  grid-column: 1/2;
-  /* background-color: blue; */
-}
-
-#rcss-sub2 {
-  grid-row: 2/3;
-  grid-column: 2/3;
-  /* background-color: violet; */
-}
-
-#rcss-container {
-  display: grid;
-  height: 200px;
-}
-#rcss-container_bottom {
-  text-align: right;
-  width: 95%;
-}
-
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
 
@@ -83,15 +44,6 @@
   grid-template-rows: 400px 225px;
   align-items: center;
   justify-content: center;
-  /* background-color: gray; */
-}
-
-#rcss-bottom {
-  display: grid;
-  height: 100px;
-  width: 95%;
-  text-align: right;
-  align-items: center;
 }
 
 .charts {
@@ -105,53 +57,175 @@
   font-weight: bold;
 }
 
-.sub-icon {
-  height: 80%;
-  width: 80%;
-}
-
-.rcss-mainicon {
-  height: 70%;
-  height: 70%;
-}
-
-.rcss-subicon {
-  height: 60%;
-  height: 60%;
-}
-
 .cardImg {
   cursor: pointer;
   height: 50%;
   width: 50%;
 }
 
-.sub-outline {
-    width: 110px; /* 카드 크기 */
-    height: 110px;
-    background-color: white; /* 배경색 */
-    border: 1px solid rgb(212, 212, 212);
-    border-radius: 20px; /* 모서리 둥글게 */
-    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-family: 'Arial', sans-serif;
-    padding: 20px;
+.swiper-slide-custom {
+  background-color: white; /* 배경색 */
+  border: 1px solid rgb(212, 212, 212); /* 테두리 */
+  border-radius: 12px; /* 둥근 모서리 */
+  padding: 16px;
+  width: 80%; /* 최대 크기 설정 */
+  max-width: 500px; /* 너무 넓어지는 것 방지 */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
 }
 
-.sub-outline img {
-  width: 80px; /* 로고 크기 */
-  height: auto;
-  
-  margin-bottom: 15px; /* 간격 */
+.chart-container {
+  padding: 20px; /* 내부 여백 */
+  text-align: center;
+  margin: 0 auto; /* 좌우 여백 자동으로 설정 (가운데 정렬) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* 차트와 범례 사이의 간격 */
 }
 
-.sub-outline-title {
-  font-size: 13px;
-  font-weight: bold;
-  color: #000;
-  margin-bottom: 5px;
+.custom-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* 아이템 간격 */
+  align-items: flex-start; /* 왼쪽 정렬 */
+  justify-content: center;
+  padding: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 이모지와 텍스트 간격 */
+  background: #f9f9f9; /* 배경색 */
+  padding: 8px 12px;
+  border-radius: 8px; /* 둥근 모서리 */
+  height: 70px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.legend-text {
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  height: 40px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+}
+
+.label {
+  margin-right: 20px; /* 라벨과 가격 사이의 간격 */
+  flex-grow: 1;
+}
+
+.price {
+  text-align: right;
+  flex-grow: 1;
+}
+
+#swiper-recommendationSubscription {
+  z-index: 0;
+}
+
+/* recommend susbscription */
+#rcss-container {
+  display: grid;
+  grid-template-rows: 160px 150px;
+  margin-top: 100px;
+}
+
+/* 추천 구독 서비스 스타일 */
+.sub-icon {
+  width: 200px !important;
+  height: 200px !important;
+  object-fit: contain;
+  border-radius: 8px;
+
+  padding: 6px;
+
+  margin: 0 auto;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.sub-icon:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+.rcss-name {
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 3px;
+  color: #333;
+}
+
+/* 구독 이미지 슬라이더 관련 스타일 */
+.subscription-slider-icon {
+  width: 100px !important; /* 부모 요소에 맞게 너비 조정 */
+  height: 100px !important; /* 비율 유지 */
+  object-fit: contain; /* 이미지 비율 유지하면서 컨테이너에 맞춤 */
+  display: block;
+  border-radius: 50%; /* 약간의 둥근 모서리 */
+  margin: 5px auto 25px; /* 하단 마진 추가 */
+}
+
+/* 서비스 이름 텍스트 스타일 */
+.sub-slider-service-name {
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* 구독 아이템 컨테이너 */
+.sub-slider-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Swiper 컨테이너 스타일 */
+#swiper-susbscription {
+  width: 100%;
+  padding: 10px 0;
+}
+
+/* Swiper 슬라이드 아이템 스타일 */
+#swiper-susbscription .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* 슬라이드 높이 증가 (텍스트 공간 확보) */
+}
+
+.subscription-slider-icon:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.12);
 }

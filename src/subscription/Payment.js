@@ -7,6 +7,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -19,6 +20,8 @@ import {
   subscriptionStorage,
   priceCalculator,
 } from "./SelectedSubscription";
+
+import MenuFooter from "../components/MenuFooter";
 
 const Payment = () => {
   const location = useLocation();

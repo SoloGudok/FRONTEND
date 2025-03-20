@@ -69,18 +69,43 @@ export default function Membership() {
 
   return (
     <div className="min-h-screen p-4 bg-gray-100 flex flex-col items-center">
-      <h1>구독 리스트</h1>
-
       <div>
         <img
           src={membershipImg}
           style={{
-            width: "550px",
+            width: "500px",
+            borderRadius: "10%",
+            marginBottom: "50px",
+            marginTop: "50px",
             objectFit: "cover",
             boxShadow: "4px 4px 10px rgba(50, 123, 240, 0.3)", // 파란색 계열 그림자 효과
           }}
           alt="멤버십 이미지"
         />
+      </div>
+      {/* 신한카드 정보 추가 */}
+      <div className="info type2">
+        <div className="info-name">
+          <div className="card_name">
+            <h1>내 맘대로 구독서비스 골라담기!</h1>
+          </div>
+        </div>
+        <p className="info-summary">
+          원하는 구독 서비스만 골라서 조합하고
+          <br />
+          할인 10%까지!
+        </p>
+        <ul className="info-benefit">
+          <li>
+            <span>대상</span>
+            <b>신한카드 고객</b>
+          </li>
+          <li>
+            <span>상품 내용</span>
+
+            <b>10% 할인 혜택</b>
+          </li>
+        </ul>
       </div>
 
       <Categorymenu setSelectedCategory={handleCategoryChange} />
@@ -96,7 +121,7 @@ export default function Membership() {
         ) : (
           <p className="text-center">구독 데이터를 불러오는 중...</p>
         )}
-        {/*밥먹고 수정하기*/}
+
         <h2>
           <div className="product-detail">상품 상세👓</div>
         </h2>
