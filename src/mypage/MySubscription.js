@@ -64,9 +64,10 @@ const MySubscription = () => {
     fetchSubscriptions();
   }, [userId]);
 
-  const handleSwitchToggle = (id, type, categoryId = null) => {
+  const handleSwitchToggle = async (id, type, categoryId = null) => {
     if (!switchStates[id]) return; // 🔹 해지된 구독은 다시 ON 불가
 
+    // 🔹 상태 업데이트 (동기 로직)
     setSwitchStates((prevStates) => {
       const newStates = {
         ...prevStates,
@@ -74,17 +75,34 @@ const MySubscription = () => {
       };
       console.log(`🛠️ 구독 ${id} 상태 변경:`, newStates[id]);
 
-      // 🔹 개별 구독 → subscription_id 전달
-      if (type === "individual") {
-        navigate(`/mypage/cancelForm?subscription_id=${id}`);
-      }
-      // 🔹 조합 구독 → category_id 전달
-      else if (type === "combo" && categoryId) {
-        navigate(`/mypage/cancelCheck?category_id=${categoryId}`);
-      }
-
-      return newStates;
+      return newStates; // 🔹 이 위치는 그대로 유지
     });
+
+    // 🔹 API 호출 및 추가 로직 (비동기 로직)
+    if (type === "individual") {
+      navigate(`/mypage/cancelForm?id=${id}`);
+    } else if (type === "combo") {
+      const combo = combinationSubscriptions.find(
+        (combo) => combo.membershipId === id
+      );
+
+      if (combo) {
+        const subscriptionIds = combo.subscriptions.map((sub) => sub.id);
+
+        try {
+          await axios.post(
+            "http://localhost:8090/api/v1/unsubscription/multi_cancel",
+            { subscriptionIds }
+          );
+
+          // 🔹 해지 성공 후 페이지 이동
+          navigate(`/mypage/cancelCheck?id=${subscriptionIds.join(",")}`);
+        } catch (error) {
+          console.error("❌ 조합 구독 해지 실패:", error);
+          alert("해지 요청에 실패했습니다. 다시 시도해주세요.");
+        }
+      }
+    }
   };
 
   return (
@@ -167,13 +185,7 @@ const MySubscription = () => {
             </div>
             <Switch
               checked={switchStates[combo.membershipId] || false}
-              onChange={() =>
-                handleSwitchToggle(
-                  combo.membershipId,
-                  "combo",
-                  combo.categoryId
-                )
-              }
+              onChange={() => handleSwitchToggle(combo.membershipId, "combo")}
               disabled={!switchStates[combo.membershipId]} // 🔹 OFF 상태면 다시 ON 불가
             />
           </div>
