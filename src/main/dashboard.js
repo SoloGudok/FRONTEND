@@ -404,7 +404,7 @@ function Dashboard() {
         </span>
         <div
           id="rcss-bottom"
-          onClick={() => (window.location.href = "/expenditure")}
+          onClick={() => (window.location.href = "/category")}
           style={{
             textAlign: "right",
             marginRight: "50px",

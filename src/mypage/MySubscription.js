@@ -5,6 +5,7 @@ import axios from "axios";
 
 import "./MySubscription.css"; // 스타일 파일 추가
 import { colors } from "@mui/material";
+import MenuFooter from "../components/MenuFooter";
 // import { PieChart } from "@mui/x-charts/PieChart";
 
 const API_BASE_URL = "http://localhost:8090/api/v1/subscription";
@@ -106,92 +107,97 @@ const MySubscription = () => {
   };
 
   return (
-    <div className="subscription-container">
-      <h2
-        style={{
-          fontSize: "20px",
-          fontWeight: "bold",
-          textAlign: "left",
-        }}
-      >
-        고객님이 구독중인 서비스
-      </h2>
+    <>
+      <div className="subscription-container">
+        <h2
+          style={{
+            fontSize: "20px",
+            fontWeight: "bold",
+            textAlign: "left",
+          }}
+        >
+          고객님이 구독중인 서비스
+        </h2>
 
-      {/* ✅ 개별 구독 서비스 리스트 */}
-      <div className="subscription-list">
-        {individualSubscriptions.map((sub) => (
-          <div key={sub.id} className="subscription-item">
-            <img
-              src={`${sub.imageUrl}` || "/default-image.jpg"}
-              alt={sub.name}
-              className="subscription-logo"
-            />
-            <div className="subscription-info">
-              <p
-                style={{
-                  textAlign: "right",
-                }}
-              >
-                <h3>{sub.name}</h3>
-                {sub.terminationDate
-                  ? new Date(sub.terminationDate).toISOString().split("T")[0]
-                  : "결제 정보 없음"}
-              </p>
+        {/* ✅ 개별 구독 서비스 리스트 */}
+        <div className="subscription-list">
+          {individualSubscriptions.map((sub) => (
+            <div key={sub.id} className="subscription-item">
+              <img
+                src={`${sub.imageUrl}` || "/default-image.jpg"}
+                alt={sub.name}
+                className="subscription-logo"
+              />
+              <div className="subscription-info">
+                <p
+                  style={{
+                    textAlign: "right",
+                  }}
+                >
+                  <h3>{sub.name}</h3>
+                  {sub.terminationDate
+                    ? new Date(sub.terminationDate).toISOString().split("T")[0]
+                    : "결제 정보 없음"}
+                </p>
+              </div>
+              <Switch
+                checked={switchStates[sub.id] || false}
+                onChange={() => handleSwitchToggle(sub.id, "individual")}
+                disabled={!switchStates[sub.id]} // 🔹 OFF 상태면 다시 ON 불가
+              />
             </div>
-            <Switch
-              checked={switchStates[sub.id] || false}
-              onChange={() => handleSwitchToggle(sub.id, "individual")}
-              disabled={!switchStates[sub.id]} // 🔹 OFF 상태면 다시 ON 불가
-            />
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      {/* ✅ 조합 구독 서비스 리스트 */}
-      <h2
-        style={{
-          fontSize: "20px",
-          fontWeight: "bold",
-          textAlign: "left",
-        }}
-      >
-        고객님이 구독중인 조합 상품
-      </h2>
-      <div className="subscription-list">
-        {combinationSubscriptions.map((combo) => (
-          <div key={combo.membershipId} className="subscription-item combo">
-            <div className="subscription-icons">
-              {combo.subscriptions.map((sub) => (
-                <img
-                  key={sub.id}
-                  src={sub.imageUrl}
-                  alt={sub.name}
-                  className="subscription-logo"
-                />
-              ))}
+        {/* ✅ 조합 구독 서비스 리스트 */}
+        <h2
+          style={{
+            fontSize: "20px",
+            fontWeight: "bold",
+            textAlign: "left",
+          }}
+        >
+          고객님이 구독중인 조합 상품
+        </h2>
+        <div className="subscription-list">
+          {combinationSubscriptions.map((combo) => (
+            <div key={combo.membershipId} className="subscription-item combo">
+              <div className="subscription-icons">
+                {combo.subscriptions.map((sub) => (
+                  <img
+                    key={sub.id}
+                    src={sub.imageUrl}
+                    alt={sub.name}
+                    className="subscription-logo"
+                  />
+                ))}
+              </div>
+              <div className="subscription-info">
+                <p
+                  style={{
+                    textAlign: "right",
+                  }}
+                >
+                  <h3>구독 조합 상품</h3>
+                  결제일:{" "}
+                  {combo.terminationDate
+                    ? new Date(combo.terminationDate)
+                        .toISOString()
+                        .split("T")[0]
+                    : "정보 없음"}
+                </p>
+              </div>
+              <Switch
+                checked={switchStates[combo.membershipId] || false}
+                onChange={() => handleSwitchToggle(combo.membershipId, "combo")}
+                disabled={!switchStates[combo.membershipId]} // 🔹 OFF 상태면 다시 ON 불가
+              />
             </div>
-            <div className="subscription-info">
-              <p
-                style={{
-                  textAlign: "right",
-                }}
-              >
-                <h3>구독 조합 상품</h3>
-                결제일:{" "}
-                {combo.terminationDate
-                  ? new Date(combo.terminationDate).toISOString().split("T")[0]
-                  : "정보 없음"}
-              </p>
-            </div>
-            <Switch
-              checked={switchStates[combo.membershipId] || false}
-              onChange={() => handleSwitchToggle(combo.membershipId, "combo")}
-              disabled={!switchStates[combo.membershipId]} // 🔹 OFF 상태면 다시 ON 불가
-            />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+      <MenuFooter />
+    </>
   );
 };
 
