@@ -1,0 +1,69 @@
+.card-ads-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding: 16px;
+}
+
+.card-ad {
+  width: 250px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: white;
+  transition: transform 0.2s ease;
+}
+
+.card-ad:hover {
+  transform: scale(1.03);
+}
+
+.card-ad-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.card-ads-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding: 16px;
+}
+
+.card-ad {
+  width: 250px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: white;
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 이미지와 텍스트 중앙 정렬 */
+}
+
+.card-ad:hover {
+  transform: scale(1.03);
+}
+
+.card-ad-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card-ad-description {
+  font-size: 17px;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  line-height: 1.4;
+  width: 80%; /* 박스 너비 조정 */
+  padding: 8px; /* 패딩 크기 조정 */
+  margin: 0 auto; /* 중앙 정렬 (optional) */
+  text-align: left; /* 왼쪽 정렬로 변경 */
+  box-sizing: border-box;
+  letter-spacing: 0.9px; /* 글자 간 간격을 1px로 설정 */
+}
