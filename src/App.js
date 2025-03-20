@@ -15,6 +15,7 @@ import MySubscription from "./mypage/MySubscription"; // 🔴 (추가됨)
 
 import CancelForm from "./mypage/cancelForm";
 import CancelCheck from "./mypage/cancelCheck";
+import ExpenditureList from "./main/ExpenditureList";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="/detail" element={<Detail />} />
             <Route path="/category" element={<Category />} />
+            <Route path="/expenditure" element={<ExpenditureList />} />
+
             {/* 카드 페이지 */}
             <Route path="/cards" element={<CardList />} />
             <Route path="/membership" element={<Membership />} />
