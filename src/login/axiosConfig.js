@@ -62,7 +62,8 @@ const refreshAccessToken = async () => {
 const handleLogout = () => {
     // console.log("[JWT] 모든 토큰이 만료됨. 로그아웃 처리.");
     removeToken();
-    window.location.href = "/auth/login"; // 로그인 페이지로 강제 이동
+    window.location.reload();
+    window.location.href = "/subscriptions"; // 로그인 페이지로 강제 이동
 };
 
 const removeToken = () =>{
