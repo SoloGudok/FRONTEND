@@ -16,6 +16,7 @@ import MySubscription from "./mypage/MySubscription"; // 🔴 (추가됨)
 import Login from "./login/Login";
 import CancelForm from "./mypage/cancelForm";
 import CancelCheck from "./mypage/cancelCheck";
+import FirstPage from "./firstPage/FirstPage";
 import { handleLogout, isTokenExpired, refreshAccessToken } from "./login/axiosConfig";
 
 function App() {
@@ -83,7 +84,7 @@ function App() {
             />
             <Route path="/mypage/cancelForm" element={isAuthenticated ? <CancelForm /> : <Navigate to="/auth/login" />} />
             <Route path="/mypage/cancelCheck" element={isAuthenticated ? <CancelCheck /> : <Navigate to="/auth/login" />} />
-
+            <Route path="/firstPage" element={<FirstPage/>} />
           </Route>
         </Routes>
       </Router>

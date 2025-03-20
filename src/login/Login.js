@@ -30,7 +30,7 @@ const Login = ({ onLogin }) => {
                 <h2 className="login-title">로그인</h2>
 
                 <div className="input-group">
-                    <input  type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="이메일 입력" />
+                    <input  type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="아이디 입력" />
                     <button className="clear-btn">×</button>
                 </div>
 
