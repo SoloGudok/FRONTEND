@@ -1,21 +1,38 @@
 import React from "react";
-import Card from "./Card"; // Card 컴포넌트 임포트
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import { EffectCoverflow } from "swiper/modules";
+import Card from "./Card";
 import "./FilterCardList.css";
 
 function FilterCardList({ filteredCards }) {
   return (
     <div className="filtered-card-list-container">
-      <div className="card-grid">
-        {filteredCards.length > 0 ? (
-          filteredCards.map((card) => (
-            <div key={card.id} className="card-item">
+      {filteredCards.length > 0 ? (
+        <Swiper
+          modules={[EffectCoverflow]}
+          effect="coverflow"
+          centeredSlides={true}
+          slidesPerView="auto"
+          coverflowEffect={{
+            rotate: 0,
+            stretch: 70,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
+          }}
+          loop={true}
+        >
+          {filteredCards.map((card) => (
+            <SwiperSlide key={card.id}>
               <Card card={card} />
-            </div>
-          ))
-        ) : (
-          <p>검색 결과가 없습니다.</p>
-        )}
-      </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      ) : (
+        <p>검색 결과가 없습니다.</p>
+      )}
     </div>
   );
 }
