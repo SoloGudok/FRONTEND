@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./CardAds.css"; // 스타일 별도 작성
-
+import { Link } from "react-router-dom"; // Link import
 function CardAds() {
   const [ads, setAds] = useState([]);
 
@@ -28,7 +28,11 @@ function CardAds() {
     <div className="card-ads-container">
       {ads.map((url, index) => (
         <div key={index} className="card-ad">
-          <img src={url} alt={`광고 ${index + 1}`} className="card-ad-img" />
+          <Link to="/event">
+            {" "}
+            {/* 이미지 클릭 시 /event 페이지로 이동 */}
+            <img src={url} alt={`광고 ${index + 1}`} className="card-ad-img" />
+          </Link>
           <p className="card-ad-description">{adDescriptions[index]}</p>
         </div>
       ))}

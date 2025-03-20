@@ -78,8 +78,11 @@ export default function UserCard() {
           </div>
           {/* 선택된 카드 모달 */}
           <Modal
+            shouldCloseOnOverlayClick={false} // 오버레이 클릭 시 모달이 닫히지 않도록 설정
             isOpen={selectedCardModalIsOpen}
-            onRequestClose={closeSelectedCardModal}
+            onRequestClose={(e) => {
+              e.stopPropagation(); // 오버레이 클릭 시 이벤트 전파를 막음
+            }}
             contentLabel="카드 선택됨"
             className="modal"
             overlayClassName="modal-overlay"

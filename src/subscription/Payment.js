@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Payment.css";
 import UserCard from "./UserCard"; // UserCard 컴포넌트 추가
-
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -14,6 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import MenuFooter from "../components/MenuFooter";
 import {
   SubscriptionList,
   subscriptionStorage,
@@ -202,6 +202,7 @@ const Payment = () => {
           </button>
         </DialogActions>
       </Dialog>
+      <MenuFooter />
     </div>
   );
 };
