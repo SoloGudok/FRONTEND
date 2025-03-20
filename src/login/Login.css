@@ -1,0 +1,72 @@
+/* 전체 페이지 스타일 */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fc; /* 배경색 */
+  }
+  
+  /* 로그인 박스 */
+  .login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    text-align: center;
+  }
+  
+  /* 로그인 제목 */
+  .login-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* 입력 필드 스타일 */
+  .input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    padding: 8px;
+    background: #f9f9f9;
+    margin-bottom: 12px;
+  }
+  
+  /* 입력 필드 */
+  .input-group input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  /* 입력 필드의 x버튼 */
+  .clear-btn {
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: #999;
+    cursor: pointer;
+  }
+  
+  /* 로그인 버튼 */
+  .login-btn {
+    width: 100%;
+    background: #d0d7e1;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #555;
+    transition: 0.3s;
+  }
+  
+  .login-btn:hover {
+    background: #c0c8d4;
+  }
