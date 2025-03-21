@@ -19,8 +19,8 @@ export default function Membership() {
     // 카테고리 ID가 0이면 전체 구독 리스트 가져오기
     const url =
       currentCategoryId === 0
-        ? "http://localhost:8090/api/v1/subscription"
-        : `http://localhost:8090/api/v1/subscription/category/${currentCategoryId}/dto`;
+        ? "http://192.168.0.169:8090/api/v1/subscription"
+        : `http://192.168.0.169:8090/api/v1/subscription/category/${currentCategoryId}/dto`;
 
     axios
       .get(url)
@@ -39,7 +39,7 @@ export default function Membership() {
       if (isSelected) {
         axios
           .put(
-            `http://localhost:8090/api/v1/subscription/unselect/${subscription.id}`
+            `http://192.168.0.169:8090/api/v1/subscription/unselect/${subscription.id}`
           )
           .then(() => console.log("구독 선택 취소 성공"))
           .catch((error) => console.error("구독 선택 취소 실패", error));
@@ -49,7 +49,7 @@ export default function Membership() {
 
       if (prev.length < 3) {
         axios
-          .post("http://localhost:8090/api/v1/subscription/select", [
+          .post("http://192.168.0.169:8090/api/v1/subscription/select", [
             ...prev.map((s) => s.id),
             subscription.id,
           ])

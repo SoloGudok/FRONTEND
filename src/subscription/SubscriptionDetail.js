@@ -20,7 +20,7 @@ const SubscriptionDetail = () => {
 
   // ✅ 구독 정보 가져오는 API 호출 추가
   useEffect(() => {
-    fetch(`http://localhost:8090/api/v1/subscription/${subscriptionId}`)
+    fetch(`http://192.168.0.169:8090/api/v1/subscription/${subscriptionId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`❌ 서버 응답 오류: ${response.status}`);

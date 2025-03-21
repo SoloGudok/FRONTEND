@@ -1,7 +1,7 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const API_BASE_URL = "http://localhost:8090"; // ✅ API 기본 주소
+const API_BASE_URL = "http://192.168.0.169:8090"; // ✅ API 기본 주소
 
 // ✅ Axios 인스턴스 생성
 const api = axios.create({
@@ -38,7 +38,7 @@ const refreshAccessToken = async () => {
 
         // console.log("[JWT] 토큰 갱신 요청 실행");
 
-        const response = await axios.post("http://localhost:8090/auth/refresh", { refreshToken });
+        const response = await axios.post("http://192.168.0.169:8090/auth/refresh", { refreshToken });
 
         if (response.data.accessToken) {
             localStorage.setItem("accessToken", response.data.accessToken);

@@ -15,7 +15,7 @@ function CardAds() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8090/api/v1/card/cardadvertisements")
+      .get("http://192.168.0.169:8090/api/v1/card/cardadvertisements")
       .then((res) => {
         setAds(res.data);
       })

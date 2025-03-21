@@ -9,7 +9,7 @@ const renderImages = (cardImgs) => {
     return cardImgs.map((img, index) => (
       <img
         key={index}
-        src={`http://localhost:8090/static/card_img/${img.cardImgUrl
+        src={`http://192.168.0.169:8090/static/card_img/${img.cardImgUrl
           .split("/")
           .pop()}`} // ✅ 경로 수정
         alt={`Card Image ${index + 1}`}
@@ -32,7 +32,7 @@ const renderAllCardImages = (cardImgs) => {
     return cardImgs.map((img, index) => (
       <img
         key={index}
-        src={`http://localhost:8090/static/card_img/${img.cardImgUrl
+        src={`http://192.168.0.169:8090/static/card_img/${img.cardImgUrl
           .split("/")
           .pop()}`} // ✅ 경로 수정
         alt={`All Card Image ${index + 1}`}

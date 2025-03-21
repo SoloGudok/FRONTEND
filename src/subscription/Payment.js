@@ -109,7 +109,7 @@ const Payment = () => {
       const subscriptionId = selectedSubscriptions[0].id;
 
       // 개별 결제 처리 부분 수정
-      fetch("http://localhost:8090/api/v1/payment/single", {
+      fetch("http://192.168.0.169:8090/api/v1/payment/single", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -145,7 +145,7 @@ const Payment = () => {
         combination: 1,
       };
 
-      fetch("http://localhost:8090/api/v1/payment/payment", {
+      fetch("http://192.168.0.169:8090/api/v1/payment/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),

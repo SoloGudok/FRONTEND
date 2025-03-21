@@ -22,7 +22,7 @@ export default function CancelCheck() {
     fetchCancelledServices();
 
     axios
-      .get("http://localhost:8090/api/v1/dashboard/sendDashboardData")
+      .get("http://192.168.0.169:8090/api/v1/dashboard/sendDashboardData")
       .then((response) => {
         setAdvertisementImages(response.data.advertisementimages);
       })
@@ -34,7 +34,7 @@ export default function CancelCheck() {
   async function fetchSubscriptionData() {
     try {
       const response = await axios.get(
-        "http://localhost:8090/recommend/subscription"
+        "http://192.168.0.169:8090/recommend/subscription"
       );
       setRecommendSubscribingImg(response.data);
       setLoading(true);
@@ -50,7 +50,7 @@ export default function CancelCheck() {
     }
     try {
       const response = await axios.get(
-        "http://localhost:8090/api/v1/unsubscription",
+        "http://192.168.0.169:8090/api/v1/unsubscription",
         {
           params: { id: ids },
           paramsSerializer: {

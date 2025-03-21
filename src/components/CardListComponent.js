@@ -13,7 +13,7 @@ function CardListComponent() {
   // ✅ 카드 데이터 가져오는 함수
   useEffect(() => {
     axios
-      .get("http://localhost:8090/api/v1/card/filter") // ✅ 엔드포인트 변경
+      .get("http://192.168.0.169:8090/api/v1/card/filter") // ✅ 엔드포인트 변경
       .then((response) => {
         console.log("✅ API 응답 데이터:", response.data);
         setCards(response.data);
@@ -53,7 +53,7 @@ function CardListComponent() {
                   card.cardImgs.map((img, imgIndex) => (
                     <img
                       key={imgIndex}
-                      src={`http://localhost:8090/static/card_img/${img.cardImgUrl
+                      src={`http://192.168.0.169:8090/static/card_img/${img.cardImgUrl
                         .split("/")
                         .pop()}`}
                       alt={`Card Image ${imgIndex + 1}`}
