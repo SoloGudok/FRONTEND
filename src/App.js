@@ -59,8 +59,8 @@ function App() {
           {/* Layout을 기본 레이아웃으로 설정 */}
           <Route path="/" element={<Layout />}>
             {/* 기본 대시보드 */}
-            {/* <Route index element={isAuthenticated ? <Dashboard /> : <Navigate to="/auth/login" />} /> */}
-            <Route index element={<SubscriptionList />} />
+            <Route index element={isAuthenticated ? <Dashboard /> : <SubscriptionList />} />
+            {/* <Route index element={<SubscriptionList />} /> */}
             <Route path="/auth/login" element={isAuthenticated ? <Dashboard /> : <Login onLogin={() => setIsAuthenticated(true)} />} />
             <Route path="/detail" element={<Detail />} />
             <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <SubscriptionList />} />
