@@ -294,7 +294,15 @@ function Dashboard() {
   };
 
   const handleCardImageClick = (cardIndex) => {
-    const selectedCard = cards[cardIndex];
+    const selectedCard = {
+      name: cards[cardIndex].card_name, // 카드 이름
+      shortDescription: cards[cardIndex].short_description, // 쇼츠 내용
+      description: cards[cardIndex].description, // 상세 내용
+      imageUrl: cards[cardIndex].card_img_url, // 이미지 URL
+      createdAt: cards[cardIndex].created_at
+    };
+    
+    // const selectedCard = cards[cardIndex];
     navigate("/detail", { state: selectedCard });
     window.location.reload();
   };
@@ -404,7 +412,7 @@ function Dashboard() {
         </span>
         <div
           id="rcss-bottom"
-          onClick={() => (window.location.href = "/expenditure")}
+          onClick={() => (window.location.href = "/category")}
           style={{
             textAlign: "right",
             marginRight: "50px",

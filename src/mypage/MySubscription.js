@@ -5,8 +5,8 @@ import axios from "axios";
 
 import "./MySubscription.css"; // 스타일 파일 추가
 import { colors } from "@mui/material";
-// import { PieChart } from "@mui/x-charts/PieChart";
 import MenuFooter from "../components/MenuFooter";
+// import { PieChart } from "@mui/x-charts/PieChart";
 
 const API_BASE_URL = "http://localhost:8090/api/v1/subscription";
 
@@ -181,7 +181,9 @@ const MySubscription = () => {
                   <h3>구독 조합 상품</h3>
                   결제일:{" "}
                   {combo.terminationDate
-                    ? new Date(combo.terminationDate).toISOString().split("T")[0]
+                    ? new Date(combo.terminationDate)
+                        .toISOString()
+                        .split("T")[0]
                     : "정보 없음"}
                 </p>
               </div>
@@ -194,6 +196,7 @@ const MySubscription = () => {
           ))}
         </div>
       </div>
+      <MenuFooter />
     </>
   );
 };

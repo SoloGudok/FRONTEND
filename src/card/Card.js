@@ -65,7 +65,7 @@ function Card({ card, isAllCard = false }) {
       };
       
       navigate('/detail', { state: selectedCard });
-
+      window.location.reload();
     } catch (error) {
       console.error('Error fetching image details:', error);
     }
