@@ -18,6 +18,7 @@ import CancelForm from "./mypage/cancelForm";
 import CancelCheck from "./mypage/cancelCheck";
 import FirstPage from "./firstPage/FirstPage";
 import { isTokenExpired, refreshAccessToken } from "./login/axiosConfig";
+import ExpenditureList from "./main/ExpenditureList";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => !!localStorage.getItem("accessToken"));
@@ -65,6 +66,8 @@ function App() {
             <Route path="/detail" element={<Detail />} />
             <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <SubscriptionList />} />
             <Route path="/category" element={isAuthenticated ? <Category /> : <SubscriptionList />} />
+            <Route path="/expenditure" element={<ExpenditureList />} />
+
             {/* 카드 페이지 */}
             <Route path="/cards" element={<CardList />} />
             <Route path="/membership" element={isAuthenticated ? <Membership /> : <SubscriptionList />} />

@@ -24,10 +24,17 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
+import { Bar } from 'react-chartjs-2';
+import 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Chart as ChartJS, registerables } from 'chart.js';
+
 // Transition for the bottom popup
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+ChartJS.register(...registerables, ChartDataLabels);
 
 const categories = [
     { id: 0, name: "전체", emoji: "🔍" }, // 전체 카테고리 추가
@@ -43,6 +50,22 @@ const categories = [
     { id: 10, name: "도서", emoji: "📚" },
 ];
 
+// Define categoryMap for category names
+const categoryMap = {
+  0: "전체",
+  1: "헬스케어",
+  2: "홈/라이프",
+  3: "게임",
+  4: "IT",
+  5: "식품",
+  6: "자기개발",
+  7: "뷰티",
+  8: "영상",
+  9: "음악",
+  10: "도서",
+  null: "전체"
+};
+
 // Day of week function
 const getDayOfWeek = (date) => {
   const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -55,7 +78,7 @@ const ExpenditureList = () => {
     const [expenditures, setExpenditures] = useState([]);
     const [totalExpense, setTotalExpense] = useState(0);
     const [totalIncome, setTotalIncome] = useState(0);
-    const [categoryId, setCategoryId] = useState(null);
+    const [categoryId, setCategoryId] = useState(0); // Default to "전체" (id: 0)
     const [cursorId, setCursorId] = useState(null);  // 🔹 마지막 소비 내역 ID
     const [hasNext, setHasNext] = useState(true); // 🔹 다음 데이터 존재 여부
     const [isFetching, setIsFetching] = useState(false); // 🔹 데이터 로딩 중 여부
@@ -67,6 +90,15 @@ const ExpenditureList = () => {
     const [selectedDate, setSelectedDate] = useState(dayjs(currentMonth));
     // 추가: 현재 뷰 상태 (month 또는 year)
     const [datePickerView, setDatePickerView] = useState('month');
+    
+    // Chart related states
+    const [chartData, setChartData] = useState({
+      userSubscriptionExpenditure: 0,
+      userNonSubscriptionExpenditure: 0,
+      avgSubscriptionExpenditure: 0,
+      avgNonSubscriptionExpenditure: 0
+    });
+    const [chartLoading, setChartLoading] = useState(false);
     
     // Group expenditures by date
     const groupedExpenditures = () => {
@@ -169,6 +201,68 @@ const ExpenditureList = () => {
       }
     }, [cursorId, isFetching, hasNext, categoryId]);
     
+    // 소비 내역 불러오기 함수 (fetch 함수 정의)
+    const fetchExpenditures = async (requestCategoryId) => {
+      const startDate = `${currentMonth.getFullYear()}-${(currentMonth.getMonth() + 1).toString().padStart(2, '0')}-01`;
+      const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate();
+      const endDate = `${currentMonth.getFullYear()}-${(currentMonth.getMonth() + 1).toString().padStart(2, '0')}-${lastDay}`;
+      
+      try {
+        const response = await axios.post('http://localhost:8090/api/v1/expenditure/list', {
+          cursorId: null,
+          startDate,
+          endDate,
+          categoryId: requestCategoryId === 0 ? null : requestCategoryId,
+          size: 10,
+        });
+        
+        setExpenditures(response.data.expenditures);
+        setTotalExpense(response.data.totalExpense);
+        setTotalIncome(response.data.totalIncome);
+        setCursorId(response.data.nextCursor);
+        setHasNext(response.data.hasNext);
+      } catch (error) {
+        console.error('❌ 소비 내역을 불러오는데 실패했습니다.', error);
+      }
+    };
+    
+    // 차트 데이터를 가져오는 함수
+    const fetchChartData = async () => {
+      setChartLoading(true);
+      try {
+        const requestCategoryId = categoryId === 0 ? null : categoryId;
+        
+        const requestBody = {
+          categoryId: requestCategoryId,
+          year: currentMonth.getFullYear(),
+          month: currentMonth.getMonth() + 1,
+          userId: 1 // 현재 로그인한 사용자 ID (실제로는 로그인 정보에서 가져와야 함)
+        };
+
+        console.log("차트 요청 데이터:", JSON.stringify(requestBody, null, 2));
+
+        const response = await axios.post("http://localhost:8090/api/v1/expenditure/chart", requestBody, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = response.data;
+        console.log("차트 응답 데이터:", data);
+
+        setChartData({
+          userSubscriptionExpenditure: data.userSubscriptionExpenditure || 0,
+          userNonSubscriptionExpenditure: data.userNonSubscriptionExpenditure || 0,
+          avgSubscriptionExpenditure: data.avgSubscriptionExpenditure || 0,
+          avgNonSubscriptionExpenditure: data.avgNonSubscriptionExpenditure || 0
+        });
+      } catch (error) {
+        console.error("차트 데이터 로드 실패:", error);
+      } finally {
+        setChartLoading(false);
+      }
+    };
+    
     // 🔹 스크롤 이벤트 감지 (무한 스크롤)
     useEffect(() => {
       const handleScroll = () => {
@@ -234,6 +328,9 @@ const ExpenditureList = () => {
           setTotalIncome(response.data.totalIncome);
           setCursorId(response.data.nextCursor);
           setHasNext(response.data.hasNext);
+          
+          // 차트 데이터도 함께 로드
+          fetchChartData();
         } catch (error) {
           console.error('❌ 소비 내역을 불러오는데 실패했습니다.', error);
         } finally {
@@ -253,7 +350,189 @@ const ExpenditureList = () => {
     const handleViewChange = () => {
       setDatePickerView(datePickerView === 'month' ? 'year' : 'month');
     };
-  
+
+    // In the BarChart1 function
+const BarChart1 = () => {
+  const data = {
+    labels: ["예진님", "20대 평균"],
+    datasets: [
+      {
+        label: '구독소비 비교',
+        data: [chartData.userSubscriptionExpenditure, chartData.avgSubscriptionExpenditure],
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+        ],
+        borderColor: [
+          'rgba(54, 162, 235, 1)',
+          'rgba(75, 192, 192, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: false,
+    indexAxis: "y",
+    borderRadius: 10,
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return `${context.raw.toLocaleString()}원`;
+          }
+        }
+      },
+      // Add datalabels plugin configuration
+      datalabels: {
+        display: true,
+        color: '#000',
+        anchor: 'end',
+        align: 'end',
+        formatter: function(value) {
+          return value.toLocaleString() + '원';
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false
+        },
+        border: {
+          display: false
+        },
+        ticks: {
+          display: false // Hide x-axis values
+        }
+      },
+      y: {
+        beginAtZero: true,
+        grid: {
+          display: false
+        },
+        ticks: {
+          display: true // Show y-axis labels
+        },
+        border: {
+          display: false
+        }
+      }
+    }
+  };
+
+  const style = {
+    position: "relative",
+  }
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <Bar data={data} options={options} style={style} />
+      <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ textAlign: 'left' }}>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+        </div>
+      </div>
+    </div>
+  );
+}
+    
+    
+const BarChart2 = () => {
+  const data = {
+    labels: ["예진님", "20대 평균"],
+    datasets: [
+      {
+        label: '일반소비 비교',
+        data: [chartData.userNonSubscriptionExpenditure, chartData.avgNonSubscriptionExpenditure],
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+        ],
+        borderColor: [
+          'rgba(54, 162, 235, 1)',
+          'rgba(75, 192, 192, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: false,
+    indexAxis: "y",
+    borderRadius: 10,
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return `${context.raw.toLocaleString()}원`;
+          }
+        }
+      },
+      // Add datalabels plugin configuration
+      datalabels: {
+        display: true,
+        color: '#000',
+        anchor: 'end',
+        align: 'end',
+        formatter: function(value) {
+          return value.toLocaleString() + '원';
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false
+        },
+        border: {
+          display: false
+        },
+        ticks: {
+          display: false // Hide x-axis values
+        }
+      },
+      y: {
+        beginAtZero: true,
+        grid: {
+          display: false
+        },
+        ticks: {
+          display: true // Show y-axis labels
+        },
+        border: {
+          display: false
+        }
+      }
+    }
+  };
+
+  const style = {
+    position: "relative"
+  }
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <Bar data={data} options={options} style={style} />
+      <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ textAlign: 'left' }}>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+        </div>
+      </div>
+    </div>
+  );
+}
+    
     return (
     <>
       <div className="expenditure-list">
@@ -342,6 +621,30 @@ const ExpenditureList = () => {
         {/* 로딩 표시 */}
         {isFetching && <p className="loading-text">데이터를 불러오는 중...</p>}
       </div>
+
+      <div className="charts-cell">
+  <div className="charts-cell-title">
+    송예진님과 같은 20대의 평균 {categoryMap[categoryId]} 소비
+  </div>
+
+  {chartLoading ? (
+    <p>차트 로딩 중...</p>
+  ) : (
+    <div className="charts-wrapper" style={{ display: 'flex', gap: '20px' }}>
+      <div className="chart-box" style={{ flex: 1, minWidth: '300px' }}>
+        <div className="chart-title">구독소비</div>
+        <BarChart1 style={{ width: '100%', paddingRight: '40px' }} />
+      </div>
+
+      <div className="chart-box" style={{ flex: 1, minWidth: '300px' }}>
+        <div className="chart-title">구독 외 소비</div>
+        <BarChart2 style={{ width: '100%', paddingRight: '40px' }} />
+      </div>
+    </div>
+  )}
+</div>
+
+
       
       {/* 하단에서 올라오는 날짜 선택 Dialog */}
       <Dialog
