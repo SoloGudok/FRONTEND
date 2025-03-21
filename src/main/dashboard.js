@@ -299,9 +299,9 @@ function Dashboard() {
       shortDescription: cards[cardIndex].short_description, // 쇼츠 내용
       description: cards[cardIndex].description, // 상세 내용
       imageUrl: cards[cardIndex].card_img_url, // 이미지 URL
-      createdAt: cards[cardIndex].created_at
+      createdAt: cards[cardIndex].created_at,
     };
-    
+
     // const selectedCard = cards[cardIndex];
     navigate("/detail", { state: selectedCard });
     window.location.reload();
@@ -606,7 +606,10 @@ function Dashboard() {
                       paddingLeft: "30px",
                     }}
                   >
-                    월 구독료 {item.price}
+                    월 구독료{" "}
+                    {item.price
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </p>
                 </div>
               </SwiperSlide>
