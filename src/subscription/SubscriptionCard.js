@@ -50,7 +50,10 @@ export default function SubscriptionCard({ subscriptions }) {
             <p className="subscription-card-name">{sub.name}</p>
 
             {sub.price && (
-              <p className="subscription-card-price">{sub.price} / 달</p>
+              <p className="subscription-card-price">
+                {sub.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} /
+                달
+              </p>
             )}
           </CardContent>
         </Card>
