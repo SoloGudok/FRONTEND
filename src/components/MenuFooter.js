@@ -34,7 +34,7 @@ const MenuFooter = () => {
           </span>
         </a>
 
-        <a href="/">
+        <a href="/dashboard">
           <span className="menu-footer-button">
             <span className="menu-footer-button-item">
               <span className="menu-footer-button-item-img">

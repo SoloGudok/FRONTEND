@@ -21,7 +21,7 @@ const FirstPage = () => {
           <Link to="https://www.shinhancard.com/pconts/html/card/main/main.html">카드</Link>
           <Link to="https://www.shinhancard.com/pconts/html/life/main/main.html">서비스</Link>
           <Link to="https://www.shinhancard.com/pconts/html/topsClub/main/main.html?vname=MOBFM005R0191">Tops Club</Link>
-          <Link to="/auth/login" className="solo-subscribe">
+          <Link to="/dashboard" className="solo-subscribe">
             솔로구독
           </Link>
           <Link to="https://www.shinhancard.com/mob/MOBFM12101N/MOBFM12101R01.shc">고객센터</Link>
