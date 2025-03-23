@@ -38,7 +38,15 @@ export default function List() {
   return (
     <>
       <div className="min-h-screen p-4 bg-gray-100 flex flex-col items-center">
-        <h1>구독 리스트</h1>
+        <h2
+          style={{
+            fontWeight: "bold",
+            textAlign: "left",
+            marginLeft: "20px",
+          }}
+        >
+          구독 서비스 한눈에 보기!
+        </h2>
 
         <Categorymenu setSelectedCategory={handleCategoryChange} />
 

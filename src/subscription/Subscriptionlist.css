@@ -8,8 +8,7 @@
   transition: box-shadow 0.2s ease-in-out;
   background-color: white;
   text-align: center;
-  margin-top: 30px; /* 상단 여백 추가 */
-  margin-bottom: 30px; /* 하40 여백 추가 */
+  margin: 30px auto; /* 상하단 여백 및 중앙 정렬 */
 }
 
 .subscription-card:hover {
@@ -41,4 +40,22 @@
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+/* 반응형 스타일 추가 */
+@media (max-width: 768px) {
+  .subscription-card {
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .subscription-card {
+    max-width: 130px;
+    height: 130px;
+  }
+
+  .subscription-name {
+    font-size: 12px;
+  }
 }

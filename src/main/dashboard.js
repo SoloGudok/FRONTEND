@@ -14,7 +14,8 @@ import LooksOneIcon from "@mui/icons-material/LooksOne";
 import LooksTwoIcon from "@mui/icons-material/LooksTwo";
 import Looks3Icon from "@mui/icons-material/Looks3";
 import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
-
+import ad1 from "./ad1.png";
+import ad2 from "./ad2.png";
 const categories = [
   { id: 0, name: "전체", emoji: "🔍" },
   { id: 1, name: "헬스케어", emoji: "🏃‍♂️‍➡️" },
@@ -41,7 +42,66 @@ function Dashboard() {
   const [advertisement_images, setadvertisement_images] = useState([]);
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalSubscriptionExpense, setTotalSubscriptionExpense] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
+
+  // 상태 선언 부분에 추가
+  const [autoplayEnabled, setAutoplayEnabled] = useState(true);
+  const swiperRef = React.useRef(null);
+
+  // 컴포넌트에 다음 함수 추가
+  const handleStopAutoplay = () => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.autoplay.stop();
+      setAutoplayEnabled(false);
+    }
+  };
+
+  const handleStartAutoplay = () => {
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.autoplay.start();
+      setAutoplayEnabled(true);
+    }
+  };
+
+  // 화면 크기 변경 감지 효과
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // 화면 크기에 따른 슬라이더 설정
+  const getSlidesPerView = () => {
+    if (windowWidth < 576) {
+      // 모바일
+      return 2;
+    } else if (windowWidth < 992) {
+      // 태블릿
+      return 3;
+    } else {
+      // 데스크탑
+      return 3;
+    }
+  };
+
+  const getRecommendSlidesPerView = () => {
+    if (windowWidth < 576) {
+      // 모바일
+      return 2;
+    } else if (windowWidth < 992) {
+      // 태블릿
+      return 2;
+    } else {
+      // 데스크탑
+      return 2;
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -96,43 +156,21 @@ function Dashboard() {
     const top3Data = chart2Datas.slice(0, 3);
     const top3Labels = chart2Labels.slice(0, 3);
 
+    // 모바일 화면에서 바 두께 조정
+    const getBarThickness = () => {
+      if (windowWidth < 576) {
+        return 30; // 모바일에서 더 얇게
+      } else {
+        return 60; // 데스크탑
+      }
+    };
+
     return (
-      <div
-        className="bar-chart-container"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            maxWidth: "500px",
-            marginTop: "20px",
-          }}
-        >
-          <div
-            className="chart-rank-icons"
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: "10px",
-              paddingLeft: "8%",
-              paddingRight: "8%",
-            }}
-          >
+      <div className="bar-chart-container">
+        <div className="chart-wrapper">
+          <div className="chart-rank-icons">
             {top3Labels.map((label, index) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "80px",
-                }}
-              >
+              <div key={index} className="rank-icon">
                 {index === 0 && <LooksOneIcon style={{ color: "#327BF0" }} />}
                 {index === 1 && <LooksTwoIcon style={{ color: "#7AABFB" }} />}
                 {index === 2 && <Looks3Icon style={{ color: "#ABC6FE" }} />}
@@ -140,8 +178,7 @@ function Dashboard() {
             ))}
           </div>
 
-          {/* 차트 컨테이너에 고정 높이 지정 */}
-          <div style={{ height: "200px", width: "100%" }}>
+          <div className="chart-container-fixed">
             <Bar
               data={{
                 labels: top3Labels,
@@ -149,15 +186,21 @@ function Dashboard() {
                   {
                     data: top3Data,
                     backgroundColor: ["#327BF0", "#7AABFB", "#ABC6FE"],
-                    barThickness: 60,
+                    barThickness: getBarThickness(),
                     borderRadius: 10,
                   },
                 ],
               }}
               options={{
                 responsive: true,
-                maintainAspectRatio: false, // 이 옵션이 중요합니다
-                plugins: { legend: { display: false } },
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { display: false },
+                  // 데이터 라벨을 비활성화
+                  datalabels: {
+                    display: false, // 이 부분이 중요합니다!
+                  },
+                },
                 scales: {
                   x: {
                     grid: { display: false },
@@ -174,16 +217,17 @@ function Dashboard() {
                   padding: {
                     left: 10,
                     right: 10,
+                    bottom: 20,
                   },
                 },
               }}
             />
-            <span>이달의 구독 지출내역 Top3</span>
           </div>
         </div>
       </div>
     );
   };
+
   const ExpenseBarChart = () => {
     // 누적 가로 바 차트를 위한 데이터 준비
     const dataColors = [
@@ -197,15 +241,21 @@ function Dashboard() {
       "#ADD8E6",
     ];
 
+    // 화면 크기에 따라 차트와 레전드 레이아웃 조정
+    const getChartWidth = () => {
+      if (windowWidth < 576) {
+        return "100%"; // 모바일에서는 화면 너비에 맞춤
+      } else {
+        return "450px"; // 데스크탑
+      }
+    };
+
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ width: "450px", height: "100px", align: "center" }}>
+      <div className="expense-chart-container">
+        <div
+          style={{ width: getChartWidth(), height: "100px" }}
+          className="expense-chart"
+        >
           <Bar
             data={{
               labels: ["지출"],
@@ -224,6 +274,9 @@ function Dashboard() {
               indexAxis: "y",
               plugins: {
                 legend: { display: false },
+                datalabels: {
+                  display: false,
+                }, // 이 부분이 중요합니다!
                 tooltip: {
                   callbacks: {
                     label: function (context) {
@@ -261,7 +314,7 @@ function Dashboard() {
           />
         </div>
 
-        <div className="custom-legend" style={{ marginTop: "25px" }}>
+        <div className="custom-legend">
           {chart1Labels.map((label, i) => {
             const category = categories.find((cat) => cat.name === label);
             return (
@@ -270,21 +323,16 @@ function Dashboard() {
                   className="legend-color"
                   style={{
                     backgroundColor: dataColors[i % dataColors.length],
-                    color: "white",
-                    borderRadius: "50%",
-                    width: "25px",
-                    height: "25px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
                   {category ? category.emoji : "❓"}
                 </span>
-                <span className="legend-text">{label}</span>
-                <span className="legend-text">
-                  {chart1Datas[i].toLocaleString()}원
-                </span>
+                <div className="legend-text-container">
+                  <span className="legend-text">{label}</span>
+                  <span className="legend-value">
+                    {chart1Datas[i].toLocaleString()}원
+                  </span>
+                </div>
               </div>
             );
           })}
@@ -295,94 +343,103 @@ function Dashboard() {
 
   const handleCardImageClick = (cardIndex) => {
     const selectedCard = {
-      name: cards[cardIndex].card_name, // 카드 이름
-      shortDescription: cards[cardIndex].short_description, // 쇼츠 내용
-      description: cards[cardIndex].description, // 상세 내용
-      imageUrl: cards[cardIndex].card_img_url, // 이미지 URL
+      name: cards[cardIndex].card_name,
+      shortDescription: cards[cardIndex].short_description,
+      description: cards[cardIndex].description,
+      imageUrl: cards[cardIndex].card_img_url,
       createdAt: cards[cardIndex].created_at,
     };
 
-    // const selectedCard = cards[cardIndex];
     navigate("/detail", { state: selectedCard });
     window.location.reload();
   };
 
   return (
     <>
-      <div className="container">
-        <div>
+      <div className="dashboard-container">
+        <div className="advertisement-banner-section">
           <Swiper
-            id="swiper-advertisement"
-            centeredSlides
-            autoplay={{ delay: 2500 }}
-            pagination
-            navigation
+            ref={swiperRef}
+            spaceBetween={30}
+            centeredSlides={true}
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet",
+              bulletActiveClass: "swiper-pagination-bullet-active",
+            }}
+            navigation={true}
             modules={[Autoplay, Pagination, Navigation]}
-            style={{ display: "flex", justifyContent: "center" }}
+            className="new-card-banner"
           >
-            {advertisement_images.map((image, index) => (
-              <SwiperSlide
-                key={index}
-                style={{ width: 500, height: 500, borderRadius: "10%" }}
-              >
+            <SwiperSlide>
+              <a href="#" alt="상세페이지로 이동">
                 <img
-                  src={image}
-                  className="adv-icon"
-                  alt={`advertisement-${index}`}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  src={ad1}
+                  alt="advertisement-1"
+                  style={{
+                    borderRadius: "5px",
+                    border: "1px solid #e0e0e0",
+                  }}
                 />
-              </SwiperSlide>
-            ))}
+              </a>
+            </SwiperSlide>
+            <SwiperSlide>
+              <a href="#" alt="상세페이지로 이동">
+                <img
+                  src={ad2}
+                  alt="advertisement-2"
+                  style={{
+                    borderRadius: "8px",
+                    border: "1px solid #e0e0e0",
+                  }}
+                />
+              </a>
+            </SwiperSlide>
           </Swiper>
-        </div>
-        <span
-          style={{
-            fontSize: "20px",
-            fontWeight: "bold",
-            display: "block",
-            textAlign: "left",
-            marginTop: "50px",
-
-            marginLeft: "50px",
-          }}
-        >
-          고객님의 현재 구독중인 서비스
-        </span>
-        <div
-          id="rcss-bottom"
-          onClick={() => (window.location.href = "/my-subscriptions/1")}
-          style={{
-            textAlign: "right",
-            marginRight: "50px",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: "5px", // 아이콘과 텍스트 간 간격 조절
-            justifyContent: "flex-end", // 🔹 오른쪽 정렬
-          }}
-        >
-          <h4 style={{ display: "flex", alignItems: "center" }}>
-            나의 구독 관리 하러 가기
-          </h4>
-          <ArrowCircleRightOutlinedIcon style={{ fontSize: "24px" }} />
+          <div className="swiper-controls">
+            <div className="swiper-pagination"></div>
+            <button
+              type="button"
+              className="swiper-button-stop"
+              onClick={handleStopAutoplay}
+            >
+              <span className="blind">stop</span>
+            </button>
+            <button
+              type="button"
+              className="swiper-button-play"
+              id="homeCardBannerPlay"
+              onClick={handleStartAutoplay}
+            >
+              <span className="blind">play</span>
+            </button>
+          </div>
         </div>
 
-        <div
-          style={{
-            width: "80%",
-            border: "1px solid #ddd",
-            borderRadius: "15px",
-            padding: "15px",
-            margin: "20px auto",
-          }}
-        >
+        <div className="section-header">
+          <span className="section-title">고객님의 현재 구독중인 서비스</span>
+          <div
+            className="section-link"
+            onClick={() => (window.location.href = "/my-subscriptions/1")}
+          >
+            <h4>나의 구독 관리 하러 가기</h4>
+            <ArrowCircleRightOutlinedIcon />
+          </div>
+        </div>
+
+        <div className="card-container">
           <Swiper
             id="swiper-susbscription"
-            slidesPerView={3} // 보여주는 슬라이스 수
-            spaceBetween={6} // 사진간 간격
-            centerInsufficientSlides={true} // 슬라이드 갯수의 중간 값을 중앙으로 보이게 함.
-            freeMode={true} // 부드럽게 넘기기
+            slidesPerView={getSlidesPerView()}
+            spaceBetween={6}
+            centerInsufficientSlides={true}
+            freeMode={true}
             modules={[FreeMode]}
+            className="subscription-swiper"
           >
             {subscribingImg?.map((item, index) => (
               <SwiperSlide key={index}>
@@ -397,46 +454,21 @@ function Dashboard() {
             )) || <p>Loading...</p>}
           </Swiper>
         </div>
-        <span
-          style={{
-            fontSize: "20px",
-            fontWeight: "bold",
-            display: "block",
-            textAlign: "left",
-            marginTop: "50px",
 
-            marginLeft: "50px",
-          }}
-        >
-          구독 관련 소비 패턴을 분석해 봤어요!
-        </span>
-        <div
-          id="rcss-bottom"
-          onClick={() => (window.location.href = "/category")}
-          style={{
-            textAlign: "right",
-            marginRight: "50px",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: "5px", // 아이콘과 텍스트 간 간격 조절
-            justifyContent: "flex-end", // 🔹 오른쪽 정렬
-          }}
-        >
-          <h4 style={{ display: "flex", alignItems: "center" }}>
-            구경하러 가기
-          </h4>
-          <ArrowCircleRightOutlinedIcon style={{ fontSize: "24px" }} />
+        <div className="section-header">
+          <span className="section-title">
+            구독 관련 소비 패턴을 분석해 봤어요!
+          </span>
+          <div
+            className="section-link"
+            onClick={() => (window.location.href = "/category")}
+          >
+            <h4>소비내역 보러가기</h4>
+            <ArrowCircleRightOutlinedIcon />
+          </div>
         </div>
-        <div
-          style={{
-            width: "80%",
-            border: "1px solid #ddd",
-            borderRadius: "15px",
-            padding: "15px",
-            margin: "20px auto",
-          }}
-        >
+
+        <div className="expenditure-container">
           <Swiper
             spaceBetween={30}
             centeredSlides
@@ -448,164 +480,74 @@ function Dashboard() {
               bulletActiveClass: "swiper-pagination-bullet-active",
             }}
             modules={[Pagination]}
-            autoHeight={true} // 내용에 맞게 높이 자동 조절
-            style={{ height: "auto" }} // 스와이퍼 컨테이너 높이를 자동으로 설정
+            autoHeight={true}
+            className="analysis-swiper"
           >
-            {/* Swiper 아래에 페이지네이션 표시 영역 추가 */}
-            <div
-              className="swiper-pagination"
-              style={{
-                position: "relative",
-                bottom: "0",
-                marginTop: "20px",
-              }}
-            ></div>
+            <div className="swiper-pagination"></div>
             <SwiperSlide>
-              <span
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                  display: "block",
-                  textAlign: "left",
-                  marginTop: "20px",
-                  marginLeft: "10px",
-                }}
-              >
-                고객님의 구독 소비액은
-                <br />
-                <span style={{ color: "#327BF0" }}>
-                  {totalSubscriptionExpense.toLocaleString()}원
-                </span>{" "}
-                입니다!
-              </span>
-              <div
-                className="chart-container"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
+              <div className="analysis-slide">
+                <span className="analysis-title">
+                  고객님의 구독 소비액은
+                  <br />
+                  <span className="highlight">
+                    {totalSubscriptionExpense.toLocaleString()}원
+                  </span>{" "}
+                  입니다!
+                </span>
+                <span className="chart-title" style={{ marginBottom: 50 }}>
+                  이달의 구독 지출내역 Top3
+                </span>
                 <BarChart />
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <span
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                  display: "block",
-                  textAlign: "left",
-                  marginTop: "20px",
-                  marginLeft: "10px",
-                }}
-              >
-                이번달
-                <br />
-                <span style={{ color: "#327BF0" }}>
-                  {totalExpense.toLocaleString()}원을을
-                </span>{" "}
-                지출하셨네요!
-              </span>
-              <div
-                className="chart-container"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <div className="analysis-slide">
+                <span className="analysis-title">
+                  이번달
+                  <br />
+                  <span className="highlight">
+                    {totalExpense.toLocaleString()}원을
+                  </span>{" "}
+                  지출하셨네요!
+                </span>
                 <ExpenseBarChart />
               </div>
             </SwiperSlide>
           </Swiper>
         </div>
-        <div>
-          <span
-            style={{
-              fontSize: "20px",
-              fontWeight: "bold",
-              display: "block",
-              textAlign: "left",
-              marginTop: "50px",
-              marginBottom: "30px",
-              marginLeft: "50px",
-            }}
-          >
-            취향대로 즐기는 구독
-          </span>
-          <span
-            style={{
-              fontSize: "15px",
-              fontWeight: "bold",
-              display: "block",
-              textAlign: "left",
 
-              marginLeft: "50px",
-              color: "gray",
-            }}
-          >
-            고객님의 소비 패턴을 분석해서 추천 리스트를 만들어 봤어요!
-          </span>
-          <div
-            id="rcss-bottom"
-            onClick={() => (window.location.href = "/subscriptions")}
-            style={{
-              textAlign: "right",
-              marginRight: "50px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "5px", // 아이콘과 텍스트 간 간격 조절
-              justifyContent: "flex-end", // 🔹 오른쪽 정렬
-            }}
-          >
-            <h4 style={{ display: "flex", alignItems: "center" }}>
-              구경하러 가기
-            </h4>
-            <ArrowCircleRightOutlinedIcon style={{ fontSize: "24px" }} />
+        <div className="recommendation-section">
+          <div className="section-header">
+            <span className="section-title">취향대로 즐기는 구독</span>
+            <span className="section-subtitle">
+              고객님의 소비 패턴을 분석해서 추천 리스트를 만들어 봤어요!
+            </span>
+            <div
+              className="section-link"
+              onClick={() => (window.location.href = "/subscriptions")}
+            >
+              <h4>구경하러 가기</h4>
+              <ArrowCircleRightOutlinedIcon />
+            </div>
           </div>
+
           <Swiper
-            slidesPerView={2}
+            slidesPerView={getRecommendSlidesPerView()}
             spaceBetween={20}
             freeMode
             modules={[FreeMode]}
+            className="recommendation-swiper"
           >
             {recommendSubscribingImg.map((item, index) => (
               <SwiperSlide key={index}>
-                <div
-                  style={{
-                    width: "80%",
-                    border: "1px solid #ddd",
-                    borderRadius: "15px",
-                    padding: "15px",
-                    margin: "20px auto",
-                  }}
-                >
+                <div className="recommendation-card">
                   <img
                     src={item.subscription_img_url}
                     className="sub-icon"
                     alt={`recommend-${index}`}
                   />
-                  <p
-                    className="rcss-name"
-                    style={{
-                      fontSize: 20,
-                      textAlign: "left",
-                      paddingLeft: "30px",
-                    }}
-                  >
-                    {item.name}
-                  </p>
-                  <p
-                    className="rcss-name"
-                    style={{
-                      fontSize: 18,
-                      textAlign: "left",
-                      paddingLeft: "30px",
-                    }}
-                  >
+                  <p className="recommendation-name">{item.name}</p>
+                  <p className="recommendation-price">
                     월 구독료{" "}
                     {item.price
                       .toString()
@@ -616,50 +558,22 @@ function Dashboard() {
             ))}
           </Swiper>
         </div>
-        <div>
-          <h2
-            style={{
-              fontSize: "20px",
-              fontWeight: "bold",
-              textAlign: "left",
-              margin: "50px 0 30px 50px",
-            }}
-          >
-            고객님에게 딱 맞는 카드!
-          </h2>
-          <span
-            style={{
-              fontSize: "15px",
-              fontWeight: "bold",
-              display: "block",
-              textAlign: "left",
-              // marginBottom: "30px",
-              marginLeft: "50px",
-              color: "gray",
-            }}
-          >
-            고객님이 현재 구독중이신 서비스를
-            <br />
-            신한카드 혜택과 함께 즐겨보세요!
-          </span>
 
-          <div
-            id="rcss-bottom"
-            onClick={() => (window.location.href = "/cards")}
-            style={{
-              textAlign: "right",
-              marginRight: "50px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "5px", // 아이콘과 텍스트 간 간격 조절
-              justifyContent: "flex-end", // 🔹 오른쪽 정렬
-            }}
-          >
-            <h4 style={{ display: "flex", alignItems: "center" }}>
-              구경하러 가기
-            </h4>
-            <ArrowCircleRightOutlinedIcon style={{ fontSize: "24px" }} />
+        <div className="card-recommendation-section">
+          <div className="section-header">
+            <h2 className="section-title">고객님에게 딱 맞는 카드!</h2>
+            <span className="section-subtitle">
+              고객님이 현재 구독중이신 서비스를
+              <br />
+              신한카드 혜택과 함께 즐겨보세요!
+            </span>
+            <div
+              className="section-link"
+              onClick={() => (window.location.href = "/cards")}
+            >
+              <h4>구경하러 가기</h4>
+              <ArrowCircleRightOutlinedIcon />
+            </div>
           </div>
           {loading ? (
             <section
@@ -714,7 +628,6 @@ function Dashboard() {
           )}
         </div>
       </div>
-
       <MenuFooter />
     </>
   );

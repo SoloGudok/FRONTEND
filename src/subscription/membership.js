@@ -3,7 +3,7 @@ import axios from "axios";
 import Categorymenu from "../components/Categorymenu";
 import Selecteddrawer from "./Selecteddrawer";
 import Subscriptionlist from "./Subscriptionlist";
-import membershipImg from "./membershipimg.jpg";
+import membershipImg from "./membershipimg2.png";
 import step1Img from "./step1.png";
 import step1Img2 from "./step2.png";
 import "./membership.css"; // CSS 파일 import
@@ -75,12 +75,11 @@ export default function Membership() {
           <img
             src={membershipImg}
             style={{
-              width: "500px",
-              borderRadius: "10%",
-              marginBottom: "50px",
+              width: "100%",
+              //borderRadius: "10%",
+              //marginBottom: "50px",
               marginTop: "50px",
               objectFit: "cover",
-              boxShadow: "4px 4px 10px rgba(50, 123, 240, 0.3)", // 파란색 계열 그림자 효과
             }}
             alt="멤버십 이미지"
           />
