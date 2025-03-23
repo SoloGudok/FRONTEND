@@ -80,7 +80,7 @@ function Dashboard() {
   const getSlidesPerView = () => {
     if (windowWidth < 576) {
       // 모바일
-      return 2;
+      return 4;
     } else if (windowWidth < 992) {
       // 태블릿
       return 3;
@@ -461,7 +461,7 @@ function Dashboard() {
           </span>
           <div
             className="section-link"
-            onClick={() => (window.location.href = "/category")}
+            onClick={() => (window.location.href = "/expenditure")}
           >
             <h4>소비내역 보러가기</h4>
             <ArrowCircleRightOutlinedIcon />

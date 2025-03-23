@@ -331,7 +331,7 @@
 /* 추천 섹션 스타일 */
 .recommendation-section,
 .card-recommendation-section {
-  margin: 30px 0;
+  /* margin: 30px 0; */
   width: 100%; /* 추가: 전체 너비 사용 */
 }
 
