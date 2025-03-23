@@ -183,7 +183,7 @@ const ExpenditureList = () => {
           startDate,
           endDate,
           categoryId: requestCategoryId,
-          size: 10,
+          size: 150,
         });
     
         console.log("📌 API 응답 데이터:", response.data);
@@ -213,7 +213,7 @@ const ExpenditureList = () => {
           startDate,
           endDate,
           categoryId: requestCategoryId === 0 ? null : requestCategoryId,
-          size: 10,
+          size: 150,
         });
         
         setExpenditures(response.data.expenditures);
@@ -318,7 +318,7 @@ const ExpenditureList = () => {
             startDate,
             endDate,
             categoryId: requestCategoryId,
-            size: 10,
+            size: 150,
           });
           
           console.log("📌 초기 데이터 응답:", response.data);
@@ -352,6 +352,7 @@ const ExpenditureList = () => {
     };
 
     // In the BarChart1 function
+// BarChart1 컴포넌트 수정
 const BarChart1 = () => {
   const data = {
     labels: ["예진님", "20대 평균"],
@@ -373,7 +374,8 @@ const BarChart1 = () => {
   };
 
   const options = {
-    responsive: false,
+    responsive: true, // true로 변경하여 컨테이너에 맞게 조정
+    maintainAspectRatio: false, // 종횡비 유지 안 함
     indexAxis: "y",
     borderRadius: 10,
     plugins: {
@@ -387,7 +389,6 @@ const BarChart1 = () => {
           }
         }
       },
-      // Add datalabels plugin configuration
       datalabels: {
         display: true,
         color: '#000',
@@ -395,7 +396,13 @@ const BarChart1 = () => {
         align: 'end',
         formatter: function(value) {
           return value.toLocaleString() + '원';
-        }
+        },
+        padding: { right: 5 }, // 오른쪽 패딩 추가
+      }
+    },
+    layout: {
+      padding: {
+        right: 30, // 오른쪽 패딩 추가
       }
     },
     scales: {
@@ -425,24 +432,14 @@ const BarChart1 = () => {
     }
   };
 
-  const style = {
-    position: "relative",
-  }
-
   return (
-    <div style={{ position: 'relative' }}>
-      <Bar data={data} options={options} style={style} />
-      <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ textAlign: 'left' }}>
-        </div>
-        <div style={{ textAlign: 'right' }}>
-        </div>
-      </div>
+    <div style={{ position: 'relative', width: '100%', height: '120px' }}>
+      <Bar data={data} options={options} />
     </div>
   );
 }
-    
-    
+
+// BarChart2 컴포넌트 수정 (BarChart1과 동일한 방식으로 수정)
 const BarChart2 = () => {
   const data = {
     labels: ["예진님", "20대 평균"],
@@ -464,7 +461,8 @@ const BarChart2 = () => {
   };
 
   const options = {
-    responsive: false,
+    responsive: true, // true로 변경
+    maintainAspectRatio: false, // 종횡비 유지 안 함
     indexAxis: "y",
     borderRadius: 10,
     plugins: {
@@ -478,7 +476,6 @@ const BarChart2 = () => {
           }
         }
       },
-      // Add datalabels plugin configuration
       datalabels: {
         display: true,
         color: '#000',
@@ -486,7 +483,13 @@ const BarChart2 = () => {
         align: 'end',
         formatter: function(value) {
           return value.toLocaleString() + '원';
-        }
+        },
+        padding: { right: 5 }, // 오른쪽 패딩 추가
+      }
+    },
+    layout: {
+      padding: {
+        right: 30, // 오른쪽 패딩 추가
       }
     },
     scales: {
@@ -516,19 +519,9 @@ const BarChart2 = () => {
     }
   };
 
-  const style = {
-    position: "relative"
-  }
-
   return (
-    <div style={{ position: 'relative' }}>
-      <Bar data={data} options={options} style={style} />
-      <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
-        <div style={{ textAlign: 'left' }}>
-        </div>
-        <div style={{ textAlign: 'right' }}>
-        </div>
-      </div>
+    <div style={{ position: 'relative', width: '100%', height: '120px' }}>
+      <Bar data={data} options={options} />
     </div>
   );
 }
@@ -630,17 +623,25 @@ const BarChart2 = () => {
   {chartLoading ? (
     <p>차트 로딩 중...</p>
   ) : (
-    <div className="charts-wrapper" style={{ display: 'flex', gap: '20px' }}>
-      <div className="chart-box" style={{ flex: 1, minWidth: '300px' }}>
-        <div className="chart-title">구독소비</div>
-        <BarChart1 style={{ width: '100%', paddingRight: '40px' }} />
-      </div>
+    // charts-wrapper 부분 변경 (약 721줄)
+<div className="charts-wrapper" style={{ 
+  display: 'flex', 
+  flexDirection: 'column', 
+  gap: '40px',
+  width: '100%',
+  maxWidth: '480px', // 최대 너비 설정
+  margin: '0 auto' // 중앙 정렬
+}}>
+  <div className="chart-box" style={{ width: '100%' }}>
+    <div className="chart-title">구독소비</div>
+    <BarChart1 />
+  </div>
 
-      <div className="chart-box" style={{ flex: 1, minWidth: '300px' }}>
-        <div className="chart-title">구독 외 소비</div>
-        <BarChart2 style={{ width: '100%', paddingRight: '40px' }} />
-      </div>
-    </div>
+  <div className="chart-box" style={{ width: '100%' }}>
+    <div className="chart-title">구독 외 소비</div>
+    <BarChart2 />
+  </div>
+</div>
   )}
 </div>
 
