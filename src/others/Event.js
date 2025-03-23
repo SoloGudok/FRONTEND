@@ -69,20 +69,15 @@ const Event = () => {
 
   return (
     <>
-      <div className="event-header">
-        <div className="event-header-leftside" onClick={() => navigate(-1)}>
-          <img src={back_icon} alt="뒤로가기" />
-        </div>
-
-        <div className="event-header-center">
-          <img
-            src={character}
-            alt="이벤트 캐릭터"
-            className="event-header-character"
-          />
-          <div className="event-header-title">이벤트</div>
-        </div>
-      </div>
+      <h2
+        style={{
+          fontWeight: "bold",
+          textAlign: "left",
+          marginLeft: "20px",
+        }}
+      >
+        Event
+      </h2>
       <div className="event-container">
         <ul className="event-list">
           {eventList.map((event) => (

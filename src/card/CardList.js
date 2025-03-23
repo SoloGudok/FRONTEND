@@ -10,7 +10,7 @@ import CategoryCard from "./CategoryCard";
 import "./CategoryCard.css";
 import MenuFooter from "../components/MenuFooter";
 import FilterCardList from "./FilterCardList";
-import "./list.css";
+import "./CardList.css";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import PauseIcon from "@mui/icons-material/Pause";
@@ -82,7 +82,7 @@ function CardList() {
     <>
       {/* === 모달 팝업 === */}
       <VideoModal isOpen={isModalOpen} onClose={handleCloseModal} />
-
+      <div class="title-left">내게 맞는 카드 찾기</div>
       <CategoryCard
         onCategorySelect={setSelectedCategory}
         className="category-menu"
@@ -92,8 +92,8 @@ function CardList() {
       <Swiper
         id="filtered-cardlist-slide"
         modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={-100}
-        slidesPerView={1.5} // 1.5개 보여줌
+        spaceBetween={-50}
+        slidesPerView={2} // 1.5개 보여줌
         centeredSlides={true}
         navigation
         autoplay={{ delay: 3000, disableOnInteraction: false }}

@@ -1,18 +1,12 @@
 .card {
-  width: 400px;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
   text-align: center;
-  margin: 10px;
-  padding: 10px;
-  margin-bottom: 7px;
-  min-height: 300px; /* 최소 높이 설정, 전체 카드 슬라이드 */
+  min-height: 150px;
 }
 
 .card-images {
-  width: 80%; /* 부모 컨테이너의 너비에 맞게 설정 */
-  height: 190px; /* 높이를 비율에 맞게 자동 조정 */
   display: flex;
   justify-content: center; /* 이미지를 가운데 정렬 */
   align-items: center;
@@ -25,20 +19,15 @@
   object-fit: contain; /* 이미지 비율 유지하면서 잘리도록 설정 */
   border-radius: 5px; /* 이미지의 모서리 둥글게 설정 */
   justify-content: center; /* 이미지를 가운데 정렬 */
-  margin-left: 41px; /* 이미지를 왼쪽으로 이동 */
-}
-
-.card-body {
-  padding: 40px;
+  margin-left: 49px; /* 이미지를 왼쪽으로 이동 */
 }
 
 .card-title {
-  font-size: 18px;
+  font-size: 28px;
   font-weight: bold;
-  padding-top: 10px;
 }
 
 .card-text {
   color: #666;
-  font-size: 14px;
+  font-size: 4px;
 }

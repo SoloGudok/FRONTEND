@@ -109,15 +109,15 @@ const MySubscription = () => {
   return (
     <>
       <div className="subscription-container">
-        <h2
+        <h3
           style={{
-            fontSize: "20px",
             fontWeight: "bold",
             textAlign: "left",
+            marginLeft: "20px",
           }}
         >
           고객님이 구독중인 서비스
-        </h2>
+        </h3>
 
         {/* ✅ 개별 구독 서비스 리스트 */}
         <div className="subscription-list">
@@ -150,15 +150,15 @@ const MySubscription = () => {
         </div>
 
         {/* ✅ 조합 구독 서비스 리스트 */}
-        <h2
+        <h3
           style={{
-            fontSize: "20px",
             fontWeight: "bold",
             textAlign: "left",
+            marginLeft: "20px",
           }}
         >
           고객님이 구독중인 조합 상품
-        </h2>
+        </h3>
         <div className="subscription-list">
           {combinationSubscriptions.map((combo) => (
             <div key={combo.membershipId} className="subscription-item combo">
@@ -178,8 +178,6 @@ const MySubscription = () => {
                     textAlign: "right",
                   }}
                 >
-                  <h3>구독 조합 상품</h3>
-                  결제일:{" "}
                   {combo.terminationDate
                     ? new Date(combo.terminationDate)
                         .toISOString()
@@ -195,8 +193,8 @@ const MySubscription = () => {
             </div>
           ))}
         </div>
+        <MenuFooter />
       </div>
-      <MenuFooter />
     </>
   );
 };

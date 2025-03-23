@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Layout from "./Layout";
 import "./App.css";
 import Dashboard from "./main/dashboard";
@@ -7,7 +12,7 @@ import Category from "./main/category";
 import Membership from "./subscription/membership";
 import SubscriptionList from "./subscription/list";
 import CardList from "./card/CardList"; // CardList 컴포넌트 import
-import "./card/list.css";
+import "./card/CardList.css";
 import Event from "./others/Event";
 import Payment from "./subscription/Payment";
 import Detail from "./card/Detail";
@@ -21,7 +26,9 @@ import { isTokenExpired, refreshAccessToken } from "./login/axiosConfig";
 import ExpenditureList from "./main/ExpenditureList";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => !!localStorage.getItem("accessToken"));
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => !!localStorage.getItem("accessToken")
+  );
 
   useEffect(() => {
     const checkAndRefreshToken = async () => {
@@ -60,35 +67,81 @@ function App() {
           {/* Layout을 기본 레이아웃으로 설정 */}
           <Route path="/" element={<Layout />}>
             {/* 기본 대시보드 */}
-            <Route index element={isAuthenticated ? <Dashboard /> : <SubscriptionList />} />
+            <Route
+              index
+              element={isAuthenticated ? <Dashboard /> : <SubscriptionList />}
+            />
             {/* <Route index element={<SubscriptionList />} /> */}
-            <Route path="/auth/login" element={isAuthenticated ? <Dashboard /> : <Login onLogin={() => setIsAuthenticated(true)} />} />
+            <Route
+              path="/auth/login"
+              element={
+                isAuthenticated ? (
+                  <Dashboard />
+                ) : (
+                  <Login onLogin={() => setIsAuthenticated(true)} />
+                )
+              }
+            />
             <Route path="/detail" element={<Detail />} />
-            <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <SubscriptionList />} />
-            <Route path="/category" element={isAuthenticated ? <Category /> : <SubscriptionList />} />
+            <Route
+              path="/dashboard"
+              element={isAuthenticated ? <Dashboard /> : <SubscriptionList />}
+            />
+            <Route
+              path="/category"
+              element={isAuthenticated ? <Category /> : <SubscriptionList />}
+            />
             <Route path="/expenditure" element={<ExpenditureList />} />
 
             {/* 카드 페이지 */}
             <Route path="/cards" element={<CardList />} />
-            <Route path="/membership" element={isAuthenticated ? <Membership /> : <SubscriptionList />} />
+            <Route
+              path="/membership"
+              element={isAuthenticated ? <Membership /> : <SubscriptionList />}
+            />
             <Route path="/event" element={<Event />} />
             <Route path="/subscriptions" element={<SubscriptionList />} />
             <Route
               path="/subscriptions/:categoryId"
               element={<SubscriptionList />}
             />
-            <Route path="/payment" element={isAuthenticated ? <Payment /> : <Navigate to="/auth/login" />} />
+            <Route
+              path="/payment"
+              element={
+                isAuthenticated ? <Payment /> : <Navigate to="/auth/login" />
+              }
+            />
             <Route
               path="/subscription/:subscriptionId"
               element={<SubscriptionDetail />}
             />
             <Route
               path="/my-subscriptions/:userId"
-              element={isAuthenticated ? <MySubscription /> : <Navigate to="/auth/login" />}
+              element={
+                isAuthenticated ? (
+                  <MySubscription />
+                ) : (
+                  <Navigate to="/auth/login" />
+                )
+              }
             />
-            <Route path="/mypage/cancelForm" element={isAuthenticated ? <CancelForm /> : <Navigate to="/auth/login" />} />
-            <Route path="/mypage/cancelCheck" element={isAuthenticated ? <CancelCheck /> : <Navigate to="/auth/login" />} />
-            <Route path="/firstPage" element={<FirstPage/>} />
+            <Route
+              path="/mypage/cancelForm"
+              element={
+                isAuthenticated ? <CancelForm /> : <Navigate to="/auth/login" />
+              }
+            />
+            <Route
+              path="/mypage/cancelCheck"
+              element={
+                isAuthenticated ? (
+                  <CancelCheck />
+                ) : (
+                  <Navigate to="/auth/login" />
+                )
+              }
+            />
+            <Route path="/firstPage" element={<FirstPage />} />
           </Route>
         </Routes>
       </Router>

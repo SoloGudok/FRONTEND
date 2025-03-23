@@ -3,7 +3,7 @@
   max-width: 600px; /* 모바일 화면에서 최대 너비 */
   min-height: 100vh; /* 화면 높이를 꽉 채우도록 설정 */
   margin: 0 auto;
-  background-color: white;
+  background-color: aliceblue;
   display: flex;
   flex-direction: column;
   text-align: center;
