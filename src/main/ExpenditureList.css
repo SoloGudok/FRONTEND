@@ -279,22 +279,32 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding: 0 10px; /* 좌우 패딩 축소 */
+    box-sizing: border-box;
+  }
+    
+  .charts-cell-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 45px;
+    padding-left: 20px; /* 왼쪽 패딩 축소 */
   }
   
-  .charts-cell-title {
-    font-size: 1.2rem; /* 글씨 크기 키움 */
-    font-weight: bold; /* 굵게 설정 */
-    text-align: left;  /* 왼쪽 정렬 */
-    width: 100%;       /* 전체 너비 */
-    margin-bottom: 45px; /* 아래 여백 추가 */
-    padding-left: 100px;  /* 왼쪽 여백 추가 */
-}
-
-.chart-title {
-    font-size: 1.2rem; /* 글씨 크기 키움 */
-    font-weight: bold;  /* 굵게 설정 */
-}
-
+  .chart-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .charts-wrapper {
+    width: 100%;
+  }
+  
+  .chart-box {
+    margin-bottom: 20px;
+  }
   
   .charts {
     display: flex;
