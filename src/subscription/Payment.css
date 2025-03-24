@@ -57,3 +57,12 @@
 .payment-button-final:hover {
   background-color: #0056b3 !important;
 }
+.custom-dialog-button {
+  width: 70% !important;
+  max-width: 100px;
+  height: 30px !important;
+  background-color: #007bff !important;
+  border-radius: 8px;
+  border: #007bff;
+  color: white;
+}

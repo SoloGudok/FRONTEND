@@ -8,7 +8,7 @@ import { FreeMode } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "../main/styles-dashboard.css";
-
+import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
 export default function CancelCheck() {
   const [recommendSubscribingImg, setRecommendSubscribingImg] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -71,6 +71,15 @@ export default function CancelCheck() {
 
   return (
     <>
+      <h3
+        style={{
+          fontWeight: "bold",
+          textAlign: "center",
+          marginLeft: "20px",
+        }}
+      >
+        해지 완료
+      </h3>
       <div className="cancel-checkBox">
         <div className="cancel-checkBox-title">
           <p>해지신청을 완료했어요.</p>
@@ -86,7 +95,22 @@ export default function CancelCheck() {
       </div>
 
       <div className="recommend-service">
-        <p>고객님만을 위한 구독 꿀조합이 준비되어 있어요!</p>
+        <h4
+          style={{
+            fontWeight: "bold",
+            textAlign: "left",
+            marginLeft: "20px",
+          }}
+        >
+          고객님을 위한 구독
+        </h4>
+        <div
+          className="section-link"
+          onClick={() => (window.location.href = "/subscriptions")}
+        >
+          <h4>구경하러 가기</h4>
+          <ArrowCircleRightOutlinedIcon />
+        </div>
         <div>
           <div id="rcss-container">
             <Swiper
@@ -112,13 +136,6 @@ export default function CancelCheck() {
                 </SwiperSlide>
               )) || <p>Loading...</p>}
             </Swiper>
-
-            <div
-              id="rcss-container_bottom"
-              onClick={() => (window.location.href = "/cards")}
-            >
-              <h4>더보기 &gt; </h4>
-            </div>
           </div>
         </div>
       </div>
