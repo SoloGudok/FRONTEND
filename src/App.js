@@ -49,7 +49,7 @@ function App() {
             />
             <Route path="/mypage/cancelForm" element={<CancelForm />} />
             <Route path="/mypage/cancelCheck" element={<CancelCheck />} />
-            <Route path="/firstPage" element={<FirstPage />} />
+            <Route path="/firstpage" element={<FirstPage />} />
           </Route>
         </Routes>
       </Router>
