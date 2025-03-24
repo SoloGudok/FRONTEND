@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import "./card.css"; // 스타일 적용
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // 이미지 출력 함수
 const renderImages = (cardImgs) => {
@@ -50,7 +50,6 @@ const renderAllCardImages = (cardImgs) => {
 };
 
 function Card({ card, isAllCard = false }) {
-
   //hyenho 추가
   const navigate = useNavigate();
   const handleCardImageClick = () => {
@@ -61,21 +60,25 @@ function Card({ card, isAllCard = false }) {
         shortDescription: card.shortDescription, // 쇼츠 내용
         description: card.description, // 상세 내용
         imageUrl: card.cardImgs[0].cardImgUrl, // 이미지 URL
-        createdAt: card.createdAt
+        createdAt: card.createdAt,
       };
-      
-      navigate('/detail', { state: selectedCard });
+
+      navigate("/detail", { state: selectedCard });
       window.location.reload();
     } catch (error) {
-      console.error('Error fetching image details:', error);
+      console.error("Error fetching image details:", error);
     }
   };
   //hyenho 추가 끝
 
-
   return (
     <div className="card">
-      <div className="card-images" onClick={() => { handleCardImageClick() }}>
+      <div
+        className="card-images"
+        onClick={() => {
+          handleCardImageClick();
+        }}
+      >
         {isAllCard
           ? renderAllCardImages(card.cardImgs)
           : renderImages(card.cardImgs)}{" "}
