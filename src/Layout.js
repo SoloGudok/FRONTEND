@@ -6,7 +6,7 @@ import { Outlet, useLocation } from "react-router-dom";
 function Layout({ title, footermessage }) {
   const location = useLocation();
 
-  const hideHeaderOnPages = ["/firstPage"];
+  const hideHeaderOnPages = ["/firstpage"];
   const shouldHideHeader = hideHeaderOnPages.includes(location.pathname);
 
   return (
