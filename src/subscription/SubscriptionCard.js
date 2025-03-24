@@ -41,14 +41,15 @@ export default function SubscriptionCard({ subscriptions }) {
         className="subscription-card-item custom-combination-card"
         sx={{
           borderRadius: 12,
-          maxWidth: 200,
-          height: 250,
-          padding: "13px",
+          maxWidth: "90%",
+          width: "90%",
+          height: 180,
+          padding: "8px",
           textAlign: "center",
           cursor: "pointer",
           background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
           color: "white",
-          margin: "12px",
+          margin: "6px",
           boxShadow: "4px 4px 12px rgba(0, 0, 0, 0.1)",
         }}
         onClick={handleCustomCombinationClick}
@@ -62,15 +63,18 @@ export default function SubscriptionCard({ subscriptions }) {
             justifyContent: "center",
             height: "100%",
             padding: "0 !important", // MUI CardContent에 기본 패딩 제거
+            position: "relative", // 상대 위치 지정
+            top: "50%", // 상위 요소의 중앙에서 시작
+            transform: "translateY(-50%)", // 자신의 높이의 50%만큼 위로 이동
           }}
         >
           <div className="subscription-card-img-container">
             <div className="custom-card-icon">🎁</div>
           </div>
-          <p className="subscription-card-name" style={{ color: "white" }}>
-          내 맘대로<br />구독 조합!
+          <p className="subscription-card-name" style={{ color: "white", marginBottom: "2px" }}>
+            내 맘대로<br />구독 조합!
           </p>
-          <p className="subscription-card-description">
+          <p className="subscription-card-description" style={{ marginTop: "2px" }}>
             나만의 구독 서비스를 조합해보세요
           </p>
         </CardContent>
@@ -92,12 +96,16 @@ export default function SubscriptionCard({ subscriptions }) {
             className="subscription-card-item"
             sx={{
               borderRadius: 12,
-              maxWidth: 200,
-              height: 250,
-              padding: "13px",
+              maxWidth: "90%",
+              width: "90%",
+              height: 180,
+              padding: "8px",
               textAlign: "center",
-              margin: "12px",
+              margin: "6px",
               boxShadow: "4px 4px 12px rgba(0, 0, 0, 0.1)",
+              display: "flex", // 플렉스 컨테이너로 설정
+              alignItems: "center", // 세로 방향 중앙 정렬
+              justifyContent: "center", // 가로 방향 중앙 정렬
             }}
           >
             <CardContent
@@ -108,11 +116,15 @@ export default function SubscriptionCard({ subscriptions }) {
                 alignItems: "center",
                 justifyContent: "center",
                 height: "100%",
+                width: "100%",
                 padding: "0 !important", // MUI CardContent에 기본 패딩 제거
               }}
             >
               {imageUrl && (
-                <div className="subscription-card-img-container">
+                <div 
+                  className="subscription-card-img-container" 
+                  style={{ marginBottom: "8px" }} // 이미지와 이름 사이 간격 조정
+                >
                   <img
                     src={imageUrl}
                     alt={name}
@@ -123,10 +135,10 @@ export default function SubscriptionCard({ subscriptions }) {
                 </div>
               )}
 
-              <p className="subscription-card-name">{name}</p>
+              <p className="subscription-card-name" style={{ marginBottom: "2px" }}>{name}</p>
 
               {hasPrice && (
-                <p className="subscription-card-price">
+                <p className="subscription-card-price" style={{ marginTop: "2px" }}>
                   {formatPrice(item.price)} / 달
                 </p>
               )}
