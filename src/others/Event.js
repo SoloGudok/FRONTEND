@@ -10,8 +10,6 @@ import event5 from "../components/img/event5.png";
 import event6 from "../components/img/event6.png";
 import event7 from "../components/img/event7.png";
 import event8 from "../components/img/event8.png";
-import character from "../components/img/character.png";
-import back_icon from "../components/img/back_icon.png";
 
 const eventList = [
   {
@@ -65,8 +63,6 @@ const eventList = [
 ];
 
 const Event = () => {
-  const navigate = useNavigate();
-
   return (
     <>
       <h2
