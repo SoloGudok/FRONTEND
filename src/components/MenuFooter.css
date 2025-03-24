@@ -2,18 +2,30 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  /* Ensure body takes up at least full viewport height */
+  min-height: 100vh;
+  /* Setup for pushing footer to bottom */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content container - will push footer down */
+.content {
+  flex: 1;
+  /* Allow this to grow and push footer down */
+  padding-bottom: 65px; /* Add padding to prevent content from being hidden behind footer */
 }
 
 .menu-footer {
-  position: sticky;
-  max-height: 55px;
+  position: fixed; /* Changed from sticky to fixed */
+  height: 50px;
   width: 100%;
   max-width: 600px;
   bottom: 0;
   left: 50%;
+  transform: translateX(-50%); /* Center the footer */
   background: rgb(230, 235, 255);
   border-top: 1px solid #d5edff;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
   padding: 10px 0;
   z-index: 999;
 }
@@ -30,7 +42,7 @@ a:hover {
 }
 
 a {
-  color: white;
+  color: inherit; /* Changed from white to inherit to match parent text color */
   text-decoration: none;
   font-size: 14px;
 }
@@ -54,17 +66,17 @@ a {
 .menu-footer-button-item-content {
   font-size: 12px;
   margin-bottom: 6px;
-  color: #3f3f3f; /* 글자 색을 어두운 회색으로 변경 */
+  color: #3f3f3f;
 }
 
 /* 링크 스타일 변경 */
 .menu-footer-link {
-  text-decoration: none; /* 밑줄 제거 */
-  color: inherit; /* 링크 색 변경 방지 */
+  text-decoration: none;
+  color: inherit;
 }
 
 .menu-footer-link:visited,
 .menu-footer-link:hover,
 .menu-footer-link:active {
-  color: inherit; /* 클릭해도 색 변하지 않도록 설정 */
+  color: inherit;
 }

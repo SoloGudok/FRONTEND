@@ -9,20 +9,23 @@ import ModalClose from "@mui/joy/ModalClose";
 import Menu from "@mui/icons-material/Menu";
 import { CssVarsProvider } from "@mui/joy/styles";
 import "./Header2.css";
-import logo from "./img/logo2.png";
+import logo from "./img/logo1.png";
 import { Link } from "react-router-dom";
 
 const Logo = () => (
   <div className="logo">
-    <img
-      src={logo}
-      alt="Logo"
-      style={{
-        width: "auto",
-        maxHeight: "100%",
-        display: "block",
-      }}
-    />
+    <Link to="/dashboard">
+      <img
+        src={logo}
+        alt="Logo"
+        style={{
+          width: "auto",
+          maxHeight: "100%",
+          display: "block",
+          cursor: "pointer",
+        }}
+      />
+    </Link>
   </div>
 );
 

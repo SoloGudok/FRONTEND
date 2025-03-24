@@ -31,7 +31,7 @@
 /* 태블릿이나 모바일에서는 더 작게 표시 */
 @media screen and (max-width: 768px) {
   .logo img {
-    max-width: 100px;
+    max-width: 170px;
   }
 }
 
