@@ -1,44 +1,90 @@
 .subscription-card-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 가로로 2개의 카드 */
-    gap: 16px;  /* 카드 간격 */
-  }
-  
-  .subscription-card-item {
-    border-radius: 12px;  /* 원래의 둥근 모서리 */
-    max-width: 200px;     /* 카드 너비 줄이기 */
-    height: 250px;        /* 카드 높이 줄이기 */
-    padding: 13px;
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.2s ease-in-out;
-    background-color: white;
-    text-align: center;
-    margin: 12px;
-  }
-  
-  .subscription-card-img-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 60%;  /* 이미지 영역을 더 키움 */
-  }
-  
-  .subscription-card-img {
-    width: 120px;   /* 이미지 크기 키우기 */
-    height: 120px;  /* 이미지 크기 키우기 */
-    object-fit: contain;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 16px;
+  max-width: 100%;
+  justify-items: center; /* 그리드 셀 내부에서 아이템 중앙 정렬 */
+}
+
+.subscription-card-item {
+  border-radius: 12px;
+  width: 100%; /* 상위 그리드 셀의 전체 너비 사용 */
+  height: 150px;
+  padding: 8px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease-in-out, transform 0.3s ease;
+  background-color: white;
+  text-align: center;
+  /* margin 제거 - 그리드 gap으로 대체 */
+}
+
+.subscription-card-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 55%;
+}
+
+.subscription-card-img {
+  width: 85px;
+  height: 85px;
+  object-fit: contain;
+}
+
+.subscription-card-name {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 6px;
+  margin-bottom: 2px;
+}
+
+.subscription-card-price {
+  font-size: 13px;
+  font-weight: bold;
+  color: #555;
+  margin-top: 2px;
+}
+
+/* 새로운 "내 맘대로 구독 조합!" 카드 스타일 */
+.custom-combination-card {
+  width: 100%; /* 상위 그리드 셀의 전체 너비 사용 */
+  height: 150px; /* 다른 카드와 높이 일치 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  color: white;
+}
+
+.custom-combination-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.custom-card-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.subscription-card-description {
+  margin-top: 0.3rem;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 미디어 쿼리 추가 - 좁은 화면에서 조정 */
+@media (max-width: 400px) {
+  .subscription-card-grid {
+    padding: 12px;
+    gap: 10px;
   }
   
   .subscription-card-name {
-    font-size: 16px;     /* 폰트 크기 복구 */
-    font-weight: bold;
-    margin-top: 12px;    /* 텍스트 간격 복구 */
+    font-size: 13px;
   }
   
-.subscription-card-price {
-font-size: 14px;
-font-weight: bold;
-color: #555;
-margin-top: 8px;
+  .subscription-card-img {
+    width: 100px;
+    height: 100px;
+  }
 }

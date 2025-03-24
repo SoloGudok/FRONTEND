@@ -196,14 +196,17 @@ const Payment = () => {
           <div className="accordion-header">
             <Typography>최종 결제 금액</Typography>
             <Typography className="discounted-price">
-              {discountedPrice} 원
+              {discountedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              원
             </Typography>
           </div>
         </AccordionSummary>
         <AccordionDetails>
           <div className="accordion-details">
             <Typography>총 금액</Typography>
-            <Typography>{totalPrice} 원</Typography>
+            <Typography>
+              {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원
+            </Typography>
           </div>
         </AccordionDetails>
       </Accordion>

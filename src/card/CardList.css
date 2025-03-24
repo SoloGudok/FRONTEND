@@ -1,0 +1,123 @@
+/* 카드 리스트 컨테이너 */
+.card-list {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* 카드 슬라이드 전용 스타일
+.swiper {
+  width: 80%;
+} */
+
+/* 슬라이드 회색 카드 크기 조정*/
+.swiper-slide .card {
+  margin-top: 10px;
+  position: relative; /* 기준 요소로 지정 */
+  height: 180px;
+  width: 120px;
+  margin-left: 70px;
+  padding: 10px 0 20px 0;
+  background-color: #f0f0f0c2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 2px 2px 10px rgba(148, 96, 96, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.swiper-slide .card:hover {
+  transform: scale(1.05);
+}
+
+.swiper-slide {
+  background-color: transparent !important;
+}
+
+.swiper-slide .card h3 {
+  margin-top: -20px;
+  font-size: 10px;
+  margin-bottom: 5px; /* 제목과 본문 간격 조정 */
+}
+
+.swiper-slide .card p {
+  font-size: 9px;
+  color: #555;
+  overflow: hidden; /* 내용이 길어질 경우 보이지 않도록 */
+  text-overflow: ellipsis; /* '...'으로 표시 */
+  height: 40px; /* p 태그의 높이를 고정 */
+  margin-bottom: 0;
+  flex-shrink: 0; /* p 태그가 줄어들지 않도록 */
+}
+
+.swiper-slide .card .card-images {
+  margin-top: 40px;
+  width: 70%;
+  height: 90px;
+  border-radius: 4px;
+  margin-bottom: 40px;
+}
+
+/* 슬라이드 카드 이미지 크기 조정 */
+.swiper-slide .card .card-images .card-image {
+  align-items: center;
+  margin-right: 50px;
+  width: 180px;
+  height: 130px;
+}
+
+/* 슬라이드 컨트롤 버튼 스타일 */
+.swiper-button-next,
+.swiper-button-prev {
+  display: none !important;
+  background-color: firebrick !important;
+}
+
+/* 필터 모달 */
+.filter-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 300px;
+  text-align: center;
+}
+
+.filter-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-content button {
+  padding: 10px;
+  background-color: #f1f1f1;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.filter-content button:hover {
+  background-color: #ddd;
+}
+
+/* 슬라이드 아래 텍스트 제목 */
+.benefits-title {
+  text-align: left;
+  margin-left: 60px;
+  margin-bottom: 3px;
+}
+.title-left {
+  text-align: left;
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 17px;
+  padding-bottom: 10px;
+}

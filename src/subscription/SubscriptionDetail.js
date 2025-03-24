@@ -91,7 +91,7 @@ const SubscriptionDetail = () => {
             <li>
               <b>
                 {subscription.price
-                  ? `월 ${subscription.price}원`
+                  ? `월 ${subscription.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원`
                   : "가격 정보 없음"}
               </b>
             </li>

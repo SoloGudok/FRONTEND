@@ -29,12 +29,34 @@ function CardListComponent() {
       {/* ✅ CSS 모듈 적용 */}
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={20}
-        slidesPerView={2} // 한 줄에 2개씩 배치
-        navigation
-        pagination={false}
+        spaceBetween={10} // 모바일에서는 간격을 좁게
+        slidesPerView="auto" // 자동으로 적절한 수의 슬라이드 표시
+        navigation={window.innerWidth > 768} // 모바일에서는 내비게이션 버튼 숨김
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+          dynamicMainBullets: 3,
+        }} // 페이지네이션 활성화
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         loop={true}
+        breakpoints={{
+          320: {
+            slidesPerView: 1.5, // 모바일에서는 1개 슬라이드와 다음 슬라이드 힌트
+            spaceBetween: 10,
+          },
+          480: {
+            slidesPerView: 1.5,
+            spaceBetween: 15,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+        }}
       >
         {cards && cards.length > 0 ? (
           cards.map((card, index) => (

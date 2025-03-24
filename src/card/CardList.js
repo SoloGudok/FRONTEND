@@ -10,13 +10,12 @@ import CategoryCard from "./CategoryCard";
 import "./CategoryCard.css";
 import MenuFooter from "../components/MenuFooter";
 import FilterCardList from "./FilterCardList";
-import "./list.css";
+import "./CardList.css";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import PauseIcon from "@mui/icons-material/Pause";
 import IconButton from "@mui/material/IconButton"; // IconButton 임포트
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import VideoModal from "./VideoModal"; // 모달 import
 import CardAds from "./CardAds"; // 광고 카드 컴포넌트 임포트
 
 function CardList() {
@@ -25,8 +24,6 @@ function CardList() {
   const [currentSlide, setCurrentSlide] = useState(1);
   const swiperRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true); // 슬라이드가 재생 중인지 여부
-  const [isModalOpen, setIsModalOpen] = useState(true); // 처음부터 열림
-  const handleCloseModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     const fetchFilteredCards = async () => {
@@ -80,9 +77,7 @@ function CardList() {
 
   return (
     <>
-      {/* === 모달 팝업 === */}
-      <VideoModal isOpen={isModalOpen} onClose={handleCloseModal} />
-
+      <div class="title-left">내게 맞는 카드 찾기</div>
       <CategoryCard
         onCategorySelect={setSelectedCategory}
         className="category-menu"
@@ -92,8 +87,8 @@ function CardList() {
       <Swiper
         id="filtered-cardlist-slide"
         modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={-100}
-        slidesPerView={1.5} // 1.5개 보여줌
+        spaceBetween={-50}
+        slidesPerView={2} // 1.5개 보여줌
         centeredSlides={true}
         navigation
         autoplay={{ delay: 3000, disableOnInteraction: false }}
@@ -164,7 +159,7 @@ function CardList() {
           <NavigateNextIcon fontSize="medium" />
         </IconButton>
       </div>
-      <h2 className="benefits-title">진행 중인 이벤트</h2>
+      <div class="title-left">진행중인 이벤트</div>
       <CardAds />
       <MenuFooter />
     </>

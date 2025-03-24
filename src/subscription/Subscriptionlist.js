@@ -4,25 +4,49 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Fab, Card, CardContent } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import "./Subscriptionlist.css"; // 스타일 적용
+import "./Subscriptionlist.css";
 
 export default function Subscriptionlist({
-  subscriptions, // ✅ 추가
+  subscriptions,
   selected,
   toggleSubscription,
 }) {
-  // ✅ 슬라이더 설정 추가
+  // 반응형 설정 추가
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
     arrows: false,
     appendDots: (dots) => (
       <div style={{ textAlign: "center" }}>{dots.slice(0, 5)}</div>
     ),
+    responsive: [
+      {
+        breakpoint: 1024, // 1024px 이하일 때
+        settings: {
+          slidesToShow: 4, // 한 번에 4개 카드 표시
+          slidesToScroll: 4, // 스크롤 시 4개씩 이동
+        },
+      },
+      {
+        breakpoint: 768, // 768px 이하일 때
+        settings: {
+          slidesToShow: 4, // 한 번에 3개 카드 표시
+          slidesToScroll: 4, // 스크롤 시 3개씩 이동
+        },
+      },
+      {
+        breakpoint: 480, // 480px 이하일 때
+        settings: {
+          slidesToShow: 3, // 한 번에 2개 카드 표시
+          slidesToScroll: 3, // 스크롤 시 2개씩 이동
+        },
+      },
+    ],
+    slidesToShow: 5, // 기본값 (1024px 초과일 때): 5개 카드 표시
+    slidesToScroll: 5, // 기본값 (1024px 초과일 때): 스크롤 시 5개씩 이동
   };
+
   return (
     <Slider {...settings}>
       {subscriptions.map((sub) => (
@@ -32,7 +56,7 @@ export default function Subscriptionlist({
           className="shadow-lg hover:shadow-xl transition-all duration-200 mx-2 subscription-card"
           sx={{
             borderRadius: 8,
-            maxWidth: 150,
+            maxWidth: 120,
             height: 150,
             padding: "12px",
             position: "relative",

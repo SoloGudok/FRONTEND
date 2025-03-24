@@ -32,7 +32,7 @@ export const SubscriptionList = ({
           )}
           {!showDelete && (
             <Typography className="subscription-price">
-              {sub.price} won
+              {sub.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} won
             </Typography>
           )}
         </li>

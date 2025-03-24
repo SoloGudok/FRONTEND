@@ -1,0 +1,316 @@
+.expenditure-list {
+    max-width: 500px;
+    margin: 0 auto;
+
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  header h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 10px;
+  }
+  
+  .date-selector {
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .summary {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .summary p {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    font-size: 1rem;
+  }
+  
+  .expense {
+    color: #e74c3c;
+  }
+  
+  .income {
+    color: #3498db;
+  }
+  
+  .toggle-bar {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  /* New styles for grouped expenditures */
+  .expenditure-groups {
+    margin-top: 20px;
+  }
+  
+  .date-group {
+    margin-bottom: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: #fff;
+  }
+  
+  .date-header {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .date-day {
+    font-size: 1rem;
+  }
+  
+  .date-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .expenditure-item {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+  }
+  
+  .expenditure-item:last-child {
+    border-bottom: none;
+  }
+  
+  .item-category {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  .item-description {
+    padding: 0 10px;
+  }
+  
+  .item-amount {
+    text-align: right;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  
+  .no-data {
+    text-align: center;
+    padding: 30px;
+    color: #999;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  .loading-text {
+    text-align: center;
+    padding: 15px 0;
+    color: #777;
+  }
+  
+  /* DatePicker 스타일 오버라이드 */
+  .datepicker {
+    width: 100% !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
+  }
+  
+  .date-picker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .date-picker-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    width: 100%;
+    max-width: 240px;
+    gap: 10px;
+  }
+  
+  .month-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .month-year-text {
+    padding: 0 10px;
+    font-weight: bold;
+  }
+  
+  .month-nav-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  
+  .month-nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .month-display button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 5px;
+  }
+  
+  .datepicker-viewport {
+    height: 260px !important;
+  }
+  
+  .datepicker-header {
+    padding: 10px !important;
+    background-color: #3498db !important;
+    color: white !important;
+  }
+  
+  .datepicker-navbar {
+    margin-top: 10px !important;
+  }
+  
+  /* 버튼 스타일 */
+  .MuiButtonGroup-root {
+    border-radius: 20px !important;
+    overflow: hidden;
+  }
+  
+  .MuiButton-contained {
+    background-color: #3498db !important;
+  }
+  
+  /* 반응형 조정 */
+  @media (max-width: 400px) {
+    .expenditure-list {
+      padding: 10px;
+    }
+    
+    .expenditure-item {
+      font-size: 0.9rem;
+    }
+    
+    .date-header {
+      padding: 10px;
+    }
+    
+    .expenditure-item {
+      padding: 10px;
+    }
+  }
+
+  /* 일자와 요일 왼쪽 정렬 */
+.date-header {
+    text-align: left;
+    padding-left: 15px;
+  }
+  
+  .date-day {
+    font-size: 1rem;
+    text-align: left;
+  }
+  
+  /* 소비내역 아이템 그리드 조정 - 아이콘 유무에 따라 자동 조정 */
+  .expenditure-item {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+  }
+  
+  /* 항목 설명 왼쪽 정렬 */
+  .item-description {
+    text-align: left;
+    padding: 0 10px;
+  }
+  
+  /* 전체 내역이 아닐 때 항목 조정용 클래스 */
+  .no-category-icon {
+    grid-column: 1 / span 2;
+    padding-left: 15px;
+  }
+
+  .charts-cell {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px; /* 좌우 패딩 축소 */
+    box-sizing: border-box;
+  }
+    
+  .charts-cell-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 45px;
+    padding-left: 20px; /* 왼쪽 패딩 축소 */
+  }
+  
+  .chart-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .charts-wrapper {
+    width: 100%;
+  }
+  
+  .chart-box {
+    margin-bottom: 20px;
+  }
+  
+  .charts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+  }
