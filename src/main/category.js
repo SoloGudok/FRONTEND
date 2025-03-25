@@ -61,7 +61,7 @@ function Category() {
 
       console.log("요청 데이터:", JSON.stringify(requestBody, null, 2));
 
-      const response = await axios.post("http://192.168.0.169:8090/api/v1/expenditure/list", requestBody, {
+      const response = await axios.post(process.env.REACT_APP_API_URL+"/api/v1/expenditure/list", requestBody, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -92,7 +92,7 @@ function Category() {
 
       console.log("차트 요청 데이터:", JSON.stringify(requestBody, null, 2));
 
-      const response = await axios.post("http://192.168.0.169:8090/api/v1/expenditure/chart", requestBody, {
+      const response = await axios.post(process.env.REACT_APP_API_URL+"/api/v1/expenditure/chart", requestBody, {
         headers: {
           "Content-Type": "application/json",
         },

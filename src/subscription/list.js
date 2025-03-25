@@ -19,8 +19,8 @@ export default function List() {
     // 카테고리 ID가 0이면 전체 구독 리스트 가져오기
     const url =
       currentCategoryId === 0
-        ? "http://192.168.0.169:8090/api/v1/subscription"
-        : `http://192.168.0.169:8090/api/v1/subscription/category/${currentCategoryId}/dto`;
+        ? process.env.REACT_APP_API_URL+"/api/v1/subscription"
+        : `${process.env.REACT_APP_API_URL}/api/v1/subscription/category/${currentCategoryId}/dto`;
 
     axios
       .get(url)

@@ -106,7 +106,7 @@ function Dashboard() {
   useEffect(() => {
     fetchData();
     axios
-      .get("http://192.168.0.169:8090/api/v1/dashboard/sendDashboardData")
+      .get(process.env.REACT_APP_API_URL+"/api/v1/dashboard/sendDashboardData")
       .then((response) =>
         setadvertisement_images(response.data.advertisementimages)
       )
@@ -118,11 +118,11 @@ function Dashboard() {
   async function fetchData() {
     try {
       const responses = await axios.all([
-        axios.get("http://192.168.0.169:8090/dashboard/subscribing"),
-        axios.get("http://192.168.0.169:8090/dashboard/chart1"),
-        axios.get("http://192.168.0.169:8090/dashboard/chart2"),
-        axios.get("http://192.168.0.169:8090/recommend/subscription"),
-        axios.get("http://192.168.0.169:8090/recommend/card"),
+        axios.get(process.env.REACT_APP_API_URL+"/dashboard/subscribing"),
+        axios.get(process.env.REACT_APP_API_URL+"/dashboard/chart1"),
+        axios.get(process.env.REACT_APP_API_URL+"/dashboard/chart2"),
+        axios.get(process.env.REACT_APP_API_URL+"/recommend/subscription"),
+        axios.get(process.env.REACT_APP_API_URL+"/recommend/card"),
       ]);
 
       setCards(responses[4].data);

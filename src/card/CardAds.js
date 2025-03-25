@@ -15,7 +15,7 @@ function CardAds() {
 
   useEffect(() => {
     axios
-      .get("http://192.168.0.169:8090/api/v1/card/cardadvertisements")
+      .get(process.env.REACT_APP_API_URL+"/api/v1/card/cardadvertisements")
       .then((res) => {
         setAds(res.data);
       })

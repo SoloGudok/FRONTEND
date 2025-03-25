@@ -178,7 +178,7 @@ const ExpenditureList = () => {
       console.log("요청 데이터:", { startDate, endDate, requestCategoryId });
     
       try {
-        const response = await axios.post('http://localhost:8090/api/v1/expenditure/list', {
+        const response = await axios.post(process.env.REACT_APP_API_URL+'/api/v1/expenditure/list', {
           cursorId: requestCursorId,
           startDate,
           endDate,
@@ -208,7 +208,7 @@ const ExpenditureList = () => {
       const endDate = `${currentMonth.getFullYear()}-${(currentMonth.getMonth() + 1).toString().padStart(2, '0')}-${lastDay}`;
       
       try {
-        const response = await axios.post('http://localhost:8090/api/v1/expenditure/list', {
+        const response = await axios.post(process.env.REACT_APP_API_URL+'/api/v1/expenditure/list', {
           cursorId: null,
           startDate,
           endDate,
@@ -241,7 +241,7 @@ const ExpenditureList = () => {
 
         console.log("차트 요청 데이터:", JSON.stringify(requestBody, null, 2));
 
-        const response = await axios.post("http://localhost:8090/api/v1/expenditure/chart", requestBody, {
+        const response = await axios.post(process.env.REACT_APP_API_URL+"/api/v1/expenditure/chart", requestBody, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -313,7 +313,7 @@ const ExpenditureList = () => {
         const requestCategoryId = categoryId === 0 ? null : categoryId;
         
         try {
-          const response = await axios.post('http://localhost:8090/api/v1/expenditure/list', {
+          const response = await axios.post(process.env.REACT_APP_API_URL+'/api/v1/expenditure/list', {
             cursorId: null,
             startDate,
             endDate,

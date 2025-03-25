@@ -60,7 +60,7 @@ export default function UserCard() {
     }
 
     axios
-      .get(`http://192.168.0.169:8090/api/v1/user/card-imgs?userId=${userId}`)
+      .get(`${process.env.REACT_APP_API_URL}/api/v1/user/card-imgs?userId=${userId}`)
       .then((response) => {
         if (response.data && response.data.length > 0) {
           setCardImgUrls(response.data);

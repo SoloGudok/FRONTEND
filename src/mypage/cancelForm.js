@@ -100,7 +100,7 @@ export default function SlotsSignIn() {
     if (ids.length > 0) {
       axios
         .get(
-          `http://192.168.0.169:8090/api/v1/unsubscription?id=${ids.join("&id=")}`
+          `${process.env.REACT_APP_API_URL}/api/v1/unsubscription?id=${ids.join("&id=")}`
         )
         .then((response) => {
           setDtoList(response.data);
@@ -124,7 +124,7 @@ export default function SlotsSignIn() {
     try {
       await Promise.all(
         dtoList.map((dto) =>
-          axios.post(`http://192.168.0.169:8090/api/v1/unsubscription/uni_cancel`, {
+          axios.post(`${process.env.REACT_APP_API_URL}/api/v1/unsubscription/uni_cancel`, {
             email: "user@example.com",
             password: "userpassword",
             serviceId: dto.id,

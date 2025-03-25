@@ -11,7 +11,7 @@ const Login = ({ onLogin }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post("http://192.168.0.169:8090/auth/login", { email, password });
+            const response = await axios.post("/auth/login", { email, password });
 
             localStorage.setItem("accessToken", response.data.accessToken);
             localStorage.setItem("refreshToken", response.data.refreshToken);

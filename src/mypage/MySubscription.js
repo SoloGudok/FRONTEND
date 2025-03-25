@@ -8,7 +8,7 @@ import { colors } from "@mui/material";
 import MenuFooter from "../components/MenuFooter";
 // import { PieChart } from "@mui/x-charts/PieChart";
 
-const API_BASE_URL = "http://192.168.0.169:8090/api/v1/subscription";
+const API_BASE_URL = process.env.REACT_APP_API_URL+"/api/v1/subscription";
 
 const MySubscription = () => {
   const { userId } = useParams();
@@ -92,7 +92,7 @@ const MySubscription = () => {
 
         try {
           await axios.post(
-            "http://192.168.0.169:8090/api/v1/unsubscription/multi_cancel",
+            process.env.REACT_APP_API_URL+"/api/v1/unsubscription/multi_cancel",
             { subscriptionIds }
           );
 

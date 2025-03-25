@@ -109,7 +109,7 @@ const Payment = () => {
       const subscriptionId = selectedSubscriptions[0].id;
 
       // 개별 결제 처리 부분 수정
-      fetch("http://192.168.0.169:8090/api/v1/payment/single", {
+      fetch(process.env.REACT_APP_API_URL+"/api/v1/payment/single", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -145,7 +145,7 @@ const Payment = () => {
         combination: 1,
       };
 
-      fetch("http://192.168.0.169:8090/api/v1/payment/payment", {
+      fetch(process.env.REACT_APP_API_URL+"/api/v1/payment/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
@@ -202,13 +202,19 @@ const Payment = () => {
           </div>
         </AccordionSummary>
         <AccordionDetails>
-          <div className="accordion-details">
-            <Typography>총 금액</Typography>
-            <Typography>
-              {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원
-            </Typography>
-          </div>
-        </AccordionDetails>
+  {combinationType === 1 && (
+    <div className="accordion-details">
+      <Typography>10% 할인 적용 금액</Typography>
+      <Typography className="discounted-price">
+        {discountedPrice.toLocaleString()} 원
+      </Typography>
+    </div>
+  )}
+  <div className="accordion-details">
+    <Typography>총 금액</Typography>
+    <Typography>{totalPrice.toLocaleString()} 원</Typography>
+  </div>
+</AccordionDetails>
       </Accordion>
 
       <div

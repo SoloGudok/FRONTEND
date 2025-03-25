@@ -35,7 +35,7 @@ function CardList() {
         }
 
         const response = await axios.get(
-          "http://192.168.0.169:8090/api/v1/card/filter",
+          process.env.REACT_APP_API_URL+"/api/v1/card/filter",
           { params }
         );
         setFilteredCards(response.data);
